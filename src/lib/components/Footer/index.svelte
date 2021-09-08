@@ -9,8 +9,13 @@
 <style>
     footer {
         background-color: rgb(239, 222, 205, .6);
-        font-size: 18px;
+        font-size: 14px;
         padding: 8px 0;
         text-align: center;
+    }
+    @media screen and (min-width: 768px) {
+        footer {
+            font-size: 18px;
+        }
     }
 </style>
