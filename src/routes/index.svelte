@@ -3,6 +3,10 @@
     import Column from '$lib/components/Layout/Column.svelte';
 </script>
 
+<svelte:head>
+    <title>Arbucks</title>
+</svelte:head>
+
 <h1>Welcome to Arbucks!</h1>
 
 <Columns>
