@@ -11,6 +11,10 @@
     import Footer from '$lib/components/Footer/index.svelte';
 </script>
 
+<svelte:head>
+    <script type="text/javascript" src="https://api.arbucks.io/latest.js" async defer></script>
+</svelte:head>
+
 <Navbar />
 
 <div class="container">
