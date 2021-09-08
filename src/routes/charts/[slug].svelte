@@ -61,8 +61,8 @@
                 <h2>{token.Token_2_price} {token.Token_2_symbol}</h2>
             </div>
             <div class="right">
-                <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={token.Token_1_contract}">Buy {token.Token_1_symbol}</a>
-                <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={token.Token_2_contract}">Buy {token.Token_2_symbol}</a>
+                <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={token.Token_1_contract}" draggable="false">Buy {token.Token_1_symbol}</a>
+                <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={token.Token_2_contract}" draggable="false">Buy {token.Token_2_symbol}</a>
             </div>
         </div>
 
