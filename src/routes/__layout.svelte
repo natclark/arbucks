@@ -8,6 +8,7 @@
 <script>
     import '$lib/global.scss';
     import Navbar from '$lib/components/Navbar/index.svelte';
+    import Footer from '$lib/components/Footer/index.svelte';
 </script>
 
 <Navbar />
@@ -18,6 +19,8 @@
     </main>
 </div>
 
+<Footer />
+
 <style>
     .container {
         display: grid;
@@ -26,6 +29,7 @@
             grid-column: 2;
         }
         main {
+            min-height: 100vh;
             padding: 0 8px;
         }
     }

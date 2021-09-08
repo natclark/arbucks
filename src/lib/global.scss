@@ -11,6 +11,14 @@
     box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+html {
+    scrollbar-width: thin;
+}
+
 body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -18,7 +26,7 @@ body {
     color: #000;
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, system-ui, sans-serif;
     margin: 0;
-    overflow: hidden;
+    overflow: hidden scroll;
 }
 
 a {
