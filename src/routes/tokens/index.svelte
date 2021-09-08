@@ -91,6 +91,8 @@
 
 <h1>Tokens ({numTokens})</h1>
 
+<p>This is a real-time list of all the ERC20 tokens currently deployed on Arbitrum One.</p>
+
 {#if !!loading}
     <div class="loading">
         <Moon size="60" color="rgba(255, 62, 0, .8)" unit="px" duration="1s" />
@@ -103,6 +105,7 @@
                 <th on:click={() => sort(1)}>Name</th>
                 <th on:click={() => sort(2)}>Symbol</th>
                 <th on:click={() => sort(3)}>Address</th>
+                <th on:click={() => sort(4)}>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -124,13 +127,11 @@
         border-spacing: 0 1em;
         margin-bottom: 32px;
         width: 100%;
-        thead {
-            th {
-                cursor: pointer;
-                text-align: left;
-                &:hover {
-                    text-decoration: underline;
-                }
+        thead th {
+            cursor: pointer;
+            text-align: left;
+            &:hover {
+                text-decoration: underline;
             }
         }
     }

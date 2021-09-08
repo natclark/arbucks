@@ -24,7 +24,7 @@
 <style>
     .container {
         display: grid;
-        grid-template-columns: 1fr min(80ch, 100%) 1fr;
+        grid-template-columns: 1fr min(100ch, 100%) 1fr;
         > * {
             grid-column: 2;
         }

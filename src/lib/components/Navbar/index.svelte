@@ -44,7 +44,7 @@
         box-shadow: rgba(50, 50, 93, .25) 0 6px 12px -2px, rgba(0, 0, 0, .3) 0 3px 7px -3px;
         display: grid;
         height: 70px;
-        grid-template-columns: 1fr min(80ch, 100%) 1fr;
+        grid-template-columns: 1fr min(100ch, 100%) 1fr;
         > * {
             grid-column: 2;
         }
