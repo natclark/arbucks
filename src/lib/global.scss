@@ -51,6 +51,26 @@ a {
     }
 }
 
+.button {
+    background-color: #aa8e68;
+    border-radius: 8px;
+    color: #fff !important;
+    font-weight: 600;
+    overflow: hidden;
+    padding: 8px;
+    position: relative;
+    text-decoration: none !important;
+    transition: all .06s;
+    width: 100%;
+    will-change: opacity;
+    &.button--buy {
+        background-color: #008000;
+    }
+    &:hover {
+        opacity: .8;
+    }
+}
+
 span.ripple {
     background-color: rgba(255, 255, 255, .5);
     border-radius: 50%;

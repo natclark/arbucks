@@ -39,9 +39,9 @@
     <td>
         <a href="https://arbiscan.io/token/{address}" rel="external noopener" target="_blank">{address.substr(0, 6)}...{address.substr(address.length - 7, address.length - 1)}</a>
     </td>
-    <td class="actions">
-        <a href="https://app.sushi.com/swap?outputCurrency={address}" rel="external noopener" target="_blank" draggable="false" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)}>Trade</a>
-        <a href="/charts/{address}/" draggable="false" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>View</a>
+    <td>
+        <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={address}" rel="external noopener" target="_blank" draggable="false" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)}>Trade</a>
+        <a class="button" href="/charts/{address}/" draggable="false" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>View</a>
     </td>
 </tr>
 
@@ -68,22 +68,6 @@
             }
             &.name {
                 font-weight: 700;
-            }
-            &.actions a {
-                background-color: #008000;
-                border-radius: 8px;
-                color: #fff;
-                font-weight: 600;
-                overflow: hidden;
-                padding: 8px;
-                position: relative;
-                text-decoration: none;
-                transition: all .06s;
-                width: 100%;
-                will-change: opacity;
-                &:hover {
-                    opacity: .8;
-                }
             }
         }
         &:hover {

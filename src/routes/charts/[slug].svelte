@@ -124,20 +124,4 @@
             margin-left: 4px;
         }
     }
-    .button {
-        background-color: #008000;
-        border-radius: 8px;
-        color: #fff;
-        font-weight: 600;
-        overflow: hidden;
-        padding: 8px;
-        position: relative;
-        text-decoration: none;
-        transition: all .06s;
-        width: 100%;
-        will-change: opacity;
-        &:hover {
-            opacity: .8;
-        }
-    }
 </style>
