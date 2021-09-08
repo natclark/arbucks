@@ -79,7 +79,7 @@
                     color: #222;
                     display: flex;
                     font-size: 20px;
-                    font-weight: 700;
+                    font-weight: 600;
                     height: 40px;
                     overflow: hidden;
                     padding: 0 8px;
