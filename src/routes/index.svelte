@@ -12,6 +12,14 @@
 
 <p>This home page will be filled in shortly!</p>
 
+<h2>New Tokens</h2>
+
+<p><em>Coming soon!</em></p>
+
+<h2>Trending Tokens</h2>
+
+<p><em>Coming soon!</em></p>
+
 <style>
     h1 {
         text-align: center;
