@@ -30,9 +30,11 @@ body {
 }
 
 a {
-    color: #8aacff;
+    color: #2260ff;
+    text-decoration: none;
     &:hover {
-        color: #626fe6;
+        color: #1129fd;
+        text-decoration: underline;
     }
     &:visited {
         color: #740074;

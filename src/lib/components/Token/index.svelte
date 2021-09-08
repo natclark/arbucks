@@ -16,7 +16,9 @@
     </td>
     <td class="name">{name}</td>
     <td>{symbol}</td>
-    <td>{address}</td>
+    <td>
+        <a href="https://arbiscan.io/token/{address}" rel="external noopener" target="_blank">{address}</a>
+    </td>
 </tr>
 
 <style>
