@@ -123,6 +123,7 @@
         border-collapse: separate; 
         border-spacing: 0 1em;
         margin-bottom: 32px;
+        width: 100%;
         thead {
             th {
                 cursor: pointer;

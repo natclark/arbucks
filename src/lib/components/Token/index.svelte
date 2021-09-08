@@ -23,25 +23,40 @@
 
 <style>
     .token {
-        &.token {
-            background-color: rgba(239, 222, 205, .6);
-            border-radius: 8px;
-            box-shadow: rgba(99, 99, 99, .2) 0 2px 8px 0;
-            height: 60px;
-            transition: all .07s;
-            will-change: background-color, box-shadow;
-            td {
-                width: 25%;
-                &.logo {
-                    padding: 0 8px;
-                }
-                &.name {
-                    font-weight: 700;
+        background-color: rgba(239, 222, 205, .6);
+        border-radius: 8px;
+        box-shadow: rgba(99, 99, 99, .2) 0 2px 8px 0;
+        font-size: 12px;
+        height: 60px;
+        transition: all .07s;
+        will-change: background-color, box-shadow;
+        td {
+            width: auto;
+            &.logo {
+                padding: 0 8px;
+                img {
+                    height: 16px;
+                    width: 16px;
                 }
             }
-            &:hover {
-                background-color: rgba(239, 222, 205, .8);
-                box-shadow: rgba(0, 0, 0, .24) 0 3px 8px;
+            &.name {
+                font-weight: 700;
+            }
+        }
+        &:hover {
+            background-color: rgba(239, 222, 205, .8);
+            box-shadow: rgba(0, 0, 0, .24) 0 3px 8px;
+        }
+    }
+    @media screen and (min-width: 768px) {
+        .token {
+            font-size: 16px;
+            td {
+                width: 10%;
+                &.logo img {
+                    height: 32px;
+                    width: 32px;
+                }
             }
         }
     }
