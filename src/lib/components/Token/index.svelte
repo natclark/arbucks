@@ -9,12 +9,16 @@
     export let logo;
 
     let row;
+    let doc;
 
     onMount(() => {
+        doc = document;
+        /*
+        TODO
         row.addEventListener(`mousedown`, (e) => {
-            // TODO
-            // ripple(e, document);
+            ripple(e, document);
         }, true);
+        */
     });
 </script>
 
@@ -35,8 +39,8 @@
     <td>
         <a href="https://arbiscan.io/token/{address}" rel="external noopener" target="_blank">{address.substr(0, 6)}...{address.substr(address.length - 7, address.length - 1)}</a>
     </td>
-    <td>
-        <a href="https://app.sushi.com/swap?outputCurrency={address}" rel="external noopener" target="_blank">Trade</a>
+    <td class="actions">
+        <a href="https://app.sushi.com/swap?outputCurrency={address}" rel="external noopener" target="_blank" draggable="false" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)}>Trade</a>
     </td>
 </tr>
 
@@ -64,10 +68,26 @@
             &.name {
                 font-weight: 700;
             }
+            &.actions a {
+                background-color: #008000;
+                border-radius: 8px;
+                color: #fff;
+                font-weight: 600;
+                overflow: hidden;
+                padding: 8px;
+                position: relative;
+                text-decoration: none;
+                transition: all .06s;
+                width: 100%;
+                will-change: opacity;
+                &:hover {
+                    opacity: .8;
+                }
+            }
         }
         &:hover {
             background-color: rgba(239, 222, 205, .8);
-            box-shadow: rgba(0, 0, 0, .24) 0 3px 8px;
+            box-shadow: rgba(99, 99, 99, .2) 0 4px 12px 0;
         }
     }
     @media screen and (min-width: 768px) {
