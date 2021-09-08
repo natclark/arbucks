@@ -21,5 +21,8 @@
         "svelte": "^3.34.0",
         "svelte-preprocess": "^4.9.2"
     },
+    "dependencies": {
+        "lightweight-charts": "^3.5.0"
+    },
     "type": "module"
 }

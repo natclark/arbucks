@@ -1,5 +1,7 @@
 <footer>
-    <p>Arbucks is currently powered by <a href="https://arbiscan.io/" rel="external noopener" target="_blank">Arbiscan</a>.</p>
+    <p>This site contains information procured from third parties.</p>
+    <p>Nothing on this site constitutes financial or legal advice.</p>
+    <p>Please don't shoot the messenger!</p>
 </footer>
 
 <style>
