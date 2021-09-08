@@ -4,7 +4,7 @@ An experimental, open-source web app for Arbitrum charts and analytics.
 
 This repo is currently synced with Cloudflare Pages at this URL: https://arbucks.pages.dev
 
-It will also be available on a custom domain soon.
+https://arbucks.io is the canonical alias of https://arbucks.pages.dev
 
 ## Development
 
