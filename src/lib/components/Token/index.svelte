@@ -17,24 +17,21 @@
     <td class="name">{name}</td>
     <td>{symbol}</td>
     <td>
-        <a href="https://arbiscan.io/token/{address}" rel="external noopener" target="_blank">{address}</a>
+        <a href="https://arbiscan.io/token/{address}" rel="external noopener" target="_blank">{address.substr(0, 6)}...{address.substr(address.length - 7, address.length - 1)}</a>
     </td>
 </tr>
 
 <style>
-    tr {
-        &.spacer {
-            height: 16px;
-        }
+    .token {
         &.token {
             background-color: rgba(239, 222, 205, .6);
             border-radius: 8px;
             box-shadow: rgba(99, 99, 99, .2) 0 2px 8px 0;
             height: 60px;
             transition: all .07s;
-            width: 100%;
             will-change: background-color, box-shadow;
             td {
+                width: 25%;
                 &.logo {
                     padding: 0 8px;
                 }

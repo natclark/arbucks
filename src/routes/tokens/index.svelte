@@ -109,6 +109,7 @@
         thead {
             th {
                 cursor: pointer;
+                text-align: left;
                 &:hover {
                     text-decoration: underline;
                 }
