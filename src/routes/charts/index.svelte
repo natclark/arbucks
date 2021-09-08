@@ -4,6 +4,7 @@
 
 <svelte:head>
     <title>Charts - Arbucks</title>
+    <link rel="canonical" href="https://arbucks.io/charts/">
 </svelte:head>
 
 <h1>Charts</h1>
