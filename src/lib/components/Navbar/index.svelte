@@ -8,7 +8,9 @@
                     </g>
                 </svg>
             </a>
+            <!--
             <a href="/charts/" sveltekit:prefetch>Charts</a>
+            -->
             <a href="/tokens/" sveltekit:prefetch>Tokens</a>
         </div>
         <div class="right">
