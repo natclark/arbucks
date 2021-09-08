@@ -87,6 +87,7 @@
 
 <svelte:head>
     <title>Tokens - Arbucks</title>
+    <link rel="canonical" href="https://arbucks.io/tokens/">
 </svelte:head>
 
 <h1>Tokens ({numTokens})</h1>

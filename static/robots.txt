@@ -1,1 +1,1 @@
-Sitemap: /sitemap.xml
+Sitemap: https://arbucks.io/sitemap.xml

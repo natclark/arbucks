@@ -5,6 +5,7 @@
 
 <svelte:head>
     <title>Arbucks</title>
+    <link rel="canonical" href="https://arbucks.io">
 </svelte:head>
 
 <h1>Welcome to Arbucks!</h1>
