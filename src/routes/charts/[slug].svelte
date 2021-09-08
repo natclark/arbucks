@@ -32,8 +32,6 @@
             const transactionsReq = await fetch(`https://api2.sushipro.io/?action=get_historical_transactions_count&pair=${$page.params.slug}&from=${timestamp - 86400}&to=${timestamp}&chainID=42161`);
             transactions = await transactionsReq.json();
             */
-
-            console.log(liquidity, volume, transactions);
         } else {
             goto(`/charts/`);
         }
