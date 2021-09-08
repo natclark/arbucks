@@ -22,7 +22,8 @@
         "svelte-preprocess": "^4.9.2"
     },
     "dependencies": {
-        "lightweight-charts": "^3.5.0"
+        "lightweight-charts": "^3.5.0",
+        "svelte-loading-spinners": "^0.1.7"
     },
     "type": "module"
 }

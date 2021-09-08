@@ -1,17 +1,20 @@
 <script>
     import { onMount } from 'svelte';
     import tokens from '$lib/stores/tokens';
+    import { Moon } from 'svelte-loading-spinners';
     import Token from '$lib/components/Token/index.svelte';
+
+    let sorting = false;
+    let loading = true;
 
     let numTokens = 0;
 
     let newTokens = [];
     let logos = [];
 
-    let sorting = false;
-
     const sort = (col) => {
         if (sorting === false) {
+            loading = true;
             let table, rows, i, row, sibling, misordered, dir, switches = 0;
             table = document.querySelector(`.tokens`);
             sorting = true;
@@ -46,6 +49,7 @@
                     }
                 }
             } while (sorting);
+            loading = false;
         }
     }
 
@@ -76,6 +80,8 @@
         });
 
         tokens.update(() => newTokens);
+
+        loading = false;
     });
 </script>
 
@@ -85,23 +91,34 @@
 
 <h1>Tokens ({numTokens})</h1>
 
-<table class="tokens">
-    <thead>
-        <tr>
-            <th on:click={() => sort(0)}>Logo</th>
-            <th on:click={() => sort(1)}>Name</th>
-            <th on:click={() => sort(2)}>Symbol</th>
-            <th on:click={() => sort(3)}>Address</th>
-        </tr>
-    </thead>
-    <tbody>
-        {#each $tokens as token}
-            <Token address={token.Contract} symbol={token.Symbol} name={token.Name} decimals={token.Decimals} logo={token.Logo || ``} />
-        {/each}
-    </tbody>
-</table>
+{#if !!loading}
+    <div class="loading">
+        <Moon size="60" color="rgba(255, 62, 0, .8)" unit="px" duration="1s" />
+    </div>
+{:else}
+    <table class="tokens">
+        <thead>
+            <tr>
+                <th on:click={() => sort(0)}>Logo</th>
+                <th on:click={() => sort(1)}>Name</th>
+                <th on:click={() => sort(2)}>Symbol</th>
+                <th on:click={() => sort(3)}>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            {#each $tokens as token}
+                <Token address={token.Contract} symbol={token.Symbol} name={token.Name} decimals={token.Decimals} logo={token.Logo || ``} />
+            {/each}
+        </tbody>
+    </table>
+{/if}
 
 <style>
+    .loading {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
     .tokens {
         border-collapse: separate; 
         border-spacing: 0 1em;
