@@ -1,0 +1,35 @@
+@charset 'UTF-8';
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition-duration: 0s !important;
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: rgb(239, 222, 205, .4);
+    color: #000;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, system-ui, sans-serif;
+    margin: 0;
+    overflow: hidden;
+}
+
+a {
+    color: #8aacff;
+    &:hover {
+        color: #626fe6;
+    }
+    &:visited {
+        color: #740074;
+        &:hover {
+            color: #4d004d;
+        }
+    }
+}
