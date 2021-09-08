@@ -39,7 +39,7 @@
     <td>
         <a href="https://arbiscan.io/token/{address}" rel="external noopener" target="_blank">{address.substr(0, 6)}...{address.substr(address.length - 7, address.length - 1)}</a>
     </td>
-    <td>
+    <td class="actions">
         <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={address}" rel="external noopener" target="_blank" draggable="false" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)}>Trade</a>
         <a class="button" href="/charts/{address}/" draggable="false" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>View</a>
     </td>
@@ -69,6 +69,12 @@
             &.name {
                 font-weight: 700;
             }
+            &.actions {
+                align-items: center;
+                display: flex;
+                justify-content: space-between;
+                text-align: center;
+            }
         }
         &:hover {
             background-color: rgba(239, 222, 205, .8);
@@ -82,6 +88,9 @@
                 &.logo img {
                     height: 32px;
                     width: 32px;
+                }
+                &.actions {
+                    display: table-cell;
                 }
             }
         }

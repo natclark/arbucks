@@ -100,22 +100,24 @@
         <Moon size="60" color="rgba(255, 62, 0, .8)" unit="px" duration="1s" />
     </div>
 {:else}
-    <table class="tokens">
-        <thead>
-            <tr>
-                <th on:click={() => sort(0)}>Logo</th>
-                <th on:click={() => sort(1)}>Name</th>
-                <th on:click={() => sort(2)}>Symbol</th>
-                <th on:click={() => sort(3)}>Address</th>
-                <th on:click={() => sort(4)}>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {#each $tokens as token}
-                <Token address={token.Contract} symbol={token.Symbol} name={token.Name} decimals={token.Decimals} logo={token.Logo || ``} />
-            {/each}
-        </tbody>
-    </table>
+    <div class="scroller">
+        <table class="tokens">
+            <thead>
+                <tr>
+                    <th on:click={() => sort(0)}>Logo</th>
+                    <th on:click={() => sort(1)}>Name</th>
+                    <th on:click={() => sort(2)}>Symbol</th>
+                    <th on:click={() => sort(3)}>Address</th>
+                    <th on:click={() => sort(4)}>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {#each $tokens as token}
+                    <Token address={token.Contract} symbol={token.Symbol} name={token.Name} decimals={token.Decimals} logo={token.Logo || ``} />
+                {/each}
+            </tbody>
+        </table>
+    </div>
 {/if}
 
 <style>
@@ -124,17 +126,26 @@
         display: flex;
         justify-content: center;
     }
-    .tokens {
-        border-collapse: separate; 
-        border-spacing: 0 1em;
-        margin-bottom: 32px;
-        width: 100%;
-        thead th {
-            cursor: pointer;
-            text-align: left;
-            &:hover {
-                text-decoration: underline;
+    .scroller {
+        overflow-x: auto;
+        .tokens {
+            border-collapse: collapse;
+            border-spacing: 0;
+            margin-bottom: 32px;
+            width: 100%;
+            thead th {
+                cursor: pointer;
+                text-align: left;
+                &:hover {
+                    text-decoration: underline;
+                }
             }
+        }
+    }
+    @media screen and (min-width: 768px) {
+        .tokens {
+            border-collapse: separate !important;
+            border-spacing: 0 1em !important;
         }
     }
 </style>

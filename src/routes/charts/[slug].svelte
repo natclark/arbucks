@@ -113,15 +113,20 @@
         font-weight: 700;
     }
     .flex {
-        align-items: center;
-        display: flex;
-        justify-content: space-between;
+        display: block;
         margin: 24px 0;
-        .left h2 {
-            margin: 0;
-        }
-        .right a {
-            margin-left: 4px;
+    }
+    @media screen and (min-width: 768px) {
+        .flex {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            .left h2 {
+                margin: 0;
+            }
+            .right a {
+                margin-left: 4px;
+            }
         }
     }
 </style>

@@ -43,8 +43,8 @@
         <a href="https://arbiscan.io/token/{address}" rel="external noopener" target="_blank">{address.substr(0, 6)}...{address.substr(address.length - 7, address.length - 1)}</a>
     </td>
     <td class="actions">
-        <a href="https://app.sushi.com/add/{contractOne}/{contractTwo}" rel="external noopener" target="_blank" draggable="false" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)}>Liquidity</a>
-        <a href="/charts/{address}/" draggable="false" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>View</a>
+        <a class="button button--buy" href="https://app.sushi.com/add/{contractOne}/{contractTwo}" rel="external noopener" target="_blank" draggable="false" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)}>Liquidity</a>
+        <a class="button" href="/charts/{address}/" draggable="false" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>View</a>
     </td>
 </tr>
 
@@ -72,24 +72,11 @@
             &.name {
                 font-weight: 700;
             }
-            &.actions a {
-                background-color: #008000;
-                border-radius: 8px;
-                color: #fff;
-                font-weight: 600;
-                overflow: hidden;
-                padding: 8px;
-                position: relative;
-                text-decoration: none;
-                transition: all .06s;
-                width: 100%;
-                will-change: opacity;
-                &:last-child {
-                    background-color: #aa8e68;
-                }
-                &:hover {
-                    opacity: .8;
-                }
+            &.actions {
+                align-items: center;
+                display: flex;
+                justify-content: space-between;
+                text-align: center;
             }
         }
         &:hover {
@@ -104,6 +91,9 @@
                 &.logo img {
                     height: 32px;
                     width: 32px;
+                }
+                &.actions {
+                    display: table-cell;
                 }
             }
         }
