@@ -3,10 +3,20 @@
     import ripple from '$lib/services/ripple';
 
     export let address;
-    export let symbol;
-    export let name;
-    export let decimals;
-    export let logo;
+    export let contractOne;
+    export let contractTwo;
+    export let symbolOne;
+    export let symbolTwo;
+    export let nameOne;
+    export let nameTwo;
+    export let decimalsOne;
+    export let decimalsTwo;
+    export let priceOne;
+    export let priceTwo;
+    export let reserveOne;
+    export let reserveTwo;
+    export let derivedOne;
+    export let derivedTwo;
 
     let row;
     let doc;
@@ -22,31 +32,24 @@
     });
 </script>
 
-<tr bind:this={row} class="token">
-    <td class="logo">
-        {#if logo !== ``}
-            <img src={logo} loading="lazy" width="32px" height="32px" aria-hidden="true">
-        {:else}
-            <img src="/placeholder.svg" loading="lazy" width="32px" height="32px" aria-hidden="true">
-        {/if}
-    </td>
+<tr bind:this={row} class="pair">
     <td class="name">
-        {name}
+        {nameOne} / {nameTwo}
     </td>
     <td>
-        {symbol}
+        {symbolOne} / {symbolTwo}
     </td>
     <td>
         <a href="https://arbiscan.io/token/{address}" rel="external noopener" target="_blank">{address.substr(0, 6)}...{address.substr(address.length - 7, address.length - 1)}</a>
     </td>
     <td class="actions">
-        <a href="https://app.sushi.com/swap?outputCurrency={address}" rel="external noopener" target="_blank" draggable="false" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)}>Trade</a>
+        <a href="https://app.sushi.com/add/{contractOne}/{contractTwo}" rel="external noopener" target="_blank" draggable="false" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)}>Liquidity</a>
         <a href="/charts/{address}/" draggable="false" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>View</a>
     </td>
 </tr>
 
 <style>
-    .token {
+    .pair {
         background-color: rgba(239, 222, 205, .6);
         border-radius: 8px;
         box-shadow: rgba(99, 99, 99, .2) 0 2px 8px 0;
@@ -81,6 +84,9 @@
                 transition: all .06s;
                 width: 100%;
                 will-change: opacity;
+                &:last-child {
+                    background-color: #aa8e68;
+                }
                 &:hover {
                     opacity: .8;
                 }
@@ -92,7 +98,7 @@
         }
     }
     @media screen and (min-width: 768px) {
-        .token {
+        .pair {
             font-size: 16px;
             td {
                 &.logo img {

@@ -10,6 +10,9 @@
         <loc>https://arbucks.io/tokens/</loc>
     </url>
     <url>
+        <loc>https://arbucks.io/pairs/</loc>
+    </url>
+    <url>
         <loc>https://arbucks.io/faq/</loc>
     </url>
 </urlset>
