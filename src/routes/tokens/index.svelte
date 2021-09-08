@@ -54,17 +54,18 @@
     }
 
     onMount(async () => {
+        /* A more reliable and decentralized solution for fetching data is a high-priority upcoming feature. */
         const reqTokens = await fetch(`https://api2.sushipro.io/?action=all_tokens&chainID=42161`);
         const jsonTokens = await reqTokens.json();
         numTokens = jsonTokens[0].number_of_results;
-        jsonTokens[1].forEach((token) => newTokens.push(token));
+        jsonTokens[1].forEach((token) => newTokens.indexOf(newTokens.find((e) => e.Contract === token.Contract)) === -1 && (newTokens.push(token)));
 
         const reqLogos = await fetch(`https://bridge.arbitrum.io/token-list-42161.json`);
         const jsonLogos = await reqLogos.json();
         jsonLogos.tokens.forEach((token) => logos.push(token));
 
         logos.forEach((logo) => {
-            const index = newTokens.indexOf(newTokens.find((e) => e.Contract == logo.address.toLowerCase()));
+            const index = newTokens.indexOf(newTokens.find((e) => e.Contract === logo.address.toLowerCase()));
             if (index > -1) {
                 newTokens[index].Logo = logo.logoURI;
             } else {

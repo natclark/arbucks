@@ -10,22 +10,7 @@
 
 <h1>Welcome to Arbucks!</h1>
 
-<Columns>
-    <Column>
-        <h2>What is Arbucks?</h2>
-        <p>Arbucks is an open-source charting and analytics web app for <a href="https://arbitrum.io" rel="external noopener" target="_blank">Arbitrum</a>!</p>
-    </Column>
-    <Column>
-        <h2>Is there a token?</h2>
-        <p>Not yet! Stay tuned for updates.</p>
-    </Column>
-</Columns>
-<Columns>
-    <Column>
-        <h2>Can I help out?</h2>
-        <p>Anyone is welcome to open an issue or submit a pull request to the <a href="https://github.com/natclark/arbucks" rel="external noopener" target="_blank">project GitHub page</a>.</p>
-    </Column>
-</Columns>
+<p>This home page will be filled in shortly!</p>
 
 <style>
     h1 {
