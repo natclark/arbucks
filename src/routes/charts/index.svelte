@@ -1,5 +1,4 @@
 <script>
-    import Chart from '$lib/components/Chart/index.svelte';
     import Search from '$lib/components/Search/index.svelte';
 </script>
 
@@ -16,11 +15,6 @@
 
 <br>
 <p><em>More features on this page are coming soon!</em></p>
-
-<!--
-TODO
-<Chart id="0" address="0xf97f4df75117a78c1a5a0dbb814af92458539fb4" />
--->
 
 <style>
     .flex {

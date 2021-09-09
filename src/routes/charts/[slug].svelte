@@ -4,6 +4,7 @@
     import { goto } from '$app/navigation';
     import { Moon } from 'svelte-loading-spinners';
     import Search from '$lib/components/Search/index.svelte';
+    import Chart from '$lib/components/Chart/index.svelte';
 
     let loading = true;
     let valid = false;
@@ -55,6 +56,7 @@
 
     $: $page.params.slug, refresh();
 </script>
+
 {#if !!loading}
     <div class="loading">
         <Moon size="60" color="rgba(255, 62, 0, .8)" unit="px" duration="1s" />
@@ -78,7 +80,8 @@
             </div>
         </div>
 
-        <p><em>Coming soon!</em></p>
+        <Chart id="0" address="0xf97f4df75117a78c1a5a0dbb814af92458539fb4" />
+        <p>If this chart looks blank to you, that's because it is indeed blank. It'll be filled with data soon though!</p>
 
         <h2>Liquidity</h2>
         {#if !!liquidity}
