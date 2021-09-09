@@ -79,21 +79,23 @@
         <Moon size="60" color="rgba(255, 62, 0, .8)" unit="px" duration="1s" />
     </div>
 {:else}
-    <table class="pairs">
-        <thead>
-            <tr>
-                <th on:click={() => sort(0)}>Name</th>
-                <th on:click={() => sort(1)}>Symbol</th>
-                <th on:click={() => sort(2)}>Address</th>
-                <th on:click={() => sort(3)}>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {#each $pairs as pair}
-                <Pair address={pair.Pair_ID} contractOne={pair.Token_1_contract} contractTwo={pair.Token_2_contract} nameOne={pair.Token_1_name} nameTwo={pair.Token_2_name} symbolOne={pair.Token_1_symbol} symbolTwo={pair.Token_2_symbol} decimalsOne={pair.Token_1_decimals} decimalsTwo={pair.Token_2_decimals} priceOne={pair.Token_1_price} priceTwo={pair.Token_2_price} reserveOne={pair.Token_1_reserve} reserveTwo={pair.Token_2_reserve} derivedOne={pair.Token_1_derived} derivedTwo={pair.Token_2_derived} />
-            {/each}
-        </tbody>
-    </table>
+    <div class="scroller">
+        <table class="pairs">
+            <thead>
+                <tr>
+                    <th on:click={() => sort(0)}>Name</th>
+                    <th on:click={() => sort(1)}>Symbol</th>
+                    <th on:click={() => sort(2)}>Address</th>
+                    <th on:click={() => sort(3)}>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {#each $pairs as pair}
+                    <Pair address={pair.Pair_ID} contractOne={pair.Token_1_contract} contractTwo={pair.Token_2_contract} nameOne={pair.Token_1_name} nameTwo={pair.Token_2_name} symbolOne={pair.Token_1_symbol} symbolTwo={pair.Token_2_symbol} decimalsOne={pair.Token_1_decimals} decimalsTwo={pair.Token_2_decimals} priceOne={pair.Token_1_price} priceTwo={pair.Token_2_price} reserveOne={pair.Token_1_reserve} reserveTwo={pair.Token_2_reserve} derivedOne={pair.Token_1_derived} derivedTwo={pair.Token_2_derived} />
+                {/each}
+            </tbody>
+        </table>
+    </div>
 {/if}
 
 <style>
@@ -102,16 +104,19 @@
         display: flex;
         justify-content: center;
     }
-    .pairs {
-        border-collapse: separate; 
-        border-spacing: 0 1em;
-        margin-bottom: 32px;
-        width: 100%;
-        thead th {
-            cursor: pointer;
-            text-align: left;
-            &:hover {
-                text-decoration: underline;
+    .scroller {
+        overflow-x: auto;
+        .pairs {
+            border-collapse: separate; 
+            border-spacing: 0 1em;
+            margin-bottom: 32px;
+            width: 100%;
+            thead th {
+                cursor: pointer;
+                text-align: left;
+                &:hover {
+                    text-decoration: underline;
+                }
             }
         }
     }

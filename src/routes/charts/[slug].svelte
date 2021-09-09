@@ -3,6 +3,7 @@
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
     import { Moon } from 'svelte-loading-spinners';
+    import Search from '$lib/components/Search/index.svelte';
 
     let loading = true;
     let valid = false;
@@ -13,7 +14,9 @@
     let volume = null;
     let transactions = null;
 
-    onMount(async () => {
+    const refresh = async () => {
+        loading = true;
+
         /* A more reliable and decentralized solution for fetching data is a high-priority upcoming feature. */
         const timestamp = Math.floor(new Date().getTime() / 1000);
         const pair = await fetch(`https://api2.sushipro.io/?action=get_pair&pair=${$page.params.slug}&chainID=42161`);
@@ -46,7 +49,11 @@
         }
 
         loading = false;
-    });
+    };
+
+    onMount(refresh);
+
+    $: $page.params.slug, refresh();
 </script>
 {#if !!loading}
     <div class="loading">
@@ -54,9 +61,14 @@
     </div>
 {:else}
     {#if !!token && !!valid}
-        <h1 class="title">{token.Token_1_symbol} / {token.Token_2_symbol}</h1>
-        <p class="subtitle"><span class="bold">{token.Token_1_name} / {token.Token_2_name}</span> (<a href="https://arbiscan.io/token/{$page.params.slug}" rel="external noopener" target="_blank">{$page.params.slug}</a>)</p>
         <div class="flex">
+            <div>
+                <h1 class="title">{token.Token_1_symbol} / {token.Token_2_symbol}</h1>
+                <p class="subtitle"><span class="bold">{token.Token_1_name} / {token.Token_2_name}</span> (<a href="https://arbiscan.io/token/{$page.params.slug}" rel="external noopener" target="_blank">{$page.params.slug}</a>)</p>
+            </div>
+            <Search />
+        </div>
+        <div class="flex flex--center">
             <div class="left">
                 <h2>{token.Token_2_price} {token.Token_2_symbol}</h2>
             </div>
@@ -118,7 +130,6 @@
     }
     @media screen and (min-width: 768px) {
         .flex {
-            align-items: center;
             display: flex;
             justify-content: space-between;
             .left h2 {
@@ -126,6 +137,9 @@
             }
             .right a {
                 margin-left: 4px;
+            }
+            &.flex--center {
+                align-items: center;
             }
         }
     }
