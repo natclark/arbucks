@@ -82,7 +82,7 @@
             </div>
         </div>
         <div class="details">
-            <p class="flex"><span class="bold">24H Volume (USDT)</span><span>{!!volume ? new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(volume[1][volume[1].length - 1].USD_total_volume) : 0}</span></p>
+            <p class="flex"><span class="bold">24H Volume (USDT)</span><span>{!!volume ? new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(volume[1][volume[1].length - 2].USD_total_volume) : 0}</span></p>
         </div>
 
         <Chart id="0" address="0xf97f4df75117a78c1a5a0dbb814af92458539fb4" />
