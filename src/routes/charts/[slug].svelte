@@ -15,6 +15,9 @@
     let volume = null;
     let transactions = null;
 
+    let zeroes = ``;
+    let price = ``;
+
     const refresh = async () => {
         loading = true;
 
@@ -31,6 +34,25 @@
                 const ethPriceReq = await fetch(`https://api2.sushipro.io/?action=get_pair&pair=0xcb0e5bfa72bbb4d16ab5aa0c60601c438f04b4ad&chainID=42161`);
                 const jsonEthPrice = await ethPriceReq.json();
                 typeof jsonEthPrice.error === `undefined` && (ethPrice = jsonEthPrice[0].Token_2_price);
+                const priceString = parseFloat(token.Token_2_price * ethPrice).toFixed(32).toString();
+                zeroes = ``;
+                price = ``;
+                let i = 0;
+                for (let j = 0; j < priceString.length; j++) {
+                    if (priceString[j] === `0`) {
+                        zeroes += `0`;
+                    } else if (priceString[j] === `.` && i === 0) {
+                        zeroes += `.`;
+                    } else if (priceString[j] === `.` && i > 0) {
+                        price += `.`;
+                    } else if (i < 4) {
+                        price += priceString[j];
+                        i++;
+                    } else if (i >= 4) {
+                        break;
+                    }
+                }
+                console.log(priceString, zeroes, price);
             }
 
             const liquidityReq = await fetch(`https://api2.sushipro.io/?action=get_historical_liquidity&pair=${$page.params.slug}&from=${timestamp - 604800}&to=${timestamp}&chainID=42161`);
@@ -72,7 +94,10 @@
         <div class="flex flex--center">
             <div class="left">
                 {#if token.Token_2_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`}
-                    <h2>${parseFloat(token.Token_2_price * ethPrice).toFixed(24)} USDT</h2>
+                <!--
+                    <h2>${parseFloat(token.Token_2_price * ethPrice).toFixed(32)} USDT</h2>
+                -->
+                    <h2><span class="light">${zeroes}</span>{price} <span class="light">USDT</span></h2>
                     <p>({token.Token_2_price} {token.Token_2_symbol})</p>
                 {:else}
                     <h2>{token.Token_2_price} {token.Token_2_symbol}</h2>
@@ -138,6 +163,9 @@
     .flex {
         display: block;
         margin: 24px 0;
+    }
+    .light {
+        color: #888;
     }
     .details {
         border: 1px solid #d2b48c;
