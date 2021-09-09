@@ -104,7 +104,6 @@
         .pairs {
             border-collapse: collapse;
             border-spacing: 0;
-            margin-bottom: 32px;
             width: 100%;
             thead th {
                 text-align: left;
