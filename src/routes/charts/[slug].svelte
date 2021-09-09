@@ -45,6 +45,8 @@
             const transactionsReq = await fetch(`https://api2.sushipro.io/?action=get_historical_transactions_count&pair=${$page.params.slug}&from=${timestamp - 604800}&to=${timestamp}&chainID=42161`);
             const jsonTransactions = await transactionsReq.json();
             typeof jsonTransactions.error === `undefined` && (transactions = jsonTransactions);
+
+            console.log(volume);
         } else {
             goto(`/charts/`);
         }
@@ -79,6 +81,9 @@
                 <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={token.Token_2_contract}" rel="external noopener" target="_blank" draggable="false">Buy {token.Token_2_symbol}</a>
             </div>
         </div>
+        <div class="details">
+            <p class="flex"><span class="bold">24H Volume (USDT)</span><span>{!!volume ? new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(volume[1][volume[1].length - 1].USD_total_volume) : 0}</span></p>
+        </div>
 
         <Chart id="0" address="0xf97f4df75117a78c1a5a0dbb814af92458539fb4" />
         <p>If this chart looks blank to you, that's because it is indeed blank. It'll be filled with data soon though!</p>
@@ -97,9 +102,10 @@
             <p>No volume data is available for this pair.</p>
         {/if}
 
-        <h2>Transactions</h2>
+        <h2>Trades</h2>
         {#if !!transactions}
-            <p><em>Coming soon!</em></p>
+            <p>{transactions[0].number_of_results} trades in the past week</p>
+            <p><em>More data coming soon!</em></p>
         {:else}
             <p>No transaction data is available for this pair.</p>
         {/if}
@@ -130,6 +136,15 @@
     .flex {
         display: block;
         margin: 24px 0;
+    }
+    .details {
+        border: 1px solid #d2b48c;
+        border-width: 1px 0 1px 0;
+        margin-bottom: 24px;
+        width: 50%;
+        p.flex {
+            margin: 12px 0;
+        }
     }
     @media screen and (min-width: 768px) {
         .flex {
