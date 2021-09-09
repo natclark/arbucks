@@ -1,6 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import ripple from '$lib/services/ripple';
+    import Copy from '$lib/components/Copy/index.svelte';
 
     export let address;
     export let symbol;
@@ -37,7 +38,7 @@
         {symbol}
     </td>
     <td>
-        <a href="https://arbiscan.io/token/{address}" rel="external noopener" target="_blank">{address.substr(0, 6)}...{address.substr(address.length - 7, address.length - 1)}</a>
+        <a href="https://arbiscan.io/token/{address}" rel="external noopener" target="_blank">{address.substr(0, 6)}...{address.substr(address.length - 7, address.length - 1)}</a> <Copy text={address} />
     </td>
     <td class="actions">
         <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={address}" rel="external noopener" target="_blank" draggable="false" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)}>Trade</a>

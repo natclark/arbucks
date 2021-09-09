@@ -3,6 +3,7 @@
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
     import { Moon } from 'svelte-loading-spinners';
+    import Copy from '$lib/components/Copy/index.svelte';
     import Search from '$lib/components/Search/index.svelte';
     import Chart from '$lib/components/Chart/index.svelte';
 
@@ -87,16 +88,21 @@
         <div class="flex">
             <div>
                 <h1 class="title">{token.Token_1_symbol} / {token.Token_2_symbol}</h1>
-                <p class="subtitle"><span class="bold">{token.Token_1_name} / {token.Token_2_name}</span> (<a href="https://arbiscan.io/token/{$page.params.slug}" rel="external noopener" target="_blank">{$page.params.slug}</a>)</p>
+                <p class="subtitle">
+                    <span class="bold">{token.Token_1_name} / {token.Token_2_name}</span>
+                    &nbsp;
+                    (<a href="https://arbiscan.io/token/{$page.params.slug}" rel="external noopener" target="_blank">{$page.params.slug}</a> <Copy text={$page.params.slug} />)
+                </p>
             </div>
             <Search />
         </div>
         <div class="flex flex--center">
             <div class="left">
                 {#if token.Token_2_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`}
-                <!--
-                    <h2>${parseFloat(token.Token_2_price * ethPrice).toFixed(32)} USDT</h2>
-                -->
+                    <!--
+                        TODO
+                        <h2>${parseFloat(token.Token_2_price * ethPrice).toFixed(32)} USDT</h2>
+                    -->
                     <h2><span class="light">${zeroes}</span>{price} <span class="light">USDT</span></h2>
                     <p>({token.Token_2_price} {token.Token_2_symbol})</p>
                 {:else}
