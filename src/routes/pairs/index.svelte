@@ -107,8 +107,8 @@
     .scroller {
         overflow-x: auto;
         .pairs {
-            border-collapse: separate; 
-            border-spacing: 0 1em;
+            border-collapse: collapse;
+            border-spacing: 0;
             margin-bottom: 32px;
             width: 100%;
             thead th {
@@ -118,6 +118,12 @@
                     text-decoration: underline;
                 }
             }
+        }
+    }
+    @media screen and (min-width: 768px) {
+        .pairs {
+            border-collapse: separate !important;
+            border-spacing: 0 1em !important;
         }
     }
 </style>
