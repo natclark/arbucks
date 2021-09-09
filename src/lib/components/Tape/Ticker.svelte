@@ -1,0 +1,25 @@
+<script>
+    export let id;
+    export let pair;
+</script>
+
+<li>
+    <p>
+        #{id + 1}
+        &nbsp;
+        <a href="/charts/{pair.Pair_ID}/" sveltekit:prefetch>
+            {pair.Token_1_symbol} / {pair.Token_2_symbol}
+        </a>
+    </p>
+</li>
+
+<style>
+    li, p {
+        margin: 0;
+    }
+    li {
+        display: inline-block;
+        padding: 0 20px;
+        white-space: nowrap;
+    }
+</style>

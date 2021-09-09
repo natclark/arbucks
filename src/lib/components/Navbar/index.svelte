@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import { page } from '$app/stores';
     import ripple from '$lib/services/ripple';
+    import Tape from '$lib/components/Tape/index.svelte';
 
     let doc;
 
@@ -53,6 +54,8 @@
         </div>
     </div>
 </nav>
+
+<Tape />
 
 <style>
     nav {
