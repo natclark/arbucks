@@ -72,7 +72,7 @@
         <div class="flex flex--center">
             <div class="left">
                 {#if token.Token_2_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`}
-                    <h2>${parseFloat(token.Token_2_price * ethPrice).toFixed(16)} USDT</h2>
+                    <h2>${parseFloat(token.Token_2_price * ethPrice).toFixed(24)} USDT</h2>
                     <p>({token.Token_2_price} {token.Token_2_symbol})</p>
                 {:else}
                     <h2>{token.Token_2_price} {token.Token_2_symbol}</h2>
