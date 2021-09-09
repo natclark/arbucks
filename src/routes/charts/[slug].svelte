@@ -24,15 +24,14 @@
         const jsonPair = await pair.json();
 
         if (typeof jsonPair.error === `undefined`) {
-            /*
-            TODO
-            const ethPriceReq = await fetch(`https://api2.sushipro.io/?action=get_pair&pair=0xcb0e5bfa72bbb4d16ab5aa0c60601c438f04b4ad&chainID=42161`);
-            const jsonEthPrice = await ethPriceReq.json();
-            typeof jsonEthPrice.error === `undefined` && (ethPrice = jsonEthPrice[0].Token_2_price);
-            */
-
             valid = true;
             token = jsonPair[0];
+
+            if (token.Token_2_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
+                const ethPriceReq = await fetch(`https://api2.sushipro.io/?action=get_pair&pair=0xcb0e5bfa72bbb4d16ab5aa0c60601c438f04b4ad&chainID=42161`);
+                const jsonEthPrice = await ethPriceReq.json();
+                typeof jsonEthPrice.error === `undefined` && (ethPrice = jsonEthPrice[0].Token_2_price);
+            }
 
             const liquidityReq = await fetch(`https://api2.sushipro.io/?action=get_historical_liquidity&pair=${$page.params.slug}&from=${timestamp - 604800}&to=${timestamp}&chainID=42161`);
             const jsonLiquidity = await liquidityReq.json();
@@ -45,8 +44,6 @@
             const transactionsReq = await fetch(`https://api2.sushipro.io/?action=get_historical_transactions_count&pair=${$page.params.slug}&from=${timestamp - 604800}&to=${timestamp}&chainID=42161`);
             const jsonTransactions = await transactionsReq.json();
             typeof jsonTransactions.error === `undefined` && (transactions = jsonTransactions);
-
-            console.log(volume);
         } else {
             goto(`/charts/`);
         }
@@ -74,7 +71,12 @@
         </div>
         <div class="flex flex--center">
             <div class="left">
-                <h2>{token.Token_2_price} {token.Token_2_symbol}</h2>
+                {#if token.Token_2_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`}
+                    <h2>${parseFloat(token.Token_2_price * ethPrice).toFixed(16)} USDT</h2>
+                    <p>({token.Token_2_price} {token.Token_2_symbol})</p>
+                {:else}
+                    <h2>{token.Token_2_price} {token.Token_2_symbol}</h2>
+                {/if}
             </div>
             <div class="right">
                 <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={token.Token_1_contract}" rel="external noopener" target="_blank" draggable="false">Buy {token.Token_1_symbol}</a>
