@@ -18,6 +18,7 @@
 
     let zeroes = ``;
     let price = ``;
+    let volume24 = ``;
 
     const refresh = async () => {
         loading = true;
@@ -53,7 +54,6 @@
                         break;
                     }
                 }
-                console.log(priceString, zeroes, price);
             }
 
             const liquidityReq = await fetch(`https://api2.sushipro.io/?action=get_historical_liquidity&pair=${$page.params.slug}&from=${timestamp - 604800}&to=${timestamp}&chainID=42161`);
@@ -63,6 +63,11 @@
             const volumeReq = await fetch(`https://api2.sushipro.io/?action=get_historical_volume&pair=${$page.params.slug}&from=${timestamp - 604800}&to=${timestamp}&chainID=42161`);
             const jsonVolume = await volumeReq.json();
             typeof jsonVolume.error === `undefined` && (volume = jsonVolume);
+            try {
+                volume24 = new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(volume[1][volume[1].length - 2].USD_total_volume);
+            } catch (e) {
+                volume24 = `Error calculating volume`;
+            }
 
             const transactionsReq = await fetch(`https://api2.sushipro.io/?action=get_historical_transactions_count&pair=${$page.params.slug}&from=${timestamp - 604800}&to=${timestamp}&chainID=42161`);
             const jsonTransactions = await transactionsReq.json();
@@ -115,7 +120,7 @@
             </div>
         </div>
         <div class="details">
-            <p class="flex"><span class="bold">24H Volume (USDT)</span><span>{!!volume ? new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(volume[1][volume[1].length - 2].USD_total_volume) : 0}</span></p>
+            <p class="flex"><span class="bold">24H Volume (USDT)</span><span>{!!volume ? volume24 : 0}</span></p>
         </div>
 
         <Chart id="0" address="0xf97f4df75117a78c1a5a0dbb814af92458539fb4" />
