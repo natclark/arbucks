@@ -1,3 +1,10 @@
+<script context="module">
+    import { browser } from '$app/env';
+    export const hydrate = true;
+    export const router = browser;
+    export const prerender = true;
+</script>
+
 <script>
     import '$lib/global.scss';
     import Navbar from '$lib/components/Navbar/index.svelte';
