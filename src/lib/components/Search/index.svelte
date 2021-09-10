@@ -54,9 +54,11 @@
         display: flex;
         justify-content: flex-end;
         input {
+            background-color: var(--bg-autocomplete);
             border: 0;
             border-radius: 8px;
             box-shadow: rgba(0, 0, 0, .24) 0 1px 4px;
+            color: var(--fg-autocomplete);
             font-size: 20px !important;
             max-width: 360px;
             opacity: .8;
@@ -70,6 +72,15 @@
             }
             &:focus {
                 outline: none;
+            }
+        }
+        .autocomplete-list {
+            background-color: var(--bg-autocomplete) !important;
+            .autocomplete-list-item {
+                color: var(--fg-autocomplete) !important;
+                &.selected, &:hover {
+                    color: #fff !important;
+                }
             }
         }
     }

@@ -62,9 +62,9 @@
         }
     }
     .tape {
-        background-color: rgba(239, 222, 205, 0.4);
+        background-color: var(--bg-tape);
         height: 25px;
-        margin-top: -10px;
+        margin-top: -16px;
         position: relative;
         width: 100vw;
         .tape__tickers {
@@ -72,6 +72,7 @@
             display: flex;
             list-style: none;
             justify-content: space-around;
+            padding-top: 3px;
             &:hover {
                 animation-play-state: paused;
             }

@@ -54,7 +54,7 @@
         margin: 0 auto;
         aside {
             align-self: start;
-            background-color: rgba(239, 222, 205, .6);
+            background-color: var(--bg-navbar);
             border-radius: 8px;
             box-shadow: 0 1px 2px 0 #111;
             margin: 1.5em 2rem 0;
@@ -68,7 +68,7 @@
                     margin-bottom: 8px;
                     a {
                         border-radius: 4px;
-                        color: #222;
+                        color: var(--fg-navbar);
                         display: block;
                         font-size: 19px;
                         font-weight: 600;
@@ -78,11 +78,11 @@
                         text-decoration: none;
                         width: 100%;
                         &[aria-current="page"] {
-                            background-color: rgba(238, 208, 178, .6);
-                            color: #000;
+                            background-color: var(--bg-selected);
+                            color: var(--fg-selected);
                         }
                         &:hover {
-                            background-color: rgb(238, 208, 178);
+                            background-color: var(--bg-hover);
                         }
                     }
                     &:last-child {

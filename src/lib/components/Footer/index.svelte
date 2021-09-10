@@ -8,7 +8,7 @@
 
 <style>
     footer {
-        background-color: rgb(239, 222, 205, .6);
+        background-color: var(--bg-navbar);
         font-size: 14px;
         padding: 8px 0;
         text-align: center;

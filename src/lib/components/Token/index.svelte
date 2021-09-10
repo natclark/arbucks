@@ -47,7 +47,7 @@
 
 <style>
     .token {
-        background-color: rgba(239, 222, 205, .6);
+        background-color: var(--bg-row);
         border-radius: 8px;
         box-shadow: rgba(99, 99, 99, .2) 0 2px 8px 0;
         font-size: 12px;
@@ -77,7 +77,7 @@
             }
         }
         &:hover {
-            background-color: rgba(239, 222, 205, .8);
+            background-color: var(--bg-row-hover);
             box-shadow: rgba(99, 99, 99, .2) 0 4px 12px 0;
         }
     }

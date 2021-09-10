@@ -137,7 +137,7 @@
 
 {#if !!loading}
     <div class="loading">
-        <Moon size="60" color="rgba(255, 62, 0, .8)" unit="px" duration="1s" />
+        <Moon size="60" color="var(--fg-loader)" unit="px" duration="1s" />
     </div>
 {:else}
     {#if !!token && !!valid}
@@ -253,7 +253,7 @@
         margin-bottom: 8px;
     }
     .subtitle {
-        color: #333;
+        color: var(--fg-subtitle);
         font-size: 14px;
     }
     .bold {
@@ -267,7 +267,7 @@
         color: #888;
     }
     .details {
-        border: 1px solid #d2b48c;
+        border: 1px solid var(--fg-border);
         border-width: 1px 0 1px 0;
         margin-bottom: 24px;
         width: 50%;
@@ -276,7 +276,7 @@
         }
     }
     .scroller {
-        background-color: rgba(207, 181, 146, .2);
+        background-color: var(--bg-table);
         border-radius: 8px;
         max-height: 600px;
         overflow-x: auto;

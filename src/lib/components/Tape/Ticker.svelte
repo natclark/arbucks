@@ -27,7 +27,7 @@
         font-weight: 700;
     }
     a {
-        color: #000;
+        color: var(--fg-body);
         &:hover {
             color: #000;
         }

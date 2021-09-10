@@ -22,6 +22,64 @@
     }
 }
 
+:root {
+    --bg-autocomplete: #fff;
+    --bg-button: #aa8e68;
+    --bg-hover: rgb(238, 208, 178);
+    --bg-navbar: rgb(239, 222, 205, .6);
+    --bg-page: rgb(239, 222, 205, .4);
+    --bg-row: rgba(239, 222, 205, .6);
+    --bg-row-hover: rgba(239, 222, 205, .8);
+    --bg-scroll: #bbb;
+    --bg-selected: rgba(238, 208, 178, .6);
+    --bg-table: rgba(207, 181, 146, .2);
+    --bg-tape: rgba(239, 222, 205, .4);
+    --fg-autocomplete: #000;
+    --fg-body: #000;
+    --fg-border: #d2b48c;
+    --fg-buy: #008000;
+    --fg-fill: #000;
+    --fg-link: #2260ff;
+    --fg-link-hover: #1129fd;
+    --fg-link-visited: #740074;
+    --fg-link-visited-hover: #4d004d;
+    --fg-loader: rgba(255, 62, 0, .8);
+    --fg-navbar: #222;
+    --fg-scroll: #333;
+    --fg-selected: #000;
+    --fg-sell: #a50000;
+    --fg-subtitle: #333;
+}
+
+:root[data-theme="cyberpunk"] {
+    --bg-autocomplete: #000;
+    --bg-button: #f72585;
+    --bg-hover: #222;
+    --bg-navbar: #000;
+    --bg-page: #111;
+    --bg-row: #333;
+    --bg-row-hover: #555;
+    --bg-scroll: #000;
+    --bg-selected: #555;
+    --bg-table: #222;
+    --bg-tape: #000;
+    --fg-autocomplete: #fff;
+    --fg-body: #fafafa;
+    --fg-border: #4cc9f0;
+    --fg-buy: #0f0;
+    --fg-fill: #fff;
+    --fg-link: #4cc9f0;
+    --fg-link-hover: #4895ef;
+    --fg-link-visited: #f72585;
+    --fg-link-visited-hover: #b5179e;
+    --fg-loader: #4cc9f0;
+    --fg-navbar: #f8f8f8;
+    --fg-scroll: #3f37c9;
+    --fg-selected: #eee;
+    --fg-sell: #f00;
+    --fg-subtitle: #ccc;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -32,23 +90,23 @@
 
 ::-webkit-scrollbar-corner,
 ::-webkit-scrollbar-track {
-    background-color: #bbb;
+    background-color: var(--bg-scroll);
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #333;
+    background-color: var(--fg-scroll);
 }
 
 html {
-    scrollbar-color: #333 #bbb;
+    scrollbar-color: var(--fg-scroll) var(--bg-scroll);
     scrollbar-width: thin;
 }
 
 body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: rgb(239, 222, 205, .4);
-    color: #000;
+    background-color: var(--bg-page);
+    color: var(--fg-body);
     font-family: 'Inter var', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, system-ui, sans-serif;
     margin: 0;
     overflow: hidden scroll;
@@ -57,29 +115,29 @@ body {
 }
 
 :is(h1, h2, h3, h4, h5, h6) > a {
-    color: #2260ff !important;
+    color: var(--fg-link) !important;
     &:hover {
-        color: #1129fd !important;
+        color: var(--fg-link-hover) !important;
     }
 }
 
 a {
-    color: #2260ff;
+    color: var(--fg-link);
     text-decoration: none;
     &:hover {
-        color: #1129fd;
+        color: var(--fg-link-hover);
         text-decoration: underline;
     }
     &:visited {
-        color: #740074;
+        color: var(--fg-link-visited);
         &:hover {
-            color: #4d004d;
+            color: var(--fg-link-visited-hover);
         }
     }
 }
 
 .button {
-    background-color: #aa8e68;
+    background-color: var(--bg-button);
     border-radius: 8px;
     box-shadow: rgba(0, 0, 0, .4) 0 2px 4px, rgba(0, 0, 0, .3) 0 7px 13px -3px, rgba(0, 0, 0, .2) 0 -3px 0px inset;
     color: #fff !important;

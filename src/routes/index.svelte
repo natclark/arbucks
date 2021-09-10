@@ -71,7 +71,7 @@
 
 {#if !!loading}
     <div class="loading">
-        <Moon size="60" color="rgba(255, 62, 0, .8)" unit="px" duration="1s" />
+        <Moon size="60" color="var(--fg-loader)" unit="px" duration="1s" />
     </div>
 {:else}
     <div class="scroller">

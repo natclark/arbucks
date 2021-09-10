@@ -59,5 +59,8 @@
                 visibility: visible;
             }
         }
+        button svg path {
+            fill: var(--fg-fill);
+        }
     }
 </style>
