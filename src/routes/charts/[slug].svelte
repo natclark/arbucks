@@ -276,7 +276,7 @@
         }
     }
     .scroller {
-        background-color: #cfb592;
+        background-color: rgba(207, 181, 146, .2);
         border-radius: 8px;
         max-height: 600px;
         overflow-x: auto;
@@ -306,9 +306,12 @@
                 align-items: center;
             }
         }
-        .trades {
-            border-collapse: separate !important;
-            border-spacing: 0 1em !important;
+        .scroller {
+            overflow-x: hidden;
+            .trades {
+                border-collapse: separate !important;
+                border-spacing: 0 1em !important;
+            }
         }
     }
 </style>
