@@ -2,7 +2,6 @@
 
 In *no particular order*, here are some of the bigger features that are coming up:
 
-- Dark mode
 - Support for Uniswap pairs
 - Support for MCDEX pairs
 - Liquidity analytics
@@ -14,6 +13,7 @@ In *no particular order*, here are some of the bigger features that are coming u
 - Better color scheme
 - Improved accessibility
 - Improved internationalization
+- Acquisition of `arbucks.com` (if possible)
 - TradingView candlestick charts (not 100% guaranteed)
 
 Items from this list will silently come and go. It's sort of like a public to-do list.
