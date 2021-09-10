@@ -59,8 +59,7 @@
             box-shadow: 0 1px 2px 0 #111;
             margin: 1.5em 2rem 0;
             padding: .5rem 0;
-            position: sticky;
-            top: 28px;
+            position: static;
             ol {
                 list-style: none;
                 margin: 0;
@@ -96,7 +95,11 @@
     @media screen and (min-width: 768px) {
         .grid {
             display: grid;
-        grid-template-columns: 15em 0.8fr;
+            grid-template-columns: 15em 0.8fr;
+            aside {
+                position: sticky;
+                top: 28px;
+            }
         }
     }
 </style>
