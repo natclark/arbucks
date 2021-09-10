@@ -15,31 +15,31 @@
                 <a href="/docs/" aria-current="{$page.path === `/docs/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Introduction</a>
             </li>
             <li>
-                <a href="/docs/faq/" aria-current="{$page.path === `/docs/faq/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>FAQ</a>
+                <a href="/docs/faq/" draggable="false" aria-current="{$page.path === `/docs/faq/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>FAQ</a>
             </li>
             <li>
-                <a href="/docs/roadmap/" aria-current="{$page.path === `/docs/roadmap/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Roadmap</a>
+                <a href="/docs/roadmap/" draggable="false" aria-current="{$page.path === `/docs/roadmap/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Roadmap</a>
             </li>
             <li>
-                <a href="/docs/token/" aria-current="{$page.path === `/docs/token/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Token</a>
+                <a href="/docs/token/" draggable="false" aria-current="{$page.path === `/docs/token/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Token</a>
             </li>
             <li>
-                <a href="/docs/governance/" aria-current="{$page.path === `/docs/governance/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Governance</a>
+                <a href="/docs/governance/" draggable="false" aria-current="{$page.path === `/docs/governance/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Governance</a>
             </li>
             <li>
-                <a href="/docs/decentralization/" aria-current="{$page.path === `/docs/decentralization/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Decentralization</a>
+                <a href="/docs/decentralization/" draggable="false" aria-current="{$page.path === `/docs/decentralization/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Decentralization</a>
             </li>
             <li>
-                <a href="/docs/transparency/" aria-current="{$page.path === `/docs/transparency/` ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Transparency</a>
+                <a href="/docs/transparency/" draggable="false" aria-current="{$page.path === `/docs/transparency/` ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Transparency</a>
             </li>
             <li>
-                <a href="/docs/manifesto/" aria-current="{$page.path === `/docs/manifesto/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Manifesto</a>
+                <a href="/docs/manifesto/" draggable="false" aria-current="{$page.path === `/docs/manifesto/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Manifesto</a>
             </li>
             <li>
-                <a href="/docs/api/" aria-current="{$page.path === `/docs/api/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>API</a>
+                <a href="/docs/api/" draggable="false" aria-current="{$page.path === `/docs/api/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>API</a>
             </li>
             <li>
-                <a href="/docs/disclaimer/" aria-current="{$page.path === `/docs/disclaimer/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Disclaimer</a>
+                <a href="/docs/disclaimer/" draggable="false" aria-current="{$page.path === `/docs/disclaimer/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Disclaimer</a>
             </li>
         </ol>
     </aside>
