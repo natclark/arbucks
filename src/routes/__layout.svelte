@@ -1,9 +1,3 @@
-<script context="module">
-    import { dev } from '$app/env';
-    export const hydrate = dev;
-    export const prerender = true;
-</script>
-
 <script>
     import '$lib/global.scss';
     import Navbar from '$lib/components/Navbar/index.svelte';
