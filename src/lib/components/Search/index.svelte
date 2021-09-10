@@ -1,8 +1,11 @@
 <script>
     import { onMount } from 'svelte';
     import pairs from '$lib/stores/pairs';
+    import { page } from '$app/stores';
     import { goto } from '$app/navigation';
     import AutoComplete from 'simple-svelte-autocomplete';
+
+    let select;
 
     let newPairs = [];
     let selectedPair;
@@ -20,15 +23,30 @@
         });
 
         pairs.update(() => newPairs);
+
+        if ($page.params.slug) {
+            try {
+                /*
+                TODO
+                const pair = $pairs[$pairs.indexOf($pairs.find((e) => e.Pair_ID == $page.params.slug))];
+                selectedPair = pair;
+                selectedValue = $page.params.slug;
+                select.querySelector(`input`).addEventListener(`focus`, () => selectedPair = null);
+                select.addEventListener(`focusout`, () => (selectedValue === null || selectedValue === pair.Pair_ID) && (selectedPair = pair));
+                */
+                // TODO - add aria-autocomplete and other a11y features
+            } catch (e) {
+                // Pair not found. The page should be redirecting by this point anyway.
+            }
+        }
     });
 
-    $: selectedValue, typeof selectedValue !== `undefined` && (goto(`/charts/${selectedValue}/`));
+    $: selectedValue, (typeof selectedValue !== `undefined` && selectedPair !== null) && (goto(`/charts/${selectedValue}/`));
 </script>
 
-<div class="select">
+<div bind:this={select} class="select">
     <AutoComplete items={$pairs} bind:selectedItem={selectedPair} bind:value={selectedValue} labelFieldName="Symbol" valueFieldName="Pair_ID" keywordsFunction={(token) => token.Token_1_symbol + `/` + token.Token_2_symbol} />
 </div>
-
 
 <style global>
     .select {

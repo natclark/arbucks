@@ -2,7 +2,6 @@
     import Search from '$lib/components/Search/index.svelte';
 </script>
 
-
 <svelte:head>
     <title>Charts - Arbucks</title>
     <link rel="canonical" href="https://arbucks.io/charts/">

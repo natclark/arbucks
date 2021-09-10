@@ -72,7 +72,7 @@
 
 <h1>Pairs ({numPairs})</h1>
 
-<p>This is a real-time list of all the Sushiswap trading pairs currently available on Arbitrum One.</p>
+<p>This is a real-time list of all the <em>Sushiswap</em> trading pairs currently available on Arbitrum One. <strong>Uniswap pairs are coming soon.</strong></p>
 
 {#if !!loading}
     <div class="loading">

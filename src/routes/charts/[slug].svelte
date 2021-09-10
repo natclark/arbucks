@@ -1,11 +1,11 @@
 <script>
-    import { onMount } from 'svelte';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
     import { Moon } from 'svelte-loading-spinners';
     import Copy from '$lib/components/Copy/index.svelte';
     import Search from '$lib/components/Search/index.svelte';
     import Chart from '$lib/components/Chart/index.svelte';
+    import Trade from '$lib/components/Trade/index.svelte';
 
     let loading = true;
     let valid = false;
@@ -14,7 +14,10 @@
     let token = null;
     let liquidity = null;
     let volume = null;
-    let transactions = null;
+
+    let supply = 0;
+    let txCount = 0;
+    let swaps = [];
 
     let zeroes = ``;
     let price = ``;
@@ -32,25 +35,56 @@
             valid = true;
             token = jsonPair[0];
 
+            let priceString = ``;
+            zeroes = ``;
+            price = ``;
+            let i = 0;
+
+            const ethPriceReq = await fetch(`https://api2.sushipro.io/?action=get_pair&pair=0xcb0e5bfa72bbb4d16ab5aa0c60601c438f04b4ad&chainID=42161`);
+            const jsonEthPrice = await ethPriceReq.json();
+            typeof jsonEthPrice.error === `undefined` && (ethPrice = jsonEthPrice[0].Token_2_price);
+
             if (token.Token_2_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
-                const ethPriceReq = await fetch(`https://api2.sushipro.io/?action=get_pair&pair=0xcb0e5bfa72bbb4d16ab5aa0c60601c438f04b4ad&chainID=42161`);
-                const jsonEthPrice = await ethPriceReq.json();
-                typeof jsonEthPrice.error === `undefined` && (ethPrice = jsonEthPrice[0].Token_2_price);
-                const priceString = parseFloat(token.Token_2_price * ethPrice).toFixed(32).toString();
-                zeroes = ``;
-                price = ``;
-                let i = 0;
-                for (let j = 0; j < priceString.length; j++) {
-                    if (priceString[j] === `0`) {
-                        zeroes += `0`;
-                    } else if (priceString[j] === `.` && i === 0) {
-                        zeroes += `.`;
-                    } else if (priceString[j] === `.` && i > 0) {
-                        price += `.`;
-                    } else if (i < 4) {
+                priceString = parseFloat(token.Token_2_price * ethPrice).toFixed(32).toString();
+            } else if (token.Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
+                priceString = parseFloat(ethPrice * (token.Token_2_price * token.Token_1_price)).toFixed(32).toString();
+            } else {
+                const xhr = new XMLHttpRequest();
+                xhr.onload = async () => {
+                    const json = JSON.parse(xhr.response); // TODO check for errors
+                    const pair = json.data.pairs[0];
+
+                    // TODO console.log(pair.token0Price, pair.token1Price, parseFloat(pair.token0Price) * parseFloat(pair.token1Price));
+                };
+                xhr.onerror = () => {
+                    console.log(`Request failed.`);
+                };
+                /* The Graph has issues, but it'll have to do for now. */
+                xhr.open(`POST`, `https://api.thegraph.com/subgraphs/name/sushiswap/arbitrum-exchange`);
+                xhr.setRequestHeader(`Content-Type`, `application/json`);
+                xhr.send(JSON.stringify({
+                    query: `{\n  pairs(where: {id: "${$page.params.slug}"}) {\n    token0Price\n    token1Price\n\t}\n}\n`,
+                    variables: null,
+                }));
+            }
+
+            for (let j = 0; j < priceString.length; j++) {
+                if (priceString[0] === `0`) {
+                    if (!zeroes.includes(`.`)) {
+                        zeroes += priceString[j];
+                    } else if (priceString[j] === `0` && i === 0) {
+                        zeroes += priceString[j];
+                    } else if (zeroes.includes(`.`) && i < 4) {
                         price += priceString[j];
                         i++;
                     } else if (i >= 4) {
+                        break;
+                    }
+                } else {
+                    price += priceString[j];
+                    if (price.includes(`.`) && i < 2) {
+                        i++;
+                    } else if (i >= 2) {
                         break;
                     }
                 }
@@ -69,17 +103,34 @@
                 volume24 = `Error calculating volume`;
             }
 
-            const transactionsReq = await fetch(`https://api2.sushipro.io/?action=get_historical_transactions_count&pair=${$page.params.slug}&from=${timestamp - 604800}&to=${timestamp}&chainID=42161`);
-            const jsonTransactions = await transactionsReq.json();
-            typeof jsonTransactions.error === `undefined` && (transactions = jsonTransactions);
+            // TODO console.log(liquidity, volume);
+
+            const xhr = new XMLHttpRequest();
+            xhr.onload = async () => {
+                const json = JSON.parse(xhr.response); // TODO check for errors
+                const pair = json.data.pairs[0];
+                supply = pair.totalSupply;
+                txCount = pair.txCount;
+                swaps = pair.swaps.sort((a, b) => {
+                    return a.timestamp - b.timestamp;
+                }).reverse();
+            };
+            xhr.onerror = () => {
+                console.log(`Request failed.`);
+            };
+            /* The Graph has issues, but it'll have to do for now. */
+            xhr.open(`POST`, `https://api.thegraph.com/subgraphs/name/sushiswap/arbitrum-exchange`);
+            xhr.setRequestHeader(`Content-Type`, `application/json`);
+            xhr.send(JSON.stringify({
+                query: `{\n  pairs(where: {id: "${$page.params.slug}"}) {\n    totalSupply\n    txCount\n    reserveETH\n    reserveUSD\n    swaps {\n        timestamp\n        amount0In\n        amount1In\n        amount0Out\n        amount1Out\n        transaction {\n            id\n        }\n    }\n\t}\n}\n`,
+                variables: null
+            }));
         } else {
             goto(`/charts/`);
         }
 
         loading = false;
     };
-
-    onMount(refresh);
 
     $: $page.params.slug, refresh();
 </script>
@@ -103,15 +154,12 @@
         </div>
         <div class="flex flex--center">
             <div class="left">
-                {#if token.Token_2_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`}
-                    <!--
-                        TODO
-                        <h2>${parseFloat(token.Token_2_price * ethPrice).toFixed(32)} USDT</h2>
-                    -->
+                {#if token.Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1` || token.Token_2_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`}
                     <h2><span class="light">${zeroes}</span>{price} <span class="light">USDT</span></h2>
-                    <p>({token.Token_2_price} {token.Token_2_symbol})</p>
+                    <p class="light">({token.Token_2_price} {token.Token_2_symbol})</p>
                 {:else}
-                    <h2>{token.Token_2_price} {token.Token_2_symbol}</h2>
+                    <h2>1 {token.Token_1_symbol} = {token.Token_2_price} {token.Token_2_symbol}</h2>
+                    <p class="light"><em>USDT pricing is coming soon for non-WETH pairs!</em></p>
                 {/if}
             </div>
             <div class="right">
@@ -120,11 +168,13 @@
             </div>
         </div>
         <div class="details">
+            <p class="flex"><span class="bold">Exchange</span><span>Sushiswap</span></p>
             <p class="flex"><span class="bold">24H Volume (USDT)</span><span>{!!volume ? volume24 : 0}</span></p>
+            <p class="flex"><span class="bold">Market Cap (Fully Diluted)</span><span><em>Coming soon!</em></span></p>
         </div>
 
-        <Chart id="0" address="0xf97f4df75117a78c1a5a0dbb814af92458539fb4" />
-        <p>If this chart looks blank to you, that's because it is indeed blank. It'll be filled with data soon though!</p>
+        <Chart id="0" pairAddress={$page.params.slug} tokenOneAddress={token.Token_1_contract} tokenTwoAddress={token.Token_2_contract} tokenOnePrice={token.Token_1_price} tokenTwoPrice={token.Token_2_price} tokenOneSymbol={token.Token_1_symbol} tokenTwoSymbol={token.Token_2_symbol} {ethPrice} />
+        <p><strong>Some charts may be a bit buggy at the moment. These issues are being fixed as we speak. Thanks for your patience!!</strong></p>
 
         <h2>Liquidity</h2>
         {#if !!liquidity}
@@ -141,12 +191,50 @@
         {/if}
 
         <h2>Trades</h2>
-        {#if !!transactions}
-            <p>{transactions[0].number_of_results} trades in the past week</p>
-            <p><em>More data coming soon!</em></p>
+        {#if !!swaps}
+            {#if swaps.length > 0}
+                <p>Showing the 100 most recent trades.</p>
+                <p><em>This doesn't yet update in real time, so you'll have to refresh the page to fetch new trades.</em></p>
+                <div class="scroller">
+                    <table class="trades">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Type</th>
+                                <th>Amount ({token.Token_1_symbol})</th>
+                                <th>Est. Price Impact</th>
+                                <th>TX Hash</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {#each swaps as swap}
+                                <Trade timestamp={swap.timestamp} type={swap.amount0In > 0 ? `Buy` : `Sell`} amount={swap.amount0In > 0 ? swap.amount0In : swap.amount0Out} address={swap.transaction.id} />
+                            {/each}
+                        </tbody>
+                    </table>
+                </div>
+            {:else}
+                <p><em>There haven't been any transactions for this pair yet.</em></p>
+            {/if}
         {:else}
             <p>No transaction data is available for this pair.</p>
         {/if}
+
+        <h2>Info</h2>
+        <div class="details">
+            <p class="flex"><span class="bold">Website</span><span><em>Coming soon!</em></span></p>
+            <p class="flex"><span class="bold">Telegram</span><span><em>Coming soon!</em></span></p>
+            <p class="flex"><span class="bold">Discord</span><span><em>Coming soon!</em></span></p>
+            <p class="flex"><span class="bold">Twitter</span><span><em>Coming soon!</em></span></p>
+            <p class="flex"><span class="bold">GitHub</span><span><em>Coming soon!</em></span></p>
+        </div>
+        <p><em>Token descriptions are coming soon!</em></p>
+
+        <h2>Other {token.Token_1_name} Pairs</h2>
+        <p><em>"Other pairs" coming soon!</em></p>
+
+        <h2>Share</h2>
+        <p><em>Share buttons are coming soon!</em></p>
     {:else if token === null && valid === false}
         <h1>Invalid Token</h1>
 
@@ -187,6 +275,23 @@
             margin: 12px 0;
         }
     }
+    .scroller {
+        background-color: #cfb592;
+        border-radius: 8px;
+        max-height: 600px;
+        overflow-x: auto;
+        padding: 8px;
+        scrollbar-width: thin;
+        .trades {
+            border-collapse: collapse;
+            border-spacing: 0;
+            margin-bottom: 32px;
+            width: 100%;
+            thead th {
+                text-align: left;
+            }
+        }
+    }
     @media screen and (min-width: 768px) {
         .flex {
             display: flex;
@@ -200,6 +305,10 @@
             &.flex--center {
                 align-items: center;
             }
+        }
+        .trades {
+            border-collapse: separate !important;
+            border-spacing: 0 1em !important;
         }
     }
 </style>
