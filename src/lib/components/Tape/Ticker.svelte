@@ -4,7 +4,7 @@
 </script>
 
 <li>
-    <p>
+    <p class={id === 0 ? `bold` : ``}>
         #{id + 1}
         &nbsp;
         <a href="/charts/{pair.Pair_ID}/" sveltekit:prefetch>
@@ -21,5 +21,8 @@
         display: inline-block;
         padding: 0 20px;
         white-space: nowrap;
+    }
+    .bold {
+        font-weight: 700;
     }
 </style>
