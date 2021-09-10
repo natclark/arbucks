@@ -7,10 +7,19 @@
         <loc>https://arbucks.io/charts/</loc>
     </url>
     <url>
+        <loc>https://arbucks.io/pairs/</loc>
+    </url>
+    <url>
         <loc>https://arbucks.io/tokens/</loc>
     </url>
     <url>
-        <loc>https://arbucks.io/pairs/</loc>
+        <loc>https://arbucks.io/futures/</loc>
+    </url>
+    <url>
+        <loc>https://arbucks.io/pools/</loc>
+    </url>
+    <url>
+        <loc>https://arbucks.io/farms/</loc>
     </url>
     <url>
         <loc>https://arbucks.io/docs/</loc>
