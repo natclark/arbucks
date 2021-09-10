@@ -52,7 +52,6 @@
             vertAlign: `center`,
             visible: true,
         },
-        width: `100vw`,
     };
 
     const priceSeriesOptions = {
