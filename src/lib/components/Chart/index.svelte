@@ -83,7 +83,8 @@
 
             let date = array[0].date;
 
-            let iterations = array.length > 99 ? 100 : array.length;
+            let iterations = array.length > 999 ? 1000 : array.length;
+            alert(array.length);
             let priceData = [];
             let volumeData = [];
 
