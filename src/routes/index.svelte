@@ -47,7 +47,7 @@
 </script>
 
 <svelte:head>
-    <title>Arbucks</title>
+    <title>Arbucks: Arbitrum Charts, Analytics, Real-Time Data, & More</title>
     <link rel="canonical" href="https://arbucks.io">
 </svelte:head>
 
