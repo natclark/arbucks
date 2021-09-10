@@ -29,7 +29,7 @@
     a {
         color: var(--fg-body);
         &:hover {
-            color: #000;
+            color: var(--fg-body);
         }
     }
 </style>
