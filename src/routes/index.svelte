@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import pages from '$lib/stores/pages';
     import pairs from '$lib/stores/pairs';
+    import { goto } from '$app/navigation';
     import { Moon } from 'svelte-loading-spinners';
     import Pair from '$lib/components/Pair/index.svelte';
 
@@ -11,6 +12,8 @@
     let newPairs = [];
 
     onMount(async () => {
+        window.location.href.includes(`/charts/`) && (goto(window.location));
+
         const reqPairs = await fetch(`https://api2.sushipro.io/?action=all_pairs&chainID=42161`);
         const jsonPairs = await reqPairs.json();
         jsonPairs[1].forEach((pair) => newPairs.indexOf(newPairs.find((e) => e.Pair_ID === pair.Pair_ID)) === -1 && (newPairs.push(pair)));
