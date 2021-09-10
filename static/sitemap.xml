@@ -13,6 +13,24 @@
         <loc>https://arbucks.io/pairs/</loc>
     </url>
     <url>
-        <loc>https://arbucks.io/faq/</loc>
+        <loc>https://arbucks.io/docs/</loc>
+    </url>
+    <url>
+        <loc>https://arbucks.io/docs/faq/</loc>
+    </url>
+    <url>
+        <loc>https://arbucks.io/docs/roadmap/</loc>
+    </url>
+    <url>
+        <loc>https://arbucks.io/docs/token/</loc>
+    </url>
+    <url>
+        <loc>https://arbucks.io/docs/governance/</loc>
+    </url>
+    <url>
+        <loc>https://arbucks.io/docs/decentralization/</loc>
+    </url>
+    <url>
+        <loc>https://arbucks.io/docs/manifesto/</loc>
     </url>
 </urlset>

@@ -56,6 +56,13 @@ body {
     scrollbar-track-color: #bbb;
 }
 
+:is(h1, h2, h3, h4, h5, h6) > a {
+    color: #2260ff !important;
+    &:hover {
+        color: #1129fd !important;
+    }
+}
+
 a {
     color: #2260ff;
     text-decoration: none;

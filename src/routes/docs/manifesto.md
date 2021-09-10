@@ -1,0 +1,3 @@
+# Manifesto
+
+*Coming soon!*

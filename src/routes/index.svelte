@@ -1,8 +1,8 @@
 <script>
     import { onMount } from 'svelte';
+    import { goto } from '$app/navigation';
     import pages from '$lib/stores/pages';
     import pairs from '$lib/stores/pairs';
-    import { goto } from '$app/navigation';
     import { Moon } from 'svelte-loading-spinners';
     import Pair from '$lib/components/Pair/index.svelte';
 
@@ -58,7 +58,7 @@
 <ul>
     <li><p>Arbucks is a real-time, open-source gateway to Arbitrum.</p></li>
     <li><p>Explore analytics, charts, tokens, pairs, liquidity, volume, transactions, pools, and more!</p></li>
-    <li><p>This is a <strong>very new</strong> project, so bugs and missing features are prevalent. If you're looking for more info, check out <a href="/faq/" sveltekit:prefetch>the FAQ</a>!</p></li>
+    <li><p>This is a <strong>very new</strong> project, so bugs and missing features are prevalent. If you want you can, check out <a href="/docs/" sveltekit:prefetch>the info page</a>!</p></li>
 </ul>
 
 <h2>New Tokens</h2>

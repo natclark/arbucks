@@ -18,11 +18,18 @@
         margin: 0;
     }
     li {
+        color: #777;
         display: inline-block;
         padding: 0 20px;
         white-space: nowrap;
     }
     .bold {
         font-weight: 700;
+    }
+    a {
+        color: #000;
+        &:hover {
+            color: #000;
+        }
     }
 </style>

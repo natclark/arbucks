@@ -53,8 +53,12 @@
 
 <style>
     @keyframes ticker {
+        0% {
+            transform: translate3d(0, 0, 0);
+        }
+
         100% {
-            transform: translate3d(-100%, 0, 0);
+            transform: translate3d(-108rem, 0, 0);
         }
     }
     .tape {
@@ -64,8 +68,7 @@
         position: relative;
         width: 100vw;
         .tape__tickers {
-            animation: ticker 30s infinite;
-            animation-timing-function: linear;
+            animation: ticker 30s linear infinite;
             display: flex;
             list-style: none;
             justify-content: space-around;

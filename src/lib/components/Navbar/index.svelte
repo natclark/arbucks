@@ -30,14 +30,14 @@
                     <a href="/charts/" draggable="false" aria-current="{$page.path.includes(`/charts/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Charts</a>
                     <a href="/pairs/" draggable="false" aria-current="{$page.path === `/pairs/` ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Pairs</a>
                     <a href="/tokens/" draggable="false" aria-current="{$page.path === `/tokens/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Tokens</a>
-                    <a href="/faq/" draggable="false" aria-current="{$page.path === `/faq/` ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>FAQ</a>
+                    <a href="/docs/" draggable="false" aria-current="{$page.path.includes(`/docs/`) ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Docs</a>
                 </div>
             </details>
             <div class="menu menu--desktop">
                 <a href="/charts/" draggable="false" aria-current="{$page.path.includes(`/charts/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Charts</a>
                 <a href="/pairs/" draggable="false" aria-current="{$page.path === `/pairs/` ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Pairs</a>
                 <a href="/tokens/" draggable="false" aria-current="{$page.path === `/tokens/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Tokens</a>
-                <a href="/faq/" draggable="false" aria-current="{$page.path === `/faq/` ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>FAQ</a>
+                <a href="/docs/" draggable="false" aria-current="{$page.path.includes(`/docs/`) ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Docs</a>
             </div>
         </div>
         <div class="right">
