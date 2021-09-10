@@ -46,7 +46,7 @@
             },
         },
         watermark: {
-            color: `rgba(239, 222, 205, .6)`,
+            color: `#777`,
             fontSize: 24,
             text: `arbucks.io`,
             vertAlign: `center`,
