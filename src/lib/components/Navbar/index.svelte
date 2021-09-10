@@ -93,7 +93,7 @@
                 </svg>
             </a>
             <a href="https://t.me/arbuckscafe" title="Telegram" draggable="false" rel="external noopener" target="_blank" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)}>
-                <svg viewBox="0 0 333334 333334" width="28px" height="28px" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd">
+                <svg class="nofill" viewBox="0 0 333334 333334" width="28px" height="28px" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd">
                     <defs><linearGradient id="a" gradientUnits="userSpaceOnUse" x1="162482" y1="307276" x2="170852" y2="26057.5"><stop offset="0" stop-color="#19a8dd"></stop><stop offset=".678" stop-color="#2ab2e2"></stop><stop offset="1" stop-color="#3cbde8"></stop></linearGradient></defs><circle cx="166667" cy="166667" r="166667" fill="url(#a)"></circle><path d="M246886 91205l-29735 149919s-4158 10396-15594 5404l-68618-52606-24952-12059-42002-14140s-6446-2288-7069-7277c-624-4992 7277-7694 7277-7694l166970-65498s13722-6030 13722 3951z" fill="#fefefe"></path><path d="M127666 239440s-2003-188-4499-8089c-2495-7901-15178-49487-15178-49487l100846-64043s5822-3535 5614 0c0 0 1040 623-2079 3534s-79222 71320-79222 71320l-5481 46765z" fill="#d4e6f1"></path><path d="M159250 214094l-27141 24745s-2122 1609-4443 601l5197-45965 26387 20619z" fill="#b6d0e5"></path>
                 </svg>
             </a>
@@ -134,7 +134,7 @@
                     padding: 0 8px;
                     position: relative;
                     text-decoration: none;
-                    svg path:first-child {
+                    svg:not(.nofill) path {
                         fill: var(--fg-fill);
                     }
                     &[aria-current="page"] {
@@ -144,6 +144,9 @@
                     &:hover {
                         background-color: var(--bg-hover);
                     }
+                }
+                summary svg:not(.nofill) path {
+                    fill: var(--fg-fill);
                 }
                 button {
                     align-items: center;
@@ -157,7 +160,7 @@
                     overflow: hidden;
                     padding: 0 8px;
                     position: relative;
-                    svg path {
+                    svg:not(.nofill) path {
                         fill: var(--fg-fill);
                     }
                     &:hover {
@@ -180,11 +183,11 @@
                         padding: 2px 8px 0;
                         position: relative;
                         &:hover {
-                            background-color: rgb(238, 208, 178);
+                            background-color: var(--bg-hover);
                         }
                     }
                     .menu__links {
-                        background-color: rgb(239, 222, 205);
+                        background-color: var(--bg-menu);
                         left: 0;
                         position: absolute;
                         top: 70px;
