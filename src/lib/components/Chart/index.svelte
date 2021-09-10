@@ -62,11 +62,11 @@
     };
 
     const volumeSeriesOptions = {
-        color: `#26a69a`,
+        color: `#fff`,
         priceFormat: {
             type: `volume`,
         },
-        priceScaleId: ``,
+        priceLineVisible: true,
         scaleMargins: {
             bottom: 0,
             top: .8,
@@ -99,14 +99,38 @@
                         time: array[i].date,
                         value,
                     });
+
+                    if (i > 0 && priceData[i - 1].value > value) {
+                        volumeData.push({
+                            color: `rgba(255, 82, 82, .8)`,
+                            time: array[i].date,
+                            value: parseInt(array[i].volumeUSD) || 0,
+                        });
+                    } else {
+                        volumeData.push({
+                            color: `rgba(0, 150, 136, .8)`,
+                            time: array[i].date,
+                            value: parseInt(array[i].volumeUSD) || 0,
+                        });
+                    }
                 } else {
                     if (i > 0) {
                         priceData.push({
                             time: date,
                             value: priceData[i - 1].value,
                         });
+                        volumeData.push({
+                            color: `rgba(0, 150, 136, .8)`,
+                            time: date,
+                            value: 0,
+                        });
                     } else {
                         priceData.push({
+                            time: date,
+                            value: 0,
+                        });
+                        volumeData.push({
+                            color: `rgba(0, 150, 136, .8)`,
                             time: date,
                             value: 0,
                         });
@@ -119,14 +143,14 @@
                 return a.time - b.time;
             });
 
-            console.log(priceData);
-
             await import('lightweight-charts/dist/lightweight-charts.standalone.production.js');
             const chart = LightweightCharts.createChart(document.querySelector(`[data-id="chart-${id}"]`), chartOptions);
             const priceSeries = chart.addAreaSeries(priceSeriesOptions);
             priceSeries.setData(priceData);
+            /*
             const volumeSeries = chart.addHistogramSeries(volumeSeriesOptions);
             volumeSeries.setData(volumeData);
+            */
             chart.timeScale().fitContent();
         };
         xhr.onerror = () => {
@@ -146,6 +170,7 @@
 
 <style global>
     .chart {
+        box-shadow: rgba(0, 0, 0, .45) 0 25px 20px -20px;
         .tv-lightweight-charts {
             border-radius: 8px;
         }
