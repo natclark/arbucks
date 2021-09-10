@@ -52,6 +52,7 @@
             vertAlign: `center`,
             visible: true,
         },
+        width: `100vw`,
     };
 
     const priceSeriesOptions = {
@@ -84,7 +85,6 @@
             let date = array[0].date;
 
             let iterations = array.length > 999 ? 1000 : array.length;
-            alert(array.length);
             let priceData = [];
             let volumeData = [];
 
