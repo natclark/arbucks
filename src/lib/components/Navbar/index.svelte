@@ -69,6 +69,7 @@
                     <a href="/futures/" draggable="false" aria-current="{$page.path === `/futures/` ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Futures</a>
                     <a href="/pools/" draggable="false" aria-current="{$page.path === `/pools/` ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Pools</a>
                     <a href="/farms/" draggable="false" aria-current="{$page.path === `/farms/` ? `page` : ``}" on:mousedown={(e)=>ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Farms</a>
+                    <a href="/ledger/" draggable="false" aria-current="{$page.path === `/ledger/` ? `page` : ``}" on:mousedown={(e)=>ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Ledger</a>
                     <a href="/docs/" draggable="false" aria-current="{$page.path.includes(`/docs/`) ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Docs</a>
                 </div>
             </details>
@@ -79,6 +80,7 @@
                 <a href="/futures/" draggable="false" aria-current="{$page.path === `/futures/` ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Futures</a>
                 <a href="/pools/" draggable="false" aria-current="{$page.path === `/pools/` ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Pools</a>
                 <a href="/farms/" draggable="false" aria-current="{$page.path === `/farms/` ? `page` : ``}" on:mousedown={(e)=>ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Farms</a>
+                <a href="/ledger/" draggable="false" aria-current="{$page.path === `/ledger/` ? `page` : ``}" on:mousedown={(e)=>ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Ledger</a>
                 <a href="/docs/" draggable="false" aria-current="{$page.path.includes(`/docs/`) ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Docs</a>
             </div>
         </div>
@@ -225,7 +227,7 @@
                 }
             }
             .search {
-                margin-bottom: 4px;
+                display: none;
             }
             .right {
                 .search {
@@ -250,11 +252,22 @@
                 display: flex !important;
             }
         }
+        .search {
+            display: block !important;
+            margin-bottom: 4px;
+        }
     }
     :global {
-        .search .input-container input {
-            font-size: 16px !important;
-            line-height: 20px !important;
+        .search {
+            .autocomplete {
+                .input-container input {
+                    font-size: 16px !important;
+                    line-height: 20px !important;
+                }
+                &:not(.hide-arrow):not(.is-loading):after {
+                    top: 45% !important;
+                }
+            }
         }
     }
 </style>
