@@ -73,8 +73,9 @@
             span {
                 border-radius: 8px;
                 color: #000;
+                font-size: 12px;
                 font-weight: 600;
-                padding: 8px;
+                padding: 7px 4px 4px;
                 &.buy {
                     background-color: rgb(0, 128, 0, .2);
                     color: #0f0;

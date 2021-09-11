@@ -166,16 +166,16 @@
                     <h2>1 {token.Token_1_symbol} = {token.Token_2_price} {token.Token_2_symbol}</h2>
                     <p class="light"><em>USDT pricing is coming soon for non-WETH pairs!</em></p>
                 {/if}
-            </div>
-            <div class="right">
                 <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={token.Token_1_contract}" rel="external noopener" target="_blank" draggable="false">Buy {token.Token_1_symbol}</a>
                 <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={token.Token_2_contract}" rel="external noopener" target="_blank" draggable="false">Buy {token.Token_2_symbol}</a>
             </div>
-        </div>
-        <div class="details">
-            <p class="flex"><span class="bold">Exchange</span><span>Sushiswap</span></p>
-            <p class="flex"><span class="bold">24H Volume (USDT)</span><span>{!!volume ? volume24 : 0}</span></p>
-            <p class="flex"><span class="bold">Market Cap (Fully Diluted)</span><span><em>Coming soon!</em></span></p>
+            <div class="right">
+                <div class="details">
+                    <p class="flex"><span class="bold">Exchange</span><span>Sushiswap</span></p>
+                    <p class="flex"><span class="bold">24H Volume (USDT)</span><span>{!!volume ? volume24 : 0}</span></p>
+                    <p class="flex"><span class="bold">Market Cap (Fully Diluted)</span><span><em>Coming soon!</em></span></p>
+                </div>
+            </div>
         </div>
 
         <Chart id="0" pairAddress={$page.params.slug} tokenOneAddress={token.Token_1_contract} tokenTwoAddress={token.Token_2_contract} tokenOnePrice={token.Token_1_price} tokenTwoPrice={token.Token_2_price} tokenOneSymbol={token.Token_1_symbol} tokenTwoSymbol={token.Token_2_symbol} {ethPrice} />
@@ -255,6 +255,7 @@
         justify-content: center;
     }
     .title {
+        font-size: 24px;
         margin-bottom: 8px;
     }
     .subtitle {
@@ -274,11 +275,15 @@
     .price {
         color: #f8f8f8;
     }
+    .flex {
+        .left, .right {
+            margin-bottom: 24px;
+        }
+    } 
     .details {
         border: 1px solid var(--fg-border);
         border-width: 1px 0 1px 0;
-        margin-bottom: 24px;
-        width: 50%;
+        width: 100%;
         p.flex {
             margin: 12px 0;
         }
@@ -310,10 +315,16 @@
         .flex {
             display: flex;
             justify-content: space-between;
+            .left, .right {
+                width: 100%;
+            }
             .left h2 {
                 margin: 0;
             }
-            .right a {
+            .left p {
+                margin-bottom: 22px;
+            }
+            .left a:last-child {
                 margin-left: 4px;
             }
             &.flex--center {
