@@ -53,7 +53,7 @@
     <div class="container">
         <div class="left">
             <a class="logo" href="/" title="Home" draggable="false" aria-current="{$page.path === `/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>
-                <img src="/img/arbcharts-logo.png" width="32px" height="32px">
+                <img draggable="false" src="/img/arbucks-logo.png" alt="Arbucks Logo" width="32px" height="32px">
             </a>
             <details class="menu menu--mobile">
                 <summary on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)}>
