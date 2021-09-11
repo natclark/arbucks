@@ -160,7 +160,7 @@
         <div class="flex flex--center">
             <div class="left">
                 {#if token.Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1` || token.Token_2_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`}
-                    <h2><span class="light">${zeroes}</span>{price} <span class="light">USDT</span></h2>
+                    <h2><span class="light">${zeroes}</span><span class="price">{price}</span> <span class="light">USDT</span></h2>
                     <p class="light">({token.Token_2_price} {token.Token_2_symbol})</p>
                 {:else}
                     <h2>1 {token.Token_1_symbol} = {token.Token_2_price} {token.Token_2_symbol}</h2>
@@ -270,6 +270,9 @@
     }
     .light {
         color: #888;
+    }
+    .price {
+        color: #f8f8f8;
     }
     .details {
         border: 1px solid var(--fg-border);
