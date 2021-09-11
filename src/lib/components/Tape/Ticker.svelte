@@ -21,6 +21,7 @@
         color: #aaa;
         display: inline-block;
         padding: 0 20px;
+        max-width: 16rem;
         white-space: nowrap;
     }
     .bold {

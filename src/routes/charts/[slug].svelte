@@ -232,6 +232,9 @@
             <p class="flex"><span class="bold">Discord</span><span><em>Coming soon!</em></span></p>
             <p class="flex"><span class="bold">Twitter</span><span><em>Coming soon!</em></span></p>
             <p class="flex"><span class="bold">GitHub</span><span><em>Coming soon!</em></span></p>
+            <p class="flex"><span class="bold">4chan</span><span><em>Coming soon!</em></span></p>
+            <p class="flex"><span class="bold">Reddit</span><span><em>Coming soon!</em></span></p>
+            <p class="flex"><span class="bold">TikTok</span><span><em>Coming soon!</em></span></p>
         </div>
         <p><em>Token descriptions are coming soon!</em></p>
 
@@ -318,14 +321,16 @@
             .left, .right {
                 width: 100%;
             }
-            .left h2 {
-                margin: 0;
-            }
-            .left p {
-                margin-bottom: 22px;
-            }
-            .left a:last-child {
-                margin-left: 4px;
+            .left {
+                h2 {
+                    margin: 0;
+                }
+                p {
+                    margin-bottom: 22px;
+                }
+                a:last-child {
+                    margin-left: 4px;
+                }
             }
             &.flex--center {
                 align-items: center;

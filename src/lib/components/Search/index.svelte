@@ -11,6 +11,11 @@
     let selectedPair;
     let selectedValue;
 
+    const newChart = () => {
+        goto(`/charts/${selectedValue}/`);
+        selectedValue = ``;
+    };
+
     onMount(async () => {
         /* A more reliable and decentralized solution for fetching data is a high-priority upcoming feature. */
         const reqPairs = await fetch(`https://api2.sushipro.io/?action=all_pairs&chainID=42161`);
@@ -41,11 +46,11 @@
         }
     });
 
-    $: selectedValue, (typeof selectedValue !== `undefined` && selectedPair !== null) && (goto(`/charts/${selectedValue}/`));
+    $: selectedValue, (typeof selectedValue !== `undefined` && selectedPair !== null) && (newChart());
 </script>
 
 <div bind:this={select} class="select">
-    <AutoComplete items={$pairs} bind:selectedItem={selectedPair} bind:value={selectedValue} labelFieldName="Symbol" valueFieldName="Pair_ID" keywordsFunction={(token) => token.Token_1_symbol + `/` + token.Token_2_symbol} />
+    <AutoComplete items={$pairs} bind:selectedItem={selectedPair} bind:value={selectedValue} labelFieldName="Symbol" valueFieldName="Pair_ID" keywordsFunction={(token) => token.Token_1_symbol + `/` + token.Token_2_symbol} placeholder="Trading pair" />
 </div>
 
 <style global>

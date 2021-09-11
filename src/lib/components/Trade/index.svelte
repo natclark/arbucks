@@ -55,9 +55,9 @@
 
 <style>
     .trade {
-        background-color: var(--bg-row);
+        background-color: var(--bg-row-dark);
         border-radius: 8px;
-        box-shadow: rgba(99, 99, 99, .2) 0 2px 8px 0;
+        box-shadow: rgba(99, 99, 99, .1) 0 2px 8px 0;
         font-size: 12px;
         height: 20px;
         overflow: hidden;
@@ -74,11 +74,10 @@
                 border-radius: 8px;
                 color: #000;
                 font-size: 12px;
-                font-weight: 600;
                 padding: 7px 4px 4px;
                 &.buy {
-                    background-color: rgb(0, 128, 0, .2);
-                    color: #0f0;
+                    background-color: rgb(0, 201, 0, .2);
+                    color: #00c900;
                 }
                 &.sell {
                     background-color: rgb(255, 110, 110, .2);
@@ -89,7 +88,7 @@
                 font-weight: 500;
             }
             &.buyText {
-                color: #0f0;
+                color: #00c900;
             }
             &.sellText {
                 color: #ff6e6e;
