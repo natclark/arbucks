@@ -14,7 +14,7 @@ The presale link is: https://dxsale.app/app/v3/defipresale?saleID=2&chain=Arbitr
 
 ## Launch schedule
 
-1) There will be a presale from 8 PM UTC to 10 PM UTC on DxSale.
+1) There will be a presale from 8:30 PM UTC to 10 PM UTC on DxSale.
 
 2) Liquidity from the presale will lock up at 10 PM UTC.
 
