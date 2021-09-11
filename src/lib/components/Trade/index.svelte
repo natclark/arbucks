@@ -67,6 +67,9 @@
         td {
             text-align: left;
             width: auto;
+            p {
+                margin: 8px 0;
+            }
             span {
                 border-radius: 8px;
                 color: #000;

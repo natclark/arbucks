@@ -283,6 +283,12 @@
             margin: 12px 0;
         }
     }
+    p {
+        font-size: 14px;
+    }
+    h2 {
+        font-size: 20px;
+    }
     .scroller {
         background-color: var(--bg-table);
         border-radius: 8px;
