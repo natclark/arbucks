@@ -33,7 +33,7 @@
         height: 400,
         layout: {
             backgroundColor: `#010101`,
-            fontFamily: `"Inter var", "Segoe UI"`,
+            fontFamily: `"Hussar Bold", "Segoe UI"`,
             textColor: `#d1d4dc`,
         },
         localization,
