@@ -43,7 +43,7 @@
             </li>
         </ol>
     </aside>
-    <div>
+    <div class="docs">
         <slot />
     </div>
 </div>
@@ -71,7 +71,7 @@
                         color: var(--fg-navbar);
                         display: block;
                         font-size: 19px;
-                        font-weight: 600;
+                        font-weight: 400;
                         overflow: hidden;
                         padding: 4px;
                         position: relative;
@@ -95,7 +95,7 @@
     @media screen and (min-width: 768px) {
         .grid {
             display: grid;
-            grid-template-columns: 15em 0.8fr;
+            grid-template-columns: 18em .8fr;
             aside {
                 position: sticky;
                 top: 28px;
