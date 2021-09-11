@@ -59,7 +59,7 @@
         border-radius: 8px;
         box-shadow: rgba(99, 99, 99, .2) 0 2px 8px 0;
         font-size: 12px;
-        height: 60px;
+        height: 20px;
         overflow: hidden;
         position: relative;
         transition: all .07s;
@@ -69,24 +69,26 @@
             width: auto;
             span {
                 border-radius: 8px;
-                color: #fff;
+                color: #000;
                 font-weight: 600;
                 padding: 8px;
                 &.buy {
-                    background-color: var(--fg-buy);
+                    background-color: rgb(0, 128, 0, .2);
+                    color: #0f0;
                 }
                 &.sell {
-                    background-color: var(--fg-sell);
+                    background-color: rgb(255, 110, 110, .2);
+                    color: #ff6e6e;
                 }
             }
             &.buyText, &.sellText {
                 font-weight: 500;
             }
             &.buyText {
-                color: var(--fg-buy);
+                color: #0f0;
             }
             &.sellText {
-                color: var(--fg-sell);
+                color: #ff6e6e;
             }
             &.actions {
                 align-items: center;

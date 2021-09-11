@@ -78,7 +78,7 @@
                         text-decoration: none;
                         width: 100%;
                         &[aria-current="page"] {
-                            background-color: var(--bg-selected);
+                            background-color: var(--bg-selected) !important;
                             color: var(--fg-selected);
                         }
                         &:hover {

@@ -34,6 +34,9 @@
 </script>
 
 <tr bind:this={row} class="pair">
+    <td class="logo">
+        <img src="https://zapper.fi/images/{symbolOne}-icon.png" loading="lazy" aria-hidden="true" width="32px" height="32px">
+    </td>
     <td class="name">
         {nameOne} / {nameTwo}
     </td>
@@ -52,7 +55,6 @@
 <style>
     .pair {
         background-color: var(--bg-row);
-        border-radius: 8px;
         box-shadow: rgba(99, 99, 99, .2) 0 2px 8px 0;
         font-size: 12px;
         height: 60px;

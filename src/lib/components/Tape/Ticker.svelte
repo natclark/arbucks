@@ -18,7 +18,7 @@
         margin: 0;
     }
     li {
-        color: #777;
+        color: #aaa;
         display: inline-block;
         padding: 0 20px;
         white-space: nowrap;

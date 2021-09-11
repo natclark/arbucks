@@ -23,52 +23,49 @@
 }
 
 :root {
-    --bg-autocomplete: #fff;
-    --bg-button: #aa8e68;
-    --bg-hover: rgb(238, 208, 178);
-    --bg-menu: rgb(239, 222, 205);
-    --bg-navbar: rgb(239, 222, 205, .6);
-    --bg-page: rgb(239, 222, 205, .4);
-    --bg-row: rgba(239, 222, 205, .6);
-    --bg-row-hover: rgba(239, 222, 205, .8);
-    --bg-scroll: #bbb;
-    --bg-selected: rgba(238, 208, 178, .6);
-    --bg-table: rgba(207, 181, 146, .2);
-    --bg-tape: rgba(239, 222, 205, .4);
-    --fg-autocomplete: #000;
-    --fg-body: #000;
-    --fg-border: #d2b48c;
-    --fg-buy: #008000;
-    --fg-fill: #000;
-    --fg-link: #2260ff;
-    --fg-link-hover: #1129fd;
-    --fg-link-visited: #740074;
-    --fg-link-visited-hover: #4d004d;
-    --fg-loader: rgba(255, 62, 0, .8);
-    --fg-navbar: #222;
-    --fg-scroll: #333;
-    --fg-selected: #000;
-    --fg-sell: #a50000;
-    --fg-subtitle: #333;
+    --bg-autocomplete: #3c096c;
+    --bg-body: #10002b;
+    --bg-button: #3f37c9;
+    --bg-hover: #3c096c;
+    --bg-menu: #240046;
+    --bg-navbar: #090016;
+    --bg-row: #3c096c;
+    --bg-row-hover: #5a189a;
+    --bg-scroll: #111;
+    --bg-selected: #5a189a;
+    --bg-table: rgba(207, 181, 146, .1);
+    --bg-tape: #240046;
+    --fg-autocomplete: #fff;
+    --fg-body: #f8f8f8;
+    --fg-border: #d8a6ff;
+    --fg-fill: #fff;
+    --fg-link: #00bbf9;
+    --fg-link-hover: #00a7df;
+    --fg-link-visited: #e4c2ff;
+    --fg-link-visited-hover: #d8a6ff;
+    --fg-loader: #9d4edd;
+    --fg-navbar: #fff;
+    --fg-scroll: #9d4edd;
+    --fg-selected: #eee;
+    --fg-subtitle: #ccc;
 }
 
 :root[data-theme="cyberpunk"] {
     --bg-autocomplete: #000;
+    --bg-body: #111;
     --bg-button: #f72585;
     --bg-hover: #222;
     --bg-menu: #333;
     --bg-navbar: #000;
-    --bg-page: #111;
     --bg-row: #333;
     --bg-row-hover: #555;
     --bg-scroll: #000;
     --bg-selected: #555;
     --bg-table: #222;
-    --bg-tape: #000;
+    --bg-tape: #222;
     --fg-autocomplete: #fff;
     --fg-body: #fafafa;
     --fg-border: #4cc9f0;
-    --fg-buy: #0f0;
     --fg-fill: #fff;
     --fg-link: #4cc9f0;
     --fg-link-hover: #4895ef;
@@ -78,7 +75,6 @@
     --fg-navbar: #f8f8f8;
     --fg-scroll: #3f37c9;
     --fg-selected: #eee;
-    --fg-sell: #f00;
     --fg-subtitle: #ccc;
 }
 
@@ -107,7 +103,7 @@ html {
 body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: var(--bg-page);
+    background-color: var(--bg-body);
     color: var(--fg-body);
     font-family: 'Inter var', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, system-ui, sans-serif;
     margin: 0;

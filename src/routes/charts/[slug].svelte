@@ -135,6 +135,11 @@
     $: $page.params.slug, refresh();
 </script>
 
+<svelte:head>
+    <title>Live Charts & Data - Arbucks</title>
+    <link rel="canonical" href="/charts/{$page.params.slug}/">
+</svelte:head>
+
 {#if !!loading}
     <div class="loading">
         <Moon size="60" color="var(--fg-loader)" unit="px" duration="1s" />

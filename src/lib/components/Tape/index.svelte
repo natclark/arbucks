@@ -43,12 +43,14 @@
     });
 </script>
 
-<div class="tape">
-    <ul class="tape__tickers">
-        {#each $pages as { pair, }, i}
-            <Ticker id={i} {pair} />
-        {/each}
-    </ul>
+<div class="container">
+    <div class="tape">
+        <ul class="tape__tickers">
+            {#each $pages as { pair, }, i}
+                <Ticker id={i} {pair} />
+            {/each}
+        </ul>
+    </div>
 </div>
 
 <style>
@@ -64,14 +66,14 @@
     .tape {
         background-color: var(--bg-tape);
         height: 25px;
-        margin-top: -16px;
         position: relative;
-        width: 100vw;
+        width: 100%;
         .tape__tickers {
             animation: ticker 30s linear infinite;
             display: flex;
-            list-style: none;
             justify-content: space-around;
+            list-style: none;
+            margin: 0;
             padding-top: 3px;
             &:hover {
                 animation-play-state: paused;

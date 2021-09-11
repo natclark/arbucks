@@ -7,8 +7,6 @@
     let sorting = false;
     let loading = true;
 
-    let numPairs = 0;
-
     let newPairs = [];
 
     const sort = (col) => {
@@ -56,7 +54,6 @@
         /* A more reliable and decentralized solution for fetching data is a high-priority upcoming feature. */
         const reqPairs = await fetch(`https://api2.sushipro.io/?action=all_pairs&chainID=42161`);
         const jsonPairs = await reqPairs.json();
-        numPairs = jsonPairs[0].number_of_results;
         jsonPairs[1].forEach((pair) => newPairs.indexOf(newPairs.find((e) => e.Pair_ID === pair.Pair_ID)) === -1 && (newPairs.push(pair)));
 
         pairs.update(() => newPairs);
@@ -70,7 +67,7 @@
     <link rel="canonical" href="https://arbucks.io/pairs/">
 </svelte:head>
 
-<h1>Pairs ({numPairs})</h1>
+<h1>Pairs ({$pairs.length})</h1>
 
 <p>This is a real-time list of all the <em>Sushiswap</em> trading pairs currently available on Arbitrum One. <strong>Uniswap pairs are coming soon.</strong></p>
 
@@ -83,10 +80,11 @@
         <table class="pairs">
             <thead>
                 <tr>
-                    <th on:click={() => sort(0)}>Name</th>
-                    <th on:click={() => sort(1)}>Symbol</th>
-                    <th on:click={() => sort(2)}>Address</th>
-                    <th on:click={() => sort(3)}>Actions</th>
+                    <th on:click={() => sort(0)}>Logo</th>
+                    <th on:click={() => sort(1)}>Name</th>
+                    <th on:click={() => sort(2)}>Symbol</th>
+                    <th on:click={() => sort(3)}>Address</th>
+                    <th on:click={() => sort(4)}>Actions</th>
                 </tr>
             </thead>
             <tbody>

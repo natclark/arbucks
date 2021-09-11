@@ -1,1 +1,1 @@
-<p><em>Coming soon!</em></p>
+<p><em>Pool data is coming soon!</em></p>

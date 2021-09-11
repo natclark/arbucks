@@ -51,19 +51,10 @@
     <link rel="canonical" href="https://arbucks.io">
 </svelte:head>
 
-<h1>Welcome to Arbucks!</h1>
-
-<h2>About</h2>
-
-<ul>
-    <li><p>Arbucks is a real-time, open-source gateway to Arbitrum.</p></li>
-    <li><p>Explore analytics, charts, tokens, pairs, liquidity, volume, transactions, pools, and more!</p></li>
-    <li><p>This is a <strong>very new</strong> project, so bugs and missing features are prevalent. If you want you can, check out <a href="/docs/" sveltekit:prefetch>the info page</a>!</p></li>
-</ul>
-
-<h2>New Tokens</h2>
-
-<p><em>Coming soon!</em></p>
+<div class="top">
+    <h1>Arbucks</h1>
+    <p><em>Arbitrum's open-source charts & analytics platform</em></p>
+</div>
 
 <h2>Trending Pairs</h2>
 
@@ -78,6 +69,7 @@
         <table class="pairs">
             <thead>
                 <tr>
+                    <th>Logo</th>
                     <th>Name</th>
                     <th>Symbol</th>
                     <th>Address</th>
@@ -93,8 +85,24 @@
     </div>
 {/if}
 
+<h2>New Tokens</h2>
+
+<p>Top 10 latest ERC20 deployments.</p>
+
+<p><em>Coming soon!</em></p>
+
+<h2>About</h2>
+
+<ul>
+    <li><p>Arbucks is a real-time, open-source gateway to Arbitrum.</p></li>
+    <li><p>Explore analytics, charts, tokens, pairs, liquidity, volume, transactions, pools, and more!</p></li>
+    <li><p>This is a <strong>very new</strong> project, so bugs and missing features are prevalent. If you want you can, check out <a href="/docs/" sveltekit:prefetch>the info page</a>!</p></li>
+</ul>
+
+<br>
+
 <style>
-    h1 {
+    .top {
         text-align: center;
     }
     .loading {

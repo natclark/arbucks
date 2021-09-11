@@ -7,8 +7,6 @@
     let sorting = false;
     let loading = true;
 
-    let numTokens = 0;
-
     let newTokens = [];
     let logos = [];
 
@@ -57,12 +55,39 @@
         /* A more reliable and decentralized solution for fetching data is a high-priority upcoming feature. */
         const reqTokens = await fetch(`https://api2.sushipro.io/?action=all_tokens&chainID=42161`);
         const jsonTokens = await reqTokens.json();
-        numTokens = jsonTokens[0].number_of_results;
         jsonTokens[1].forEach((token) => newTokens.indexOf(newTokens.find((e) => e.Contract === token.Contract)) === -1 && (newTokens.push(token)));
 
         const reqLogos = await fetch(`https://bridge.arbitrum.io/token-list-42161.json`);
         const jsonLogos = await reqLogos.json();
         jsonLogos.tokens.forEach((token) => logos.push(token));
+
+
+        const xhr = new XMLHttpRequest();
+        xhr.onload = () => {
+            const json = JSON.parse(xhr.response); // TODO check for errors
+            const graphTokens = json.data.tokens;
+            console.log(graphTokens);
+            let uniTokens = [];
+            graphTokens.forEach((token) => $tokens.indexOf($tokens.find((e) => e.Contract === token.id.toLowerCase())) === -1 && (uniTokens.push({
+                Contract: token.id.toLowerCase(),
+                Symbol: token.symbol,
+                Name: token.name,
+                Decimals: token.decimals,
+                Logo: `https://zapper.fi/images/${token.Symbol}-icon.png`,
+            })));
+            console.log(uniTokens);
+            tokens.update(() => $tokens.concat(uniTokens));
+        };
+        xhr.onerror = () => {
+            console.log(`Request failed.`);
+        };
+        /* The Graph has issues, but it'll have to do for now. */
+        xhr.open(`POST`, `https://api.thegraph.com/subgraphs/name/ianlapham/arbitrum-dev`);
+        xhr.setRequestHeader(`Content-Type`, `application/json`);
+        xhr.send(JSON.stringify({
+            query: `{\n  tokens(last: 1000) {\n    id\n    symbol\n    name\n    decimals\n\t}\n}\n`,
+            variables: null,
+        }));
 
         logos.forEach((logo) => {
             const index = newTokens.indexOf(newTokens.find((e) => e.Contract === logo.address.toLowerCase()));
@@ -76,7 +101,6 @@
                     Decimals: logo.decimals,
                     Logo: logo.logoURI,
                 });
-                numTokens++;
             }
         });
 
@@ -91,7 +115,7 @@
     <link rel="canonical" href="https://arbucks.io/tokens/">
 </svelte:head>
 
-<h1>Tokens ({numTokens})</h1>
+<h1>Tokens ({$tokens.length})</h1>
 
 <p>This is a real-time list of all the ERC20 tokens currently deployed on Arbitrum One.</p>
 

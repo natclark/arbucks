@@ -32,7 +32,7 @@
         },
         height: 400,
         layout: {
-            backgroundColor: `#131722`,
+            backgroundColor: `#010101`,
             fontFamily: `"Inter var", "Segoe UI"`,
             textColor: `#d1d4dc`,
         },
@@ -48,16 +48,17 @@
         watermark: {
             color: `#777`,
             fontSize: 24,
+            horzAlign: `left`,
             text: `arbucks.io`,
-            vertAlign: `center`,
+            vertAlign: `bottom`,
             visible: true,
         },
     };
 
     const priceSeriesOptions = {
-        bottomColor: `rgba(38,198,218, .04)`,
-        topColor: `rgba(38,198,218, .56)`,
-        lineColor: `rgba(38,198,218, 1)`,
+        bottomColor: `rgba(122, 43, 191, .04)`,
+        topColor: `rgba(122, 43, 191, .56)`,
+        lineColor: `rgba(122, 43, 191, 1)`,
         lineWidth: 2,
     };
 

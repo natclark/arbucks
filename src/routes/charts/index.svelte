@@ -1,5 +1,9 @@
 <script>
+    import { onMount } from 'svelte';
+    import { goto } from '$app/navigation';
     import Search from '$lib/components/Search/index.svelte';
+
+    onMount(() => goto(`/charts/0x515e252b2b5c22b4b2b6df66c2ebeea871aa4d69/`));
 </script>
 
 <svelte:head>
