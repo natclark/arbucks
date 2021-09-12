@@ -52,6 +52,7 @@
 </svelte:head>
 
 <div class="top">
+    <br>
     <h1>Arbucks</h1>
     <p><em>Arbitrum's open-source charts & analytics platform</em></p>
 </div>
@@ -104,6 +105,9 @@
 <style>
     .top {
         text-align: center;
+        img {
+            max-width: 800px;
+        }
     }
     .loading {
         align-items: center;
