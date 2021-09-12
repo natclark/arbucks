@@ -130,6 +130,12 @@
                     transition: all .08s ease-in;
                     width: 200px;
                     will-change: box-shadow, outline;
+                    &::-ms-input-placeholder, &:-ms-input-placeholder, *::placeholder {
+                        color: #888;
+                    }
+                    &::placeholder {
+                        opacity: 1;
+                    }
                     &:hover, &:focus, &:active {
                         box-shadow: rgba(0, 0, 0, .4) 0 30px 90px;
                     }
