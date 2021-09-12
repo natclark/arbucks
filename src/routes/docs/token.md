@@ -1,36 +1,17 @@
 # Token
 
-Everything on this page is a *rough draft*.
-
-Some details my be tweaked leading up to the launch.
-
-We're on track to launch Saturday, Sept. 11, at 10 PM UTC (that's 6 PM EST).
-
-**When the token launches, https://token.arbitrum.io will redirect to the initial Sushiswap pair.**
+The Arbucks token had a presale at 8:30 P.M. UTC on Saturday, Septermber 11, 2021 and launched on Sushiswap at 10:00 P.M. UTC that same day.
 
 The token address is: [0xAFD871f684F21Ab9D7137608C71808f83D75e6fc](https://arbiscan.io/token/0xAFD871f684F21Ab9D7137608C71808f83D75e6fc).
 
-The presale link is: https://dxsale.app/app/v3/defipresale?saleID=2&chain=Arbitrum.
+<br>
 
-## Launch schedule
+<a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency=0xafd871f684f21ab9d7137608c71808f83d75e6fc" rel="external noopener" target="_blank">
+    Trade on Sushiswap
+</a>
 
-1) There will be a presale from 8:30 PM UTC to 10 PM UTC on DxSale.
-
-2) Liquidity from the presale will lock up at 10 PM UTC.
-
-3) The token will be available for trading on Sushiswap at 10 PM UTC.
-
-### Presale details
-
-- 3 ETH softcap, 5 ETH hardcap
-
-- 10,000,000 (10M) BUCK per 1 ETH
-
-- 0.1 ETH minimum contribution, 0.3 ETH maxmimum contribution
-
-- 100% immediately locked in initial Sushi LP
-
-- 1 month cliff
+<br>
+<br>
 
 ## General tokenomics
 
@@ -70,19 +51,42 @@ There are **no** transaction taxes of any kind.
 
 Because this is a speedy release, the developer wallet, DAO treasury wallet, marketing wallet, and advisory wallet will all be controlled by the developer at first.
 
-The developer will be airdropped these tokens via DxDrop *after* the presale. Most of these tokens plan to be vested (and *will& be vested, if DxLock allows it - otherwise, we'll figure out another way to vest the tokens).
+The developer will be airdropped these tokens via DxDrop *after* the presale.
 
-All wallet addresses will be publicly available for transparency.
+Almost 90% of the developer wallet has been locked:
+
+<br>
+
+<a class="button button--buy" href="https://dxsale.app/app/v3/dxlockview?id=1&add=0xA3b113Fba39133b7a9D544A45713A296945fF7B4&type=tokenlock&chain=Arbitrum" rel="external noopener" target="_blank">
+    View Locker on dxSale
+</a>
+
+<br>
+<br>
+
+For transparency, here is the deployer wallet: [0xA3b113Fba39133b7a9D544A45713A296945fF7B4](https://arbiscan.io/address/0xA3b113Fba39133b7a9D544A45713A296945fF7B4).
+
+### Presale details
+
+- 3 ETH softcap, 5 ETH hardcap
+
+- 10,000,000 (10M) BUCK per 1 ETH
+
+- 0.1 ETH minimum contribution, 0.3 ETH maxmimum contribution
+
+- 100% immediately locked in initial Sushi LP
+
+- 1 month cliff
 
 ## Trading pairs
 
 The token symbol is "BUCK".
 
-The initial trading pair will be either BUCK / ETH or BUCK / WETH, but likely the former.
+The initial trading pair is BUCK / ETH.
 
 Future pairs are likely to be created, including Uniswap V3 pairs.
 
-The pair will debut on Sushiswap at 4,000,000 (4M) BUCK per 1 ETH.
+The pair's debut was on Sushiswap at 4,000,000 (4M) BUCK per 1 ETH.
 
 ## Charts and analytics
 
@@ -91,8 +95,6 @@ Charts will be available on this very platform, as you'd expect!
 ## Important disclaimer
 
 Please be careful! Don't be rushed or pressured into buying.
-
-If you want to wait a week after the launch to buy the token, that's completely fine.
 
 If there's someone trying to shill you hard on the token, they are **not** affiliated with the project's developer, and are likely just be trying to "pump their bags".
 
