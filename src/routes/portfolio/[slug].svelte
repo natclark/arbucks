@@ -168,48 +168,50 @@
                         let zeroes = ``;
                         let price = ``;
 
-                        if (typeof jsonTokenPairs[0].error === `undefined`) {
-                            let found = false;
-                            let priceString = ``;
-                            let i = 0;
+                        try {
+                            if (typeof jsonTokenPairs[0].error === `undefined`) {
+                                let found = false;
+                                let priceString = ``;
+                                let i = 0;
 
-                            jsonTokenPairs[1].forEach((token) => {
-                                if (found === false) {
-                                    if (item.contract_address === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
-                                        priceString = ethPrice.toFixed(32).toString();
-                                        found = true;
-                                    } else if (token.Token_2_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
-                                        priceString = parseFloat(token.Token_2_price * ethPrice).toFixed(32).toString();
-                                        found = true;
-                                    } else if (token.Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
-                                        priceString = parseFloat(ethPrice * (token.Token_2_price * token.Token_1_price)).toFixed(32).toString();
-                                        found = true;
+                                jsonTokenPairs[1].forEach((token) => {
+                                    if (found === false) {
+                                        if (item.contract_address === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
+                                            priceString = ethPrice.toFixed(32).toString();
+                                            found = true;
+                                        } else if (token.Token_2_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
+                                            priceString = parseFloat(token.Token_2_price * ethPrice).toFixed(32).toString();
+                                            found = true;
+                                        } else if (token.Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
+                                            priceString = parseFloat(ethPrice * (token.Token_2_price * token.Token_1_price)).toFixed(32).toString();
+                                            found = true;
+                                        }
                                     }
-                                }
-                            });
+                                });
 
-                            for (let j = 0; j < priceString.length; j++) {
-                                if (priceString[0] === `0`) {
-                                    if (!zeroes.includes(`.`)) {
-                                        zeroes += priceString[j];
-                                    } else if (priceString[j] === `0` && i === 0) {
-                                        zeroes += priceString[j];
-                                    } else if (zeroes.includes(`.`) && i < 4) {
+                                for (let j = 0; j < priceString.length; j++) {
+                                    if (priceString[0] === `0`) {
+                                        if (!zeroes.includes(`.`)) {
+                                            zeroes += priceString[j];
+                                        } else if (priceString[j] === `0` && i === 0) {
+                                            zeroes += priceString[j];
+                                        } else if (zeroes.includes(`.`) && i < 4) {
+                                            price += priceString[j];
+                                            i++;
+                                        } else if (i >= 4) {
+                                            break;
+                                        }
+                                    } else {
                                         price += priceString[j];
-                                        i++;
-                                    } else if (i >= 4) {
-                                        break;
-                                    }
-                                } else {
-                                    price += priceString[j];
-                                    if (price.includes(`.`) && i < 2) {
-                                        i++;
-                                    } else if (i >= 2) {
-                                        break;
+                                        if (price.includes(`.`) && i < 2) {
+                                            i++;
+                                        } else if (i >= 2) {
+                                            break;
+                                        }
                                     }
                                 }
                             }
-                        }
+                        } catch (e) {}
 
                         (zeroes !== `` || price !== ``) && (netWorth += (item.holdings[0].close.balance / (10 ** item.contract_decimals)) * (zeroes + price));
 
