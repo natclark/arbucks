@@ -174,6 +174,7 @@
                     <p class="flex"><span class="bold">Exchange</span><span>Sushiswap</span></p>
                     <p class="flex"><span class="bold">24H Volume (USDT)</span><span>{!!volume ? volume24 : 0}</span></p>
                     <p class="flex"><span class="bold">Market Cap (Fully Diluted)</span><span><em>Coming soon!</em></span></p>
+                    <p class="flex"><span class="bold">Holders</span><span><em>Coming soon!</em></span></p>
                 </div>
             </div>
         </div>

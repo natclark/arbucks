@@ -16,7 +16,7 @@ Here's some of the questions that either get asked a lot on Telegram or are inev
 Arbucks is an open-source charting and analytics web app for [Arbitrum](https://arbitrum.io)!
 
 ## Is there a token?
-There will be! It's launching **this Saturday** at 10 PM UTC. See the [token page](/docs/token/) for details.
+There is a token! See the [token page](/docs/token/) for details.
 
 ## Can I help out?
 Anyone is welcome to open an issue or submit a pull request to the [project GitHub page](https://github.com/natclark/arbucks). If you want, you can share some relevant DRM-free artwork in the [Telegram group](https://t.me/arbuckscafe), and we might use it with your permission. Credit will be given!
@@ -62,7 +62,3 @@ No.
 
 ## Is this project affiliated with Offchain Labs?
 Technically not, no.
-
-## Why can't you launch the token right this literal second?
-
-😐

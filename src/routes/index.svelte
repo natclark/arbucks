@@ -12,7 +12,7 @@
     let newPairs = [];
 
     onMount(async () => {
-        window.location.href.includes(`/charts/`) && (goto(window.location));
+        (window.location.href.includes(`/charts/`) || window.location.href.includes(`/portfolio/`)) && (goto(window.location));
 
         const reqPairs = await fetch(`https://api2.sushipro.io/?action=all_pairs&chainID=42161`);
         const jsonPairs = await reqPairs.json();
