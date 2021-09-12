@@ -58,7 +58,7 @@
 
 <h1>Ledger</h1>
 
-<p>Real-time order book for Sushiswap trades on Arbitrum One. This page updates every 10 seconds. <strong>Uniswap orders are coming soon!</strong></p>
+<p>Real-time order book for the last hour of Sushiswap trades on Arbitrum One. This page updates every 10 seconds. <strong>Uniswap orders are coming soon!</strong></p>
 
 <fieldset>
     <legend>Control Panel</legend>
