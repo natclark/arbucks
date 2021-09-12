@@ -183,7 +183,7 @@
                                             priceString = parseFloat(token.Token_2_price * ethPrice).toFixed(32).toString();
                                             found = true;
                                         } else if (token.Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
-                                            priceString = parseFloat(ethPrice * (token.Token_2_price * token.Token_1_price)).toFixed(32).toString();
+                                            priceString = parseFloat(ethPrice * token.Token_1_price).toFixed(32).toString();
                                             found = true;
                                         }
                                     }
