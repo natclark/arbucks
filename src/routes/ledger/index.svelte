@@ -154,11 +154,7 @@
             margin-bottom: 32px;
             width: 100%;
             thead th {
-                cursor: pointer;
                 text-align: left;
-                &:hover {
-                    text-decoration: underline;
-                }
             }
         }
     }
