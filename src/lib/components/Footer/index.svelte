@@ -12,7 +12,10 @@
         <div class="column">
             <h2>Project Info</h2>
             <p><a href="/docs/" draggable="false" sveltekit:prefetch>Docs</a></p>
+            <!--
+            TODO
             <p><a href="/blog/" draggable="false" sveltekit:prefetch>Blog</a></p>
+            -->
             <p><a href="/docs/roadmap/" draggable="false" sveltekit:prefetch>Roadmap</a></p>
             <!--
             TODO
