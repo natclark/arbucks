@@ -26,6 +26,10 @@ Its creation was motivated by a few elements of the other existing Arbitrum char
 
 ## How can I use it?
 
-You can browse live [tokens](/tokens/) and [pairs](/pairs/), but you can also go to the [charts page](/charts/) and search for a trading pair using the search box.
+You can browse live [tokens](/tokens/) and [pools](/pools/), but you can search for a token using the search box.
 
-If the pair exists, you can select it and browse assorted metrics including the price chart, recent transactions, and 24-hour volume.
+If the token exists, you can select it and browse assorted metrics including the price chart, recent transactions, and 24-hour volume.
+
+There's also a [portfolio](/portfolio/) where you can track your Arbitrum-based digital assets in real-time, and tons of other features on the way.
+
+Have fun! And if you're confused about anything, just drop us a line on Telegram!
