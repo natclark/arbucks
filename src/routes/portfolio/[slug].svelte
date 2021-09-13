@@ -322,11 +322,13 @@
         {:else}
             <p>This wallet does not have any NFTs on Arbitrum yet.</p>
         {/if}
-        <h2>Pools</h2>
-        <p><em>Coming soon!</em></p>
         <h2>Farms</h2>
         <p><em>Coming soon!</em></p>
         <h2>Futures</h2>
+        <p><em>Coming soon!</em></p>
+        <h2>Lending</h2>
+        <p><em>Coming soon!</em></p>
+        <h2>Borrowed Assets</h2>
         <p><em>Coming soon!</em></p>
     {:else if valid === false}
         <h1>Invalid Address</h1>
