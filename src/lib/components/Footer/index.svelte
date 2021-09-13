@@ -4,8 +4,6 @@
     <p>Please don't shoot the messenger!</p>
 </footer>
 
-<!-- This is a privacy-friendly analytics solution. The analytics dashboard is public. This is for displaying trending tickers and popular tokens. A more decentralized solution should be implemented in the future, however. -->
-
 <style>
     footer {
         background-color: var(--bg-navbar);
