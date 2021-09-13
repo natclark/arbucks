@@ -206,6 +206,9 @@
                     &.logo {
                         height: 40px;
                     }
+                    &:not(.logo) {
+                        padding-top: 4px !important;
+                    }
                 }
                 .menu {
                     &.menu--mobile {
