@@ -61,12 +61,10 @@
         const jsonLogos = await reqLogos.json();
         jsonLogos.tokens.forEach((token) => logos.push(token));
 
-
         const xhr = new XMLHttpRequest();
         xhr.onload = () => {
             const json = JSON.parse(xhr.response); // TODO check for errors
             const graphTokens = json.data.tokens;
-            console.log(graphTokens);
             let uniTokens = [];
             graphTokens.forEach((token) => $tokens.indexOf($tokens.find((e) => e.Contract === token.id.toLowerCase())) === -1 && (uniTokens.push({
                 Contract: token.id.toLowerCase(),
@@ -75,7 +73,6 @@
                 Decimals: token.decimals,
                 Logo: `https://zapper.fi/images/${token.Symbol}-icon.png`,
             })));
-            console.log(uniTokens);
             tokens.update(() => $tokens.concat(uniTokens));
         };
         xhr.onerror = () => {
@@ -93,7 +90,7 @@
             const index = newTokens.indexOf(newTokens.find((e) => e.Contract === logo.address.toLowerCase()));
             if (index > -1) {
                 newTokens[index].Logo = logo.logoURI;
-            } else {
+            } else if (logo.address.toLowerCase() !== `0xafd871f684f21ab9d7137608c71808f83d75e6fc`) {
                 newTokens.push({
                     Contract: logo.address.toLowerCase(),
                     Symbol: logo.symbol,
@@ -103,6 +100,16 @@
                 });
             }
         });
+
+        newTokens = [{
+            Contract: `0xafd871f684f21ab9d7137608c71808f83d75e6fc`,
+            Symbol: `BUCK`,
+            Name: `Arbucks`,
+            Decimals: 18,
+            Logo: `https://arbucks.io/img/arbucks-logo.png`,
+        }].concat(newTokens);
+
+        console.log(newTokens);
 
         tokens.update(() => newTokens);
 

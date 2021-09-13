@@ -11,30 +11,37 @@
     let valid = false;
     let ethPrice = -1;
 
+    let pair = [];
     let token = null;
     let liquidity = null;
     let volume = null;
 
-    let supply = 0;
-    let txCount = 0;
-    let swaps = [];
-
     let zeroes = ``;
     let price = ``;
+    let change = ``;
+    let changePctg = ``;
+    let changeDir = `positive`;
     let volume24 = ``;
+
+    let supply = 0;
+    let fdmc = 0;
+    let txCount = 0;
+    let holders = 0;
+    let swaps = [];
 
     const refresh = async () => {
         loading = true;
 
         /* A more reliable and decentralized solution for fetching data is a high-priority upcoming feature. */
         const timestamp = Math.floor(new Date().getTime() / 1000);
-        const pair = await fetch(`https://api2.sushipro.io/?action=get_pair&pair=${$page.params.slug}&chainID=42161`);
-        const jsonPair = await pair.json();
+        const tokenPairs = await fetch(`https://api2.sushipro.io/?action=get_pairs_by_token&token=${$page.params.slug}&chainID=42161`);
+        const jsonTokenPairs = await tokenPairs.json();
 
-        if (typeof jsonPair.error === `undefined`) {
+        if (typeof jsonTokenPairs.error === `undefined`) {
             valid = true;
-            token = jsonPair[0];
+            //token = jsonPair[0];
 
+            let found = false;
             let priceString = ``;
             zeroes = ``;
             price = ``;
@@ -44,28 +51,24 @@
             const jsonEthPrice = await ethPriceReq.json();
             typeof jsonEthPrice.error === `undefined` && (ethPrice = jsonEthPrice[0].Token_2_price);
 
-            if (token.Token_2_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
-                priceString = parseFloat(token.Token_2_price * ethPrice).toFixed(32).toString();
-            } else if (token.Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
-                priceString = parseFloat(ethPrice * (token.Token_2_price * token.Token_1_price)).toFixed(32).toString();
-            } else {
-                const xhr = new XMLHttpRequest();
-                xhr.onload = async () => {
-                    const json = JSON.parse(xhr.response); // TODO check for errors
-                    const pair = json.data.pairs[0];
-
-                    // TODO console.log(pair.token0Price, pair.token1Price, parseFloat(pair.token0Price) * parseFloat(pair.token1Price));
-                };
-                xhr.onerror = () => {
-                    console.log(`Request failed.`);
-                };
-                /* The Graph has issues, but it'll have to do for now. */
-                xhr.open(`POST`, `https://api.thegraph.com/subgraphs/name/sushiswap/arbitrum-exchange`);
-                xhr.setRequestHeader(`Content-Type`, `application/json`);
-                xhr.send(JSON.stringify({
-                    query: `{\n  pairs(where: {id: "${$page.params.slug}"}) {\n    token0Price\n    token1Price\n\t}\n}\n`,
-                    variables: null,
-                }));
+            try {
+                jsonTokenPairs[1].forEach((p) => {
+                    if (found === false) {
+                        if (p.Token_2_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
+                            priceString = parseFloat(p.Token_2_price * ethPrice).toFixed(32).toString();
+                            token = p;
+                            pair = p.Pair_ID;
+                            found = true;
+                        } else if (p.Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
+                            priceString = parseFloat(ethPrice * p.Token_1_price).toFixed(32).toString();
+                            token = p;
+                            pair = p.Pair_ID;
+                            found = true;
+                        }
+                    }
+                });
+            } catch (e) {
+                goto(`/tokens/`);
             }
 
             for (let j = 0; j < priceString.length; j++) {
@@ -90,6 +93,8 @@
                 }
             }
 
+            /*
+            TODO
             const liquidityReq = await fetch(`https://api2.sushipro.io/?action=get_historical_liquidity&pair=${$page.params.slug}&from=${timestamp - 604800}&to=${timestamp}&chainID=42161`);
             const jsonLiquidity = await liquidityReq.json();
             typeof jsonLiquidity.error === `undefined` && (liquidity = jsonLiquidity);
@@ -104,16 +109,53 @@
             }
 
             // TODO console.log(liquidity, volume);
+            &/
+
+            /* A more reliable and decentralized solution for fetching data is a high-priority upcoming feature. */
+            try {
+                const COVALENT_KEY = `ckey_f02916bdd2b04038bc0808fb3bc`;
+                const holdersReq = await fetch(`https://api.covalenthq.com/v1/42161/tokens/${$page.params.slug}/token_holders/?key=${COVALENT_KEY}`);
+                const jsonHolders = await holdersReq.json();
+                fdmc = new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(parseFloat(priceString) * (jsonHolders.data.items[0].total_supply / (10 ** jsonHolders.data.items[0].contract_decimals)));
+                holders = jsonHolders.data.pagination.total_count;
+            } catch (e) {
+                fdmc = `Error`;
+                holders = `Error`;
+            }
 
             const xhr = new XMLHttpRequest();
             xhr.onload = async () => {
                 const json = JSON.parse(xhr.response); // TODO check for errors
                 const pair = json.data.pairs[0];
-                supply = pair.totalSupply;
-                txCount = pair.txCount;
+                txCount = pair.txCount
+                volume = true;
+                volume24 = new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(pair.volumeUSD);
                 swaps = pair.swaps.sort((a, b) => {
                     return a.timestamp - b.timestamp;
                 }).reverse();
+                try {
+                    let reserveBasedPrice = pair.dayData[1].reserve1 / pair.dayData[1].reserve0;
+                    if (token.Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
+                        reserveBasedPrice = pair.dayData[1].reserve0 / pair.dayData[1].reserve1;
+                    }
+                    change = parseFloat(priceString) - (parseFloat(reserveBasedPrice * ethPrice).toFixed(32).toString());
+                    changePctg = ((change / parseFloat(priceString)) * 100).toFixed(2);
+                    changeDir = change >= 0 ? `positive` : `negative`;
+                } catch (e) {
+                    try {
+                        let reserveBasedPrice = pair.dayData[0].reserve1 / pair.dayData[0].reserve0;
+                        if (token.Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
+                            reserveBasedPrice = pair.dayData[0].reserve0 / pair.dayData[0].reserve1;
+                        }
+                        change = parseFloat(priceString) - (parseFloat(reserveBasedPrice * ethPrice).toFixed(32).toString());
+                        changePctg = ((change / parseFloat(priceString)) * 100).toFixed(2);
+                        changeDir = change >= 0 ? `positive` : `negative`;
+                    } catch(e) {
+                        change = `Error`;
+                        changePctg = ``;
+                        changeDir = `negative`;
+                    }
+                }
             };
             xhr.onerror = () => {
                 console.log(`Request failed.`);
@@ -122,11 +164,11 @@
             xhr.open(`POST`, `https://api.thegraph.com/subgraphs/name/sushiswap/arbitrum-exchange`);
             xhr.setRequestHeader(`Content-Type`, `application/json`);
             xhr.send(JSON.stringify({
-                query: `{\n  pairs(where: {id: "${$page.params.slug}"}) {\n    totalSupply\n    txCount\n    reserveETH\n    reserveUSD\n    swaps {\n        timestamp\n        amount0In\n        amount1In\n        amount0Out\n        amount1Out\n        transaction {\n            id\n        }\n    }\n\t}\n}\n`,
-                variables: null
+                query: `{\n  pairs(where: {id: "${pair}"}) {\n    totalSupply\n    txCount\n    reserveETH\n    reserveUSD\n    volumeUSD\n    dayData(orderBy: date, orderDirection: desc) {\n      date\n      reserve0\n      reserve1\n    }\n    swaps {\n        timestamp\n        amountUSD\n        amount0In\n        amount1In\n        amount0Out\n        amount1Out\n        transaction {\n            id\n        }\n    }\n\t}\n}\n`,
+                variables: null,
             }));
         } else {
-            goto(`/charts/`);
+            goto(`/tokens/`);
         }
 
         loading = false;
@@ -137,7 +179,7 @@
 
 <svelte:head>
     <title>Live Charts & Data - Arbucks</title>
-    <link rel="canonical" href="/charts/{$page.params.slug}/">
+    <link rel="canonical" href="/tokens/{$page.params.slug}/">
 </svelte:head>
 
 {#if !!loading}
@@ -159,13 +201,9 @@
         </div>
         <div class="flex flex--center">
             <div class="left">
-                {#if token.Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1` || token.Token_2_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`}
-                    <h2><span class="light">${zeroes}</span><span class="price">{price}</span> <span class="light">USDT</span></h2>
-                    <p class="light">({token.Token_2_price} {token.Token_2_symbol})</p>
-                {:else}
-                    <h2>1 {token.Token_1_symbol} = {token.Token_2_price} {token.Token_2_symbol}</h2>
-                    <p class="light"><em>USDT pricing is coming soon for non-WETH pairs!</em></p>
-                {/if}
+                <h2><span class="light">${zeroes}</span><span class="price">{price}</span> <span class="light">USDT</span> <span class={changeDir}>{changePctg}%</span></h2>
+                <br>
+                <!--<p class="light">(TODO ETH)</p>-->
                 <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={token.Token_1_contract}" rel="external noopener" target="_blank" draggable="false">Buy {token.Token_1_symbol}</a>
                 <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={token.Token_2_contract}" rel="external noopener" target="_blank" draggable="false">Buy {token.Token_2_symbol}</a>
             </div>
@@ -173,15 +211,19 @@
                 <div class="details">
                     <p class="flex"><span class="bold">Exchange</span><span>Sushiswap</span></p>
                     <p class="flex"><span class="bold">24H Volume (USDT)</span><span>{!!volume ? volume24 : 0}</span></p>
-                    <p class="flex"><span class="bold">Market Cap (Fully Diluted)</span><span><em>Coming soon!</em></span></p>
-                    <p class="flex"><span class="bold">Holders</span><span><em>Coming soon!</em></span></p>
+                    <p class="flex"><span class="bold">Market Cap (Fully Diluted)</span><span>{fdmc}</span></p>
+                    <p class="flex"><span class="bold">Holders</span><span>{holders}</span></p>
+                    <p class="flex"><span class="bold">Transactions</span><span>{txCount}</span></p>
                 </div>
             </div>
         </div>
 
-        <Chart id="0" pairAddress={$page.params.slug} tokenOneAddress={token.Token_1_contract} tokenTwoAddress={token.Token_2_contract} tokenOnePrice={token.Token_1_price} tokenTwoPrice={token.Token_2_price} tokenOneSymbol={token.Token_1_symbol} tokenTwoSymbol={token.Token_2_symbol} {ethPrice} />
-        <p><strong>Some charts may be a bit buggy at the moment. These issues are being fixed as we speak. Thanks for your patience!!</strong></p>
+        <Chart id="0" pairAddress={token.Pair_ID} tokenOneAddress={token.Token_1_contract} tokenTwoAddress={token.Token_2_contract} tokenOnePrice={token.Token_1_price} tokenTwoPrice={token.Token_2_price} tokenOneSymbol={token.Token_1_symbol} tokenTwoSymbol={token.Token_2_symbol} {ethPrice} />
 
+        <br>
+
+        <!--
+            TODO
         <h2>Liquidity</h2>
         {#if !!liquidity}
             <p><em>Coming soon!</em></p>
@@ -195,6 +237,7 @@
         {:else}
             <p>No volume data is available for this pair.</p>
         {/if}
+        -->
 
         <h2>Trades</h2>
         {#if !!swaps}
@@ -207,14 +250,14 @@
                             <tr>
                                 <th>Time</th>
                                 <th>Type</th>
-                                <th>Amount ({token.Token_1_symbol})</th>
+                                <th>Amount (USDT)</th>
                                 <th>Est. Price Impact</th>
                                 <th>TX Hash</th>
                             </tr>
                         </thead>
                         <tbody>
                             {#each swaps as swap}
-                                <Trade timestamp={swap.timestamp} type={swap.amount0In > 0 ? `Buy` : `Sell`} amount={swap.amount0In > 0 ? swap.amount0In : swap.amount0Out} address={swap.transaction.id} />
+                                <Trade timestamp={swap.timestamp} type={swap.amount0In > 0 ? `Buy` : `Sell`} amount={swap.amountUSD} address={swap.transaction.id} />
                             {/each}
                         </tbody>
                     </table>
@@ -248,6 +291,10 @@
         <h1>Invalid Token</h1>
 
         <p><em>Redirecting...</em></p>
+    {:else}
+        <h1>No Pairs Found</h1>
+
+        <p><em>Redirecting...</em></p>
     {/if}
 {/if}
 
@@ -278,6 +325,12 @@
     }
     .price {
         color: #f8f8f8;
+    }
+    .positive {
+        color: #00f000;
+    }
+    .negative {
+        color: #ff6e6e;
     }
     .flex {
         .left, .right {

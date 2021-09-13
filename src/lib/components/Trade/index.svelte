@@ -40,9 +40,15 @@
     </td>
     <td class="{type.toLowerCase()}Text">
         {#if type === `Buy`}
-            {amount}
+            {new Intl.NumberFormat(`en-US`, {
+                currency: `USD`,
+                style: 'currency',
+            }).format(amount)}
         {:else}
-            ({amount})
+            ({new Intl.NumberFormat(`en-US`, {
+                currency: `USD`,
+                style: 'currency',
+            }).format(amount)})
         {/if}
     </td>
     <td>

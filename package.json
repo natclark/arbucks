@@ -24,7 +24,8 @@
     "dependencies": {
         "lightweight-charts": "^3.5.0",
         "simple-svelte-autocomplete": "^2.2.3",
-        "svelte-loading-spinners": "^0.1.7"
+        "svelte-loading-spinners": "^0.1.7",
+        "svelte-simple-modal": "^1.0.3"
     },
     "type": "module"
 }

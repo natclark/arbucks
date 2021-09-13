@@ -1,5 +1,7 @@
 <script>
     import { goto } from '$app/navigation';
+    import Modal from 'svelte-simple-modal';
+    import NewWallet from '$lib/components/Modals/NewWallet.svelte';
     let address;
 
     const handleSubmit = () => goto(`/portfolio/${address}/`);
@@ -15,9 +17,23 @@
     <input bind:value={address} class="input__field" type="text" placeholder="Search any wallet address...">
 </form>
 
+<div class="top">
+    <br>
+    <br>
+    <h2>Saved Wallets</h2>
+    <p>Save wallets for easy access!</p>
+    <p><a class="button" draggable="false" role="button">New Wallet</a></p>
+    <br>
+    <p><em>This feature is coming very soon!</em></p>
+</div>
+
 <style>
     .top {
         text-align: center;
+        .button {
+            cursor: pointer;
+            margin-top: 4px;
+        }
     }
     .input {
         align-items: center;

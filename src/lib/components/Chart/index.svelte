@@ -11,15 +11,23 @@
     export let tokenTwoSymbol;
     export let ethPrice;
 
+    /*
     let localization = {
         priceFormatter: (price) => `${price} ${tokenTwoSymbol}`,
     };
+    */
 
+    /*
     if (tokenTwoAddress === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
         localization = {
             priceFormatter: (price) => `$${price}`,
         };
     }
+    */
+
+    let localization = {
+        priceFormatter: (price) => `$${price}`,
+    };
 
     const chartOptions = {
         grid: {
@@ -78,9 +86,13 @@
         const xhr = new XMLHttpRequest();
         xhr.onload = async () => {
             const json = JSON.parse(xhr.response); // TODO check for errors
+            /*
             const array = json.data.pairHourDatas.sort((a, b) => {
                 return a.date - b.date;
             }).reverse();
+            */
+           const array = json.data.pairHourDatas
+           //console.log(array);
 
             let date = array[0].date;
 
@@ -92,9 +104,46 @@
                 if (array.indexOf(array.find((e) => e.date === date)) > -1) {
                     let value = array[i].reserve1 / array[i].reserve0;
 
+                    /*
                     if (tokenTwoAddress === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
                         value = parseFloat(value * ethPrice).toFixed(32);
                     }
+                    */
+
+                    if (tokenTwoAddress === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
+                        value = parseFloat(value * ethPrice).toFixed(32).toString();
+                    } else if (tokenOneAddress === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
+                        value = parseFloat((array[i].reserve0 / array[i].reserve1) * ethPrice).toFixed(32).toString();
+                    }
+
+                    let zeroes = ``;
+                    let price = ``;
+
+                    let k = 0;
+
+                    for (let j = 0; j < value.length; j++) {
+                        if (value[0] === `0`) {
+                            if (!zeroes.includes(`.`)) {
+                                zeroes += value[j];
+                            } else if (value[j] === `0` && k === 0) {
+                                zeroes += value[j];
+                            } else if (zeroes.includes(`.`) && k < 4) {
+                                price += value[j];
+                                k++;
+                            } else if (k >= 4) {
+                                break;
+                            }
+                        } else {
+                            price += value[j];
+                            if (price.includes(`.`) && k < 2) {
+                                k++;
+                            } else if (k >= 2) {
+                                break;
+                            }
+                        }
+                    }
+
+                    value = parseFloat(zeroes + price);
 
                     priceData.push({
                         time: array[i].date,
@@ -161,7 +210,7 @@
         xhr.open(`POST`, `https://api.thegraph.com/subgraphs/name/sushiswap/arbitrum-exchange`);
         xhr.setRequestHeader(`Content-Type`, `application/json`);
         xhr.send(JSON.stringify({
-            query: `{\n  pairHourDatas(first: 1000, where: {pair: "${pairAddress}"}) {\n    id\n    date\n    pair {\n      id\n    token0Price\n    token1Price\n    }\n    reserve0\n    reserve1\n    reserveUSD\n    volumeToken0\n    volumeToken1\n    volumeUSD\n    txCount\n\t}\n}\n`,
+            query: `{\n  pairHourDatas(first: 1000, where: {pair: "${pairAddress}"}, orderBy: date, orderDirection: desc) {\n    id\n    date\n    pair {\n      id\n    token0Price\n    token1Price\n    }\n    reserve0\n    reserve1\n    reserveUSD\n    volumeToken0\n    volumeToken1\n    volumeUSD\n    txCount\n\t}\n}\n`,
             variables: null,
         }));
     });
