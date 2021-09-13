@@ -1,19 +1,85 @@
 <footer>
-    <p>This site contains information procured from third parties.</p>
-    <p>Nothing on this site constitutes financial or legal advice.</p>
-    <p>Please don't shoot the messenger!</p>
+    <div class="columns">
+        <div class="column">
+            <h2>Arbitrum Tools</h2>
+            <p><a href="/tokens/" draggable="false" sveltekit:prefetch>Tokens</a></p>
+            <p><a href="/pools/" draggable="false" sveltekit:prefetch>Pools</a></p>
+            <p><a href="/farms/" draggable="false" sveltekit:prefetch>Farms</a></p>
+            <p><a href="/futures/" draggable="false" sveltekit:prefetch>Futures</a></p>
+            <p><a href="/ledger/" draggable="false" sveltekit:prefetch>Ledger</a></p>
+            <p><a href="/portfolio/" draggable="false" sveltekit:prefetch>Portfolio</a></p>
+        </div>
+        <div class="column">
+            <h2>Project Info</h2>
+            <p><a href="/docs/" draggable="false" sveltekit:prefetch>Docs</a></p>
+            <p><a href="/blog/" draggable="false" sveltekit:prefetch>Blog</a></p>
+            <p><a href="/docs/roadmap/" draggable="false" sveltekit:prefetch>Roadmap</a></p>
+            <!--
+            TODO
+            <p><a href="/dao/" draggable="false" sveltekit:prefetch>DAO</a></p>
+            -->
+        </div>
+        <div class="column">
+            <h2>Socials</h2>
+            <p><a href="https://github.com/natclark/arbucks" draggable="false">GitHub</a></p>
+            <p><a href="https://twitter.com/arbucks_io" draggable="false">Twitter</a></p>
+            <p><a href="https://t.me/arbuckscafe" draggable="false">Telegram</a></p>
+            <p><a href="mailto:contact@arbucks.io" draggable="false">contact@arbucks.io</a></p>
+        </div>
+    </div>
+    <div class="disclaimer">
+        <p>DISCLAIMER: This site contains information procured from third parties. Nothing on this site constitutes financial or legal advice. Please don't shoot the messenger!</p>
+    </div>
 </footer>
 
 <style>
     footer {
         background-color: var(--bg-navbar);
         font-size: 14px;
-        padding: 8px 0;
+        padding: 16px 0 0;
         text-align: center;
+        .columns {
+            display: block;
+            width: 100%;
+            .column {
+                width: 100%;
+                h2 {
+                    font-size: 20px;
+                }
+                p {
+                    font-size: 16px;
+                    a {
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                        &:visited {
+                            color: var(--fg-link) !important;
+                        }
+                    }
+                }
+            }
+        }
+        .disclaimer {
+            background-color: #000;
+            color: #555;
+            font-size: 12px;
+            padding: 12px 0 8px;
+            p {
+                margin: 0;
+            }
+        }
     }
     @media screen and (min-width: 768px) {
         footer {
             font-size: 18px;
+            .columns {
+                column-gap: 3px;
+                display: flex;
+                justify-content: space-between;
+                .column {
+                    width: 50%;
+                }
+            }
         }
     }
 </style>
