@@ -40,7 +40,7 @@
         `Replying to ChainLinkGod's latest thread...`,
         `Scowering Crypto Twitter for alpha...`,
         `Refreshing /biz/...`,
-        `Waiting for ETH to flip BTC...`,
+        `Waiting for the flippening...`,
         `TOKEN NOT NEEDED!`,
         `Tending to the yield...`,
         `Shilling internet money to strangers...`,
@@ -211,7 +211,9 @@
                                     }
                                 }
                             }
-                        } catch (e) {}
+                        } catch (e) {
+                            item.contract_address === `` && (price = ethPrice.toFixed(2).toString());
+                        }
 
                         (zeroes !== `` || price !== ``) && (netWorth += (item.holdings[0].close.balance / (10 ** item.contract_decimals)) * (zeroes + price));
 
