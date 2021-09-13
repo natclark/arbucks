@@ -30,7 +30,7 @@
         {#if logo !== ``}
             <img src={logo} loading="lazy" width="32px" height="32px" aria-hidden="true">
         {:else}
-            <img src="/placeholder.svg" loading="lazy" width="32px" height="32px" aria-hidden="true">
+            <img src="/placeholder.png" loading="lazy" width="32px" height="32px" aria-hidden="true">
         {/if}
     </td>
     <td class="name">
