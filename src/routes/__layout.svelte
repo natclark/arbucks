@@ -7,8 +7,15 @@
 
 <script>
     import '$lib/global.scss';
+    import { onMount } from 'svelte';
+    import { goto } from '$app/navigation';
     import Navbar from '$lib/components/Navbar/index.svelte';
     import Footer from '$lib/components/Footer/index.svelte';
+
+    onMount(() => {
+        (window.location.href.includes(`/charts/`)) && (goto(`/tokens/`));
+        (window.location.href.includes(`/pairs/`)) && (goto(`/pools/`));
+    });
 </script>
 
 <svelte:head>
