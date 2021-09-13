@@ -152,6 +152,9 @@
 <style>
     .top {
         text-align: center;
+        h1 {
+            text-shadow: 0 0 80px #888, 0 0 16px var(--fg-header);
+        }
         img {
             max-width: 800px;
         }
