@@ -118,6 +118,11 @@ body {
     scrollbar-track-color: #bbb;
 }
 
+.window-wrap .window {
+    background-color: var(--bg-body) !important;
+    color: var(--fg-body) !important;
+}
+
 h1, h2, h3, h4, h5, h6 {
     color: var(--fg-header);
     > a {
@@ -158,6 +163,9 @@ a {
     will-change: opacity;
     &.button--buy {
         background-color: #008000;
+    }
+    &.button--sell {
+        background-color: #a81818;
     }
     &:hover {
         opacity: .8;

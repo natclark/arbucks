@@ -67,7 +67,7 @@
     <link rel="canonical" href="https://arbucks.io/pairs/">
 </svelte:head>
 
-<h1>Pairs ({$pairs.length})</h1>
+<h1>Pools ({$pairs.length})</h1>
 
 <p>This is a real-time list of all the <em>Sushiswap</em> trading pairs currently available on Arbitrum One. <strong>Uniswap pairs are coming soon.</strong></p>
 

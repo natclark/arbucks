@@ -1,11 +1,43 @@
 <script>
     import { goto } from '$app/navigation';
+    import { onMount } from 'svelte';
+    import portfolioWallets from '$lib/stores/portfolioWallets';
     import Modal from 'svelte-simple-modal';
     import NewWallet from '$lib/components/Modals/NewWallet.svelte';
+    import Wallet from '$lib/components/Portfolio/Wallet.svelte';
+
+    let ls;
+    let newPortfolioWallets = [];
+
     let address;
 
     const handleSubmit = () => goto(`/portfolio/${address}/`);
+
+    onMount(() => {
+        if (typeof localStorage !== `undefined`) {
+            ls = localStorage;
+            if (ls.getItem(`arbucks::v0:wallets`) !== null) {
+                try {
+                    JSON.parse(ls.getItem(`arbucks::v0:wallets`)).forEach((wallet) => {
+                        newPortfolioWallets.push({
+                            name: wallet.name,
+                            address: wallet.address,
+                        });
+                    });
+                    portfolioWallets.update(() => newPortfolioWallets);
+                } catch (e) {
+                    newPortfolioWallets = [];
+                    portfolioWallets.update(() => newPortfolioWallets);
+                }
+            }
+        }
+    });
 </script>
+
+<svelte:head>
+    <title>Track Any Arbitrum Wallet in Real-Time - Arbucks</title>
+    <link rel="canonical" href="https://arbucks.io/portfolio/">
+</svelte:head>
 
 <div class="top">
     <br>
@@ -22,18 +54,35 @@
     <br>
     <h2>Saved Wallets</h2>
     <p>Save wallets for easy access!</p>
-    <p><a class="button" draggable="false" role="button">New Wallet</a></p>
+    <Modal>
+        <NewWallet />
+    </Modal>
     <br>
-    <p><em>This feature is coming very soon!</em></p>
+    {#if $portfolioWallets.length > 0}
+        <div class="scroller">
+            <table class="wallets">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {#each $portfolioWallets as wallet}
+                        <Wallet name={wallet.name} address={wallet.address} />
+                    {/each}
+                </tbody>
+            </table>
+        </div>
+    {:else}
+        <p><em>Looks like you haven't saved any wallets yet!</em></p>
+    {/if}
 </div>
 
 <style>
     .top {
         text-align: center;
-        .button {
-            cursor: pointer;
-            margin-top: 4px;
-        }
     }
     .input {
         align-items: center;
@@ -66,6 +115,27 @@
             &:focus {
                 box-shadow: rgba(0, 0, 0, .16) 0 1px 4px, var(--fg-header) 0 0 0 2px;
             }
+        }
+    }
+    .scroller {
+        overflow-x: auto;
+        .wallets {
+            border-collapse: collapse;
+            border-spacing: 0;
+            margin-bottom: 32px;
+            width: 100%;
+            thead th {
+                text-align: left;
+                &:last-child {
+                    text-align: right;
+                }
+            }
+        }
+    }
+    @media screen and (min-width: 768px) {
+        .wallets {
+            border-collapse: separate !important;
+            border-spacing: 0 1em !important;
         }
     }
 </style>
