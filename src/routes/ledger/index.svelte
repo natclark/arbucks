@@ -129,7 +129,7 @@
                     padding: .3rem;
                     transition: all .08s ease-in;
                     width: 200px;
-                    will-change: box-shadow, outline;
+                    will-change: box-shadow;
                     &::-ms-input-placeholder, &:-ms-input-placeholder, *::placeholder {
                         color: #888;
                     }
@@ -140,7 +140,7 @@
                         box-shadow: rgba(0, 0, 0, .4) 0 30px 90px;
                     }
                     &:focus {
-                        outline: 2px solid var(--fg-header);
+                        box-shadow: rgba(0, 0, 0, .16) 0 1px 4px, var(--fg-header) 0 0 0 2px;
                     }
                 }
             }
