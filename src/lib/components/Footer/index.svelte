@@ -21,9 +21,9 @@
         </div>
         <div class="column">
             <h2>Socials</h2>
-            <p><a href="https://github.com/natclark/arbucks" draggable="false">GitHub</a></p>
-            <p><a href="https://twitter.com/arbucks_io" draggable="false">Twitter</a></p>
-            <p><a href="https://t.me/arbuckscafe" draggable="false">Telegram</a></p>
+            <p><a href="https://github.com/natclark/arbucks" draggable="false" rel="external noopener" target="_blank">GitHub</a></p>
+            <p><a href="https://twitter.com/arbucks_io" draggable="false" rel="external noopener" target="_blank">Twitter</a></p>
+            <p><a href="https://t.me/arbuckscafe" draggable="false" rel="external noopener" target="_blank">Telegram</a></p>
             <p><a href="mailto:contact@arbucks.io" draggable="false">contact@arbucks.io</a></p>
         </div>
     </div>
