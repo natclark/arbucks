@@ -261,7 +261,7 @@
                 style: 'currency',
             }).format(netWorth)}
         </h1>
-        <p class="subtitle"><a href="https://arbiscan.io/address/${address}" rel="external noopener" target="_blank">{address}</a> <Copy text={address} /></p>
+        <p class="subtitle"><a href="https://arbiscan.io/address/{address}" rel="external noopener" target="_blank">{address}</a> <Copy text={address} /></p>
         <p class="subtitle">A chart to track your portfolio value over time is coming soon!</p>
         <h2>Tokens</h2>
         <p>P&L, 24H change, support for USDT value of Uniswap token balances, and more is coming soon!!</p>
