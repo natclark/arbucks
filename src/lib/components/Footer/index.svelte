@@ -63,7 +63,7 @@
             background-color: #000;
             color: #555;
             font-size: 12px;
-            padding: 12px 0 8px;
+            padding: 12px 4px 8px;
             p {
                 margin: 0;
             }
