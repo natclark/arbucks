@@ -73,7 +73,6 @@
                     <a href="/futures/" draggable="false" aria-current="{$page.path === `/futures/` ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Futures</a>
                     <a href="/ledger/" draggable="false" aria-current="{$page.path === `/ledger/` ? `page` : ``}" on:mousedown={(e)=>ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Ledger</a>
                     <a href="/docs/" draggable="false" aria-current="{$page.path.includes(`/docs/`) ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Docs</a>
-                    <a href="/blog/" draggable="false" aria-current="{$page.path.includes(`/blog/`) ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Blog</a>
                     <a href="https://app.sushi.com/swap?outputCurrency=0xafd871f684f21ab9d7137608c71808f83d75e6fc" draggable="false" rel="external noopener" target="_blank" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>$BUCK</a>
                     <a href="/portfolio/" draggable="false" aria-current="{$page.path.includes(`/portfolio/`) ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Portfolio</a>
                 </div>
@@ -89,7 +88,6 @@
                 <a href="/futures/" draggable="false" aria-current="{$page.path === `/futures/` ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Futures</a>
                 <a href="/ledger/" draggable="false" aria-current="{$page.path === `/ledger/` ? `page` : ``}" on:mousedown={(e)=>ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Ledger</a>
                 <a href="/docs/" draggable="false" aria-current="{$page.path.includes(`/docs/`) ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Docs</a>
-                <a href="/blog/" draggable="false" aria-current="{$page.path.includes(`/blog/`) ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Blog</a>
             </div>
         </div>
         <div class="right">
