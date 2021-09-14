@@ -6,7 +6,7 @@ This details all the important information about the project.
 
 ## What is Arbucks?
 
-Here's the evelator pitch:
+Here's the elevator pitch:
 
 - Token-powered and DAC-governed, Arbucks is an **open-source**, **product-first**, and **community-led** Arbitrum project.
 

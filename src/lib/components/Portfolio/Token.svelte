@@ -52,6 +52,9 @@
         }).format((holdings[0].close.balance / (10 ** decimals)) * price)}
     </td>
     <td class="actions">
+        {#if address !== ``}
+            <a class="button" href="/tokens/{address}/" draggable="false" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>View</a>
+        {/if}
         <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={address}" rel="external noopener" target="_blank" draggable="false" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)}>Trade</a>
     </td>
 </tr>
