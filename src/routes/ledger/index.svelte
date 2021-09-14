@@ -169,10 +169,6 @@
                 display: block !important;
             }
         }
-        .tokens {
-            border-collapse: separate !important;
-            border-spacing: 0 1em !important;
-        }
     }
 </style>
 
