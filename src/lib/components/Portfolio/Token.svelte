@@ -96,6 +96,12 @@
     </td>
     <td>
         {new Intl.NumberFormat(`en-US`, {
+        currency: `USD`,
+        style: 'currency',
+        }).format(price)}
+    </td>
+    <td>
+        {new Intl.NumberFormat(`en-US`, {
             currency: `USD`,
             style: 'currency',
         }).format((holdings[0].close.balance / (10 ** decimals)) * price)}

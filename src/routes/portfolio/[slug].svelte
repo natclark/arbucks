@@ -300,6 +300,7 @@
                             <th>Symbol</th>
                             <th>Address</th>
                             <th>Balance</th>
+                            <th>USDT Price</th>
                             <th>USDT Value</th>
                             <th>Actions</th>
                         </tr>
