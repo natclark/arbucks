@@ -395,10 +395,6 @@
         }
         .scroller {
             overflow-x: hidden;
-            .trades {
-                border-collapse: separate !important;
-                border-spacing: 0 1em !important;
-            }
         }
     }
 </style>
