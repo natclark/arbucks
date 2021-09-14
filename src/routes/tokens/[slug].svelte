@@ -165,7 +165,7 @@
             xhr.open(`POST`, `https://api.thegraph.com/subgraphs/name/sushiswap/arbitrum-exchange`);
             xhr.setRequestHeader(`Content-Type`, `application/json`);
             xhr.send(JSON.stringify({
-                query: `{\n  pairs(where: {id: "${pair}"}) {\n    totalSupply\n    txCount\n    reserveETH\n    reserveUSD\n    volumeUSD\n    dayData(orderBy: date, orderDirection: desc) {\n      date\n      reserve0\n      reserve1\n    }\n    swaps {\n        timestamp\n        amountUSD\n        amount0In\n        amount1In\n        amount0Out\n        amount1Out\n        transaction {\n            id\n        }\n    }\n\t}\n}\n`,
+                query: `{\n  pairs(where: {id: "${pair}"}) {\n    totalSupply\n    txCount\n    reserveETH\n    reserveUSD\n    volumeUSD\n    dayData(orderBy: date, orderDirection: desc) {\n      date\n      reserve0\n      reserve1\n    }\n    swaps {\n        timestamp\n        to\n        amountUSD\n        amount0In\n        amount1In\n        amount0Out\n        amount1Out\n        transaction {\n            id\n        }\n    }\n\t}\n}\n`,
                 variables: null,
             }));
         } else {
@@ -254,13 +254,14 @@
                                 <th>Time</th>
                                 <th>Type</th>
                                 <th>Amount (USDT)</th>
-                                <th>Est. Price Impact</th>
+                                <th>Est. Price Impact (WIP)</th>
+                                <th>Maker</th>
                                 <th>TX Hash</th>
                             </tr>
                         </thead>
                         <tbody>
                             {#each swaps as swap}
-                                <Trade timestamp={swap.timestamp} type={swap.amount0In > 0 ? `Buy` : `Sell`} amount={swap.amountUSD} address={swap.transaction.id} />
+                                <Trade timestamp={swap.timestamp} type={swap.amount0In > 0 ? `Buy` : `Sell`} amount={swap.amountUSD} maker={swap.to} address={swap.transaction.id} />
                             {/each}
                         </tbody>
                     </table>

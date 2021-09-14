@@ -6,6 +6,7 @@
     export let timestamp;
     export let type;
     export let amount;
+    export let maker;
     export let address;
 
     const difference = Math.floor(new Date().getTime() / 1000) - parseInt(timestamp);
@@ -52,7 +53,10 @@
         {/if}
     </td>
     <td>
-        <p><em>Coming soon!</em></p>
+        <p>0.00%</p>
+    </td>
+    <td>
+        <a href="https://arbiscan.io/address/{maker}" rel="external noopener" target="_blank">{maker.substr(0, 6)}...{maker.substr(address.length - 7, maker.length - 1)}</a> <Copy text={maker} />
     </td>
     <td>
         <a href="https://arbiscan.io/tx/{address}" rel="external noopener" target="_blank">{address.substr(0, 6)}...{address.substr(address.length - 7, address.length - 1)}</a> <Copy text={address} />
