@@ -2,7 +2,6 @@
     import { onMount } from 'svelte';
     import pages from '$lib/stores/pages';
     import tokens from '$lib/stores/tokens';
-    import { Moon } from 'svelte-loading-spinners';
     import TickerItem from './TickerItem.svelte';
 
     let loading = true;

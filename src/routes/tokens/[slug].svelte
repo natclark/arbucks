@@ -1,7 +1,7 @@
 <script>
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
-    import { Moon } from 'svelte-loading-spinners';
+    import Loader from '$lib/components/Loader/index.svelte';
     import Copy from '$lib/components/Copy/index.svelte';
     import Search from '$lib/components/Search/index.svelte';
     import Chart from '$lib/components/Chart/index.svelte';
@@ -187,7 +187,7 @@
 
 {#if !!loading}
     <div class="loading">
-        <Moon size="60" color="var(--fg-loader)" unit="px" duration="1s" />
+        <Loader />
     </div>
 {:else}
     {#if !!token && !!valid}

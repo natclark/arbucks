@@ -8,7 +8,7 @@
     import portfolioLPs from '$lib/stores/portfolioLPs';
     import portfolioFutures from '$lib/stores/portfolioFutures';
     import { goto } from '$app/navigation';
-    import { Moon } from 'svelte-loading-spinners';
+    import Loader from '$lib/components/Loader/index.svelte';
     import Copy from '$lib/components/Copy/index.svelte';
     //import Chart from '$lib/components/Portfolio/Chart.svelte';
     import Token from '$lib/components/Portfolio/Token.svelte';
@@ -251,7 +251,7 @@
 {#if !!loading}
     <div class="container">
         <div class="loading">
-            <Moon size="60" color="var(--fg-loader)" unit="px" duration="1s" />
+            <Loader />
         </div>
         <br>
         <p>{loadingMessages[Math.floor(Math.random() * loadingMessages.length)]}</p>

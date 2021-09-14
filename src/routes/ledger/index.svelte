@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import orders from '$lib/stores/orders';
-    import { Moon } from 'svelte-loading-spinners';
+    import Loader from '$lib/components/Loader/index.svelte';
     import Order from '$lib/components/Order/index.svelte';
 
     let loading = true;
@@ -80,7 +80,7 @@
 
 {#if !!loading}
     <div class="loading">
-        <Moon size="60" color="var(--fg-loader)" unit="px" duration="1s" />
+        <Loader />
     </div>
 {:else}
     <div class="scroller">

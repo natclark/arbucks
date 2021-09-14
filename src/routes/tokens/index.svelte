@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import tokens from '$lib/stores/tokens';
-    import { Moon } from 'svelte-loading-spinners';
+    import Loader from '$lib/components/Loader/index.svelte';
     import Token from '$lib/components/Token/index.svelte';
 
     let sorting = false;
@@ -130,7 +130,7 @@
 
 {#if !!loading}
     <div class="loading">
-        <Moon size="60" color="var(--fg-loader)" unit="px" duration="1s" />
+        <Loader />
     </div>
 {:else}
     <div class="scroller">
