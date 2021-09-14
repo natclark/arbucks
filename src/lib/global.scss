@@ -155,7 +155,7 @@ a {
     color: #fff !important;
     font-weight: 500;
     overflow: hidden;
-    padding: 8px 16px;
+    padding: 8px 24px;
     position: relative;
     text-decoration: none !important;
     transition: all .07s;
@@ -242,14 +242,6 @@ a {
             transform: translateY(1px);
             transition: transform 34ms;
         }
-    }
-}
-
-@media screen and (min-width: 768px) {
-    .primary__front {
-        display: block !important;
-        font-size: 1.25rem !important;
-        padding: 8px 42px !important;
     }
 }
 

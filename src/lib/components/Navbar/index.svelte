@@ -206,6 +206,13 @@
                     }
                     &.logo {
                         height: 40px;
+                        will-change: opacity, transform;
+                        &:hover {
+                            opacity: .8;
+                        }
+                        &:active {
+                            transform: scale(.97);
+                        }
                     }
                     &:not(.logo) {
                         padding-top: 4px !important;
@@ -285,7 +292,11 @@
             margin-bottom: 4px;
         }
         .primary {
+            display: block;
             margin-left: 12px;
+            .primary__front {
+                display: block;
+            }
         }
     }
     :global {
