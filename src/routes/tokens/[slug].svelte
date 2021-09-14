@@ -181,6 +181,8 @@
 <svelte:head>
     <title>Live Arbitrum Charts & Analytics - Arbucks</title>
     <link rel="canonical" href="/tokens/{$page.params.slug}/">
+    <meta property="og:title" content="Live Arbitrum Charts & Analytics - Arbucks">
+    <meta name=twitter:title content="Live Arbitrum Charts & Analytics - Arbucks">
 </svelte:head>
 
 {#if !!loading}

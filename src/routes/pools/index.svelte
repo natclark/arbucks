@@ -65,6 +65,8 @@
 <svelte:head>
     <title>Pairs - Arbucks</title>
     <link rel="canonical" href="https://arbucks.io/pairs/">
+    <meta property="og:title" content="Pairs - Arbucks">
+    <meta name=twitter:title content="Pairs - Arbucks">
 </svelte:head>
 
 <h1>Pools ({$pairs.length})</h1>

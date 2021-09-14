@@ -52,8 +52,10 @@
 </script>
 
 <svelte:head>
-    <title>Tokens - Arbucks</title>
+    <title>Real-Time Arbitrum Order Book - Arbucks</title>
     <link rel="canonical" href="https://arbucks.io/tokens/">
+    <meta property="og:title" content="Real-Time Arbitrum Order Book - Arbucks">
+    <meta name=twitter:title content="Real-Time Arbitrum Order Book - Arbucks">
 </svelte:head>
 
 <h1>Ledger</h1>

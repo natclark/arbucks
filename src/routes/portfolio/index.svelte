@@ -37,6 +37,8 @@
 <svelte:head>
     <title>Track Any Arbitrum Wallet in Real-Time - Arbucks</title>
     <link rel="canonical" href="https://arbucks.io/portfolio/">
+    <meta property="og:title" content="Track Any Arbitrum Wallet in Real-Time - Arbucks">
+    <meta name=twitter:title content="Track Any Arbitrum Wallet in Real-Time - Arbucks">
 </svelte:head>
 
 <div class="top">

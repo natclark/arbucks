@@ -118,8 +118,10 @@
 </script>
 
 <svelte:head>
-    <title>Tokens - Arbucks</title>
+    <title>Real-Time Arbitrum Token List - Arbucks</title>
     <link rel="canonical" href="https://arbucks.io/tokens/">
+    <meta property="og:title" content="Real-Time Arbitrum Token List - Arbucks">
+    <meta name=twitter:title content="Real-Time Arbitrum Token List - Arbucks">
 </svelte:head>
 
 <h1>Tokens ({$tokens.length})</h1>

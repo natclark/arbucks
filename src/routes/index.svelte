@@ -96,6 +96,8 @@
 <svelte:head>
     <title>Arbucks: Arbitrum Charts, Analytics, Real-Time Data, & More</title>
     <link rel="canonical" href="https://arbucks.io">
+    <meta property="og:title" content="Arbucks: Arbitrum Charts, Analytics, Real-Time Data, & More">
+    <meta name=twitter:title content="Arbucks: Arbitrum Charts, Analytics, Real-Time Data, & More">
 </svelte:head>
 
 <div class="top">

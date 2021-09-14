@@ -244,6 +244,8 @@
 <svelte:head>
     <title>Portfolio Tracker - Arbucks</title>
     <link rel="canonical" href="/portfolio/{$page.params.slug}/">
+    <meta property="og:title" content="Portfolio Tracker - Arbucks">
+    <meta name=twitter:title content="Portfolio Tracker - Arbucks">
 </svelte:head>
 
 {#if !!loading}
