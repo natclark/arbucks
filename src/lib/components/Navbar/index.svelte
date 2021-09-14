@@ -53,7 +53,7 @@
     <div class="container">
         <div class="left">
             <a class="logo" href="/" title="Home" draggable="false" aria-current="{$page.path === `/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>
-                <img draggable="false" src="/img/arbucks-logo.png" alt="Arbucks Logo" width="32px" height="32px">
+                <img draggable="false" src="/img/arbucks-logo.svg" alt="Arbucks Logo" width="32px" height="32px">
             </a>
             <details class="menu menu--mobile">
                 <summary on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)}>
@@ -117,10 +117,10 @@
                     <defs><linearGradient id="a" gradientUnits="userSpaceOnUse" x1="162482" y1="307276" x2="170852" y2="26057.5"><stop offset="0" stop-color="#19a8dd"></stop><stop offset=".678" stop-color="#2ab2e2"></stop><stop offset="1" stop-color="#3cbde8"></stop></linearGradient></defs><circle cx="166667" cy="166667" r="166667" fill="url(#a)"></circle><path d="M246886 91205l-29735 149919s-4158 10396-15594 5404l-68618-52606-24952-12059-42002-14140s-6446-2288-7069-7277c-624-4992 7277-7694 7277-7694l166970-65498s13722-6030 13722 3951z" fill="#fefefe"></path><path d="M127666 239440s-2003-188-4499-8089c-2495-7901-15178-49487-15178-49487l100846-64043s5822-3535 5614 0c0 0 1040 623-2079 3534s-79222 71320-79222 71320l-5481 46765z" fill="#d4e6f1"></path><path d="M159250 214094l-27141 24745s-2122 1609-4443 601l5197-45965 26387 20619z" fill="#b6d0e5"></path>
                 </svg>
             </a>
-            <a class="portfolio" href="/portfolio/" draggable="false" aria-current="{$page.path.includes(`/portfolio/`) ? `page` : ``}" sveltekit:prefetch>
-                <span class="portfolio__shadow"></span>
-                <span class="portfolio__edge"></span>
-                <span class="portfolio__front">
+            <a class="primary" href="/portfolio/" draggable="false" aria-current="{$page.path.includes(`/portfolio/`) ? `page` : ``}" sveltekit:prefetch>
+                <span class="primary__shadow"></span>
+                <span class="primary__edge"></span>
+                <span class="primary__front">
                     Portfolio
                 </span>
             </a>
@@ -152,7 +152,7 @@
                 align-items: center;
                 display: flex;
                 justify-content: space-between;
-                a:not(.portfolio) {
+                a:not(.primary) {
                     align-items: center;
                     border-radius: 4px;
                     color: var(--fg-navbar);
@@ -168,7 +168,7 @@
                     svg:not(.nofill) path {
                         fill: var(--fg-fill);
                     }
-                    &[aria-current="page"] {
+                    &[aria-current="page"]:not(&.logo) {
                         background-color: var(--bg-selected);
                         color: var(--fg-selected);
                     }
@@ -179,7 +179,7 @@
                 summary svg:not(.nofill) path {
                     fill: var(--fg-fill);
                 }
-                button:not(.portfolio) {
+                button:not(.primary) {
                     align-items: center;
                     background-color: transparent;
                     border: 0;
@@ -258,85 +258,13 @@
                     margin-right: 8px;
                     margin-top: 4px;
                 }
-                a:not(.portfolio) {
+                a:not(.primary) {
                     margin-left: 12px;
                     &.icon {
                         height: 40px;
                         margin-left: 0;
                         &:hover {
                             background-color: var(--bg-hover);
-                        }
-                    }
-                }
-                .portfolio {
-                    -webkit-user-select: none;
-                    border: 0;
-                    background: transparent;
-                    cursor: pointer;
-                    display: none;
-                    margin-top: 4px;
-                    outline-offset: 4px;
-                    padding: 0;
-                    position: relative;
-                    user-select: none;
-                    touch-action: manipulation;
-                    transition: filter 250ms;
-                    .portfolio__shadow {
-                        background: hsl(0deg 0% 0% / .25);
-                        border-radius: 12px;
-                        height: 100%;
-                        left: 0;
-                        position: absolute;
-                        top: 0;
-                        transform: translateY(2px);
-                        transition: transform .6s cubic-bezier(.3, .7, .4, 1);
-                        will-change: transform;
-                        width: 100%;
-                    }
-                    .portfolio__edge {
-                        background: linear-gradient(to left, #240046 0%, #5a189a 8%, #5a189a 92%, #3c096c 100%);
-                        border-radius: 12px;
-                        height: 100%;
-                        left: 0;
-                        position: absolute;
-                        top: 0;
-                        width: 100%;
-                    }
-                    .portfolio__front {
-                        background: #892fd3;
-                        border-radius: 12px;
-                        color: #fff;
-                        display: block;
-                        font-size: 1.1rem;
-                        padding: 8px 27px 5px;
-                        position: relative;
-                        transform: translateY(-4px);
-                        transition: transform .6s cubic-bezier(.3, .7, .4, 1);
-                        will-change: transform;
-                    }
-                    &:hover {
-                        filter: brightness(110%);
-                        text-decoration: none;
-                        .portfolio__front {
-                            transform: translateY(-6px);
-                            transition: transform .25s cubic-bezier(.3, .7, .4, 1.5);
-                        }
-                        .portfolio__shadow {
-                            transform: translateY(4px);
-                            transition: transform .25s cubic-bezier(.3, .7, .4, 1.5);
-                        }
-                    }
-                    &:focus:not(:focus-visible) {
-                        outline: none;
-                    }
-                    &:active {
-                        .portfolio__front {
-                            transform: translateY(-2px);
-                            transition: transform 34ms;
-                        }
-                        .portfolio__shadow {
-                            transform: translateY(1px);
-                            transition: transform 34ms;
                         }
                     }
                 }
@@ -356,13 +284,8 @@
             display: block !important;
             margin-bottom: 4px;
         }
-        .portfolio {
-            display: block !important;
+        .primary {
             margin-left: 12px;
-            .portfolio__front {
-                font-size: 1.25rem;
-                padding: 8px 42px;
-            }
         }
     }
     :global {

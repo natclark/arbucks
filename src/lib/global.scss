@@ -172,6 +172,87 @@ a {
     }
 }
 
+.primary {
+    -webkit-user-select: none;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    display: none;
+    margin-top: 4px;
+    outline-offset: 4px;
+    padding: 0;
+    position: relative;
+    user-select: none;
+    touch-action: manipulation;
+    transition: filter 250ms;
+    .primary__shadow {
+        background: hsl(0deg 0% 0% / .25);
+        border-radius: 12px;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        transform: translateY(2px);
+        transition: transform .6s cubic-bezier(.3, .7, .4, 1);
+        will-change: transform;
+        width: 100%;
+    }
+    .primary__edge {
+        background: linear-gradient(to left, #240046 0%, #5a189a 8%, #5a189a 92%, #3c096c 100%);
+        border-radius: 12px;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+    .primary__front {
+        background: #892fd3;
+        border-radius: 12px;
+        color: #fff;
+        display: block;
+        font-size: 1.1rem;
+        padding: 8px 27px 5px;
+        position: relative;
+        transform: translateY(-4px);
+        transition: transform .6s cubic-bezier(.3, .7, .4, 1);
+        will-change: transform;
+    }
+    &:hover {
+        filter: brightness(110%);
+        text-decoration: none;
+        .primary__front {
+            transform: translateY(-6px);
+            transition: transform .25s cubic-bezier(.3, .7, .4, 1.5);
+        }
+        .primary__shadow {
+            transform: translateY(4px);
+            transition: transform .25s cubic-bezier(.3, .7, .4, 1.5);
+        }
+    }
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
+    &:active {
+        .primary__front {
+            transform: translateY(-2px);
+            transition: transform 34ms;
+        }
+        .primary__shadow {
+            transform: translateY(1px);
+            transition: transform 34ms;
+        }
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .primary__front {
+        display: block !important;
+        font-size: 1.25rem;
+        padding: 8px 42px;
+    }
+}
+
 span.ripple {
     background-color: rgba(255, 255, 255, .5);
     border-radius: 50%;
