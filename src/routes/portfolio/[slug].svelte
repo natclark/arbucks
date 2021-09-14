@@ -8,6 +8,7 @@
     import portfolioLPs from '$lib/stores/portfolioLPs';
     import portfolioFutures from '$lib/stores/portfolioFutures';
     import { goto } from '$app/navigation';
+    import { onMount } from 'svelte';
     import Loader from '$lib/components/Loader/index.svelte';
     import Copy from '$lib/components/Copy/index.svelte';
     //import Chart from '$lib/components/Portfolio/Chart.svelte';
@@ -29,6 +30,8 @@
     let pools = [];
     let farms = [];
     let futures = [];
+    let hasHiddenTokens = false;
+    let ls;
 
     let loadingMessages = [
         `Querying the blockchain...`,
@@ -217,6 +220,21 @@
 
                         (zeroes !== `` || price !== ``) && (netWorth += (item.holdings[0].close.balance / (10 ** item.contract_decimals)) * (zeroes + price));
 
+                        let hidden = `false`;
+
+                        if (!!ls) {
+                            if (ls.getItem(`arbucks::v0:hidden`) !== null) {
+                                try {
+                                    JSON.parse(ls.getItem(`arbucks::v0:hidden`)).forEach((addr) => hidden = addr === item.contract_address ? `true` : `false`);
+                                    hidden === `true` && (hasHiddenTokens = true);
+                                } catch (e) {
+                                    ls.setItem(`arbucks::v0:hidden`, JSON.stringify([]));
+                                }
+                            } else {
+                                ls.setItem(`arbucks::v0:hidden`, JSON.stringify([]));
+                            }
+                        }
+
                         tokens.push({
                             address: item.contract_address,
                             symbol: item.contract_ticker_symbol,
@@ -225,6 +243,7 @@
                             logo: item.logo_url,
                             holdings: item.holdings,
                             price: zeroes + price,
+                            hidden,
                         });
 
                         portfolioTokens.update(() => tokens);
@@ -237,6 +256,8 @@
             goto(`/portfolio/`);
         }
     };
+
+    onMount(() => typeof localStorage !== `undefined` && (ls = localStorage));
 
     $: $page.params.slug, refresh();
 </script>
@@ -285,7 +306,9 @@
                     </thead>
                     <tbody>
                         {#each $portfolioTokens as token}
-                            <Token address={token.address} symbol={token.symbol} name={token.name} decimals={token.decimals} logo={token.logo} holdings={token.holdings} price={token.price} />
+                            {#if token.hidden === `false`}
+                                <Token address={token.address} symbol={token.symbol} name={token.name} decimals={token.decimals} logo={token.logo} holdings={token.holdings} price={token.price} hidden={token.hidden} />
+                            {/if}
                         {/each}
                     </tbody>
                 </table>
@@ -332,6 +355,32 @@
         <p><em>Coming soon!</em></p>
         <h2>Borrowed Assets</h2>
         <p><em>Coming soon!</em></p>
+        <h2>Hidden Balances</h2>
+        <p>You can "hide" token balances you don't want to see at the top of this page, which will move them down here.</p>
+        {#if $portfolioTokens.length > 0 && !!hasHiddenTokens}
+            <div class="scroller">
+                <table class="tokens">
+                    <thead>
+                        <tr>
+                            <th>Logo</th>
+                            <th>Name</th>
+                            <th>Symbol</th>
+                            <th>Address</th>
+                            <th>Balance</th>
+                            <th>USDT Value</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {#each $portfolioTokens as token}
+                            {#if token.hidden === `true`}
+                                <Token address={token.address} symbol={token.symbol} name={token.name} decimals={token.decimals} logo={token.logo} holdings={token.holdings} price={token.price} hidden={token.hidden} />
+                            {/if}
+                        {/each}
+                    </tbody>
+                </table>
+            </div>
+        {/if}
     {:else if valid === false}
         <h1>Invalid Address</h1>
 
