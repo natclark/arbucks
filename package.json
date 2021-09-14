@@ -25,8 +25,7 @@
         "canvas-confetti": "^1.4.0",
         "lightweight-charts": "^3.5.0",
         "simple-svelte-autocomplete": "^2.2.3",
-        "svelte-simple-modal": "^1.0.3",
-        "svelte-spinkit": "^1.0.3"
+        "svelte-simple-modal": "^1.0.3"
     },
     "type": "module"
 }
