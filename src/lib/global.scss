@@ -248,8 +248,8 @@ a {
 @media screen and (min-width: 768px) {
     .primary__front {
         display: block !important;
-        font-size: 1.25rem;
-        padding: 8px 42px;
+        font-size: 1.25rem !important;
+        padding: 8px 42px !important;
     }
 }
 

@@ -168,7 +168,7 @@
                     svg:not(.nofill) path {
                         fill: var(--fg-fill);
                     }
-                    &[aria-current="page"]:not(&.logo) {
+                    &[aria-current="page"]:not(.logo) {
                         background-color: var(--bg-selected);
                         color: var(--fg-selected);
                     }
