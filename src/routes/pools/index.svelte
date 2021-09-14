@@ -114,6 +114,9 @@
             thead th {
                 cursor: pointer;
                 text-align: left;
+                &:last-child {
+                    text-align: center;
+                }
                 &:hover {
                     text-decoration: underline;
                 }

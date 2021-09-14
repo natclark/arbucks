@@ -174,6 +174,9 @@
             width: 100%;
             thead th {
                 text-align: left;
+                &:last-child {
+                    text-align: center;
+                }
             }
         }
     }
