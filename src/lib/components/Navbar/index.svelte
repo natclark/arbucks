@@ -73,6 +73,7 @@
                     <a href="/futures/" draggable="false" aria-current="{$page.path === `/futures/` ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Futures</a>
                     <a href="/ledger/" draggable="false" aria-current="{$page.path === `/ledger/` ? `page` : ``}" on:mousedown={(e)=>ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Ledger</a>
                     <a href="/docs/" draggable="false" aria-current="{$page.path.includes(`/docs/`) ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Docs</a>
+                    <a href="/blog/" draggable="false" aria-current="{$page.path.includes(`/blog/`) ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Blog</a>
                     <a href="https://app.sushi.com/swap?outputCurrency=0xafd871f684f21ab9d7137608c71808f83d75e6fc" draggable="false" rel="external noopener" target="_blank" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>$BUCK</a>
                     <a href="/portfolio/" draggable="false" aria-current="{$page.path.includes(`/portfolio/`) ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Portfolio</a>
                 </div>
@@ -88,6 +89,7 @@
                 <a href="/futures/" draggable="false" aria-current="{$page.path === `/futures/` ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Futures</a>
                 <a href="/ledger/" draggable="false" aria-current="{$page.path === `/ledger/` ? `page` : ``}" on:mousedown={(e)=>ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Ledger</a>
                 <a href="/docs/" draggable="false" aria-current="{$page.path.includes(`/docs/`) ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Docs</a>
+                <a href="/blog/" draggable="false" aria-current="{$page.path.includes(`/blog/`) ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Blog</a>
             </div>
         </div>
         <div class="right">
@@ -109,13 +111,13 @@
                     </svg>
                 </summary>
                 <div class="socials">
-                    <button title="Change Theme" on:mousedown={(e) => ripple(e, doc)} on:click={changeTheme}>
+                    <a class="icon" role="button" title="Change Theme" on:mousedown={(e) => ripple(e, doc)} on:click={changeTheme}>
                         <svg version="1.1" width="24px" height="24px" x="0px" y="0px" viewBox="0 0 122.88 122.88" style="enable-background:new 0 0 122.88 122.88" xml:space="preserve">
                             <g>
                                 <path clip-rule="evenodd" fill-rule="evenodd" d="M122.88,61.44L122.88,61.44L122.88,61.44c0,8.47-1.5,16.34-4.5,23.58c-0.49,1.19-1.02,2.35-1.59,3.49 c-2.92,5.89-6.89,11.35-11.92,16.36l0,0l0,0l0,0l0,0l0,0c-1.67,1.68-3.4,3.24-5.17,4.68c-1.78,1.45-3.61,2.78-5.48,3.98 c-9.65,6.23-20.58,9.34-32.78,9.34h0v0c-8.47,0-16.33-1.5-23.58-4.5c-1.19-0.49-2.35-1.02-3.49-1.59 c-5.89-2.92-11.35-6.89-16.36-11.92l0,0l0,0l0,0l0,0l0,0c-1.68-1.67-3.24-3.4-4.68-5.17c-1.45-1.78-2.78-3.61-3.98-5.48 C3.11,84.58,0,73.64,0,61.44v0h0c0-8.47,1.5-16.33,4.5-23.58c0.49-1.19,1.02-2.35,1.59-3.49c2.92-5.89,6.89-11.35,11.92-16.36l0,0 l0,0l0,0l0,0l0,0c1.67-1.68,3.4-3.24,5.17-4.68c1.78-1.45,3.61-2.78,5.48-3.98C38.3,3.11,49.24,0,61.44,0h0v0 c8.47,0,16.33,1.5,23.58,4.5c1.19,0.49,2.35,1.02,3.49,1.59c5.89,2.92,11.35,6.89,16.36,11.92l0,0l0,0l0,0l0,0l0,0 c1.68,1.67,3.24,3.4,4.68,5.17c1.45,1.78,2.78,3.61,3.98,5.48C119.77,38.3,122.88,49.24,122.88,61.44L122.88,61.44z M61.44,10.96 c0.11,0,0.22,0,0.32,0v100.96c-0.11,0-0.22,0-0.32,0c-27.88,0-50.48-22.6-50.48-50.48C10.96,33.56,33.56,10.96,61.44,10.96 L61.44,10.96z"></path>
                             </g>
                         </svg>
-                    </button>
+                    </a>
                     <a class="icon" href="https://github.com/natclark/arbucks" title="GitHub" draggable="false" rel="external noopener" target="_blank" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)}>
                         <svg width="24px" height="24px" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 640 640">
                             <path d="M319.988 7.973C143.293 7.973 0 151.242 0 327.96c0 141.392 91.678 261.298 218.826 303.63 16.004 2.964 21.886-6.957 21.886-15.414 0-7.63-.319-32.835-.449-59.552-89.032 19.359-107.8-37.772-107.8-37.772-14.552-36.993-35.529-46.831-35.529-46.831-29.032-19.879 2.209-19.442 2.209-19.442 32.126 2.245 49.04 32.954 49.04 32.954 28.56 48.922 74.883 34.76 93.131 26.598 2.882-20.681 11.15-34.807 20.315-42.803-71.08-8.067-145.797-35.516-145.797-158.14 0-34.926 12.52-63.485 32.965-85.88-3.33-8.078-14.291-40.606 3.083-84.674 0 0 26.87-8.61 88.029 32.8 25.512-7.075 52.878-10.642 80.056-10.76 27.2.118 54.614 3.673 80.162 10.76 61.076-41.386 87.922-32.8 87.922-32.8 17.398 44.08 6.485 76.631 3.154 84.675 20.516 22.394 32.93 50.953 32.93 85.879 0 122.907-74.883 149.93-146.117 157.856 11.481 9.921 21.733 29.398 21.733 59.233 0 42.792-.366 77.28-.366 87.804 0 8.516 5.764 18.473 21.992 15.354 127.076-42.354 218.637-162.274 218.637-303.582 0-176.695-143.269-319.988-320-319.988l-.023.107z"></path>
@@ -319,6 +321,9 @@
                         position: fixed;
                         top: 70px;
                         width: 100%;
+                        a[role="button"] {
+                            cursor: pointer;
+                        }
                     }
                 }
             }
@@ -346,7 +351,7 @@
         }
         .socials {
             left: auto !important;
-            right: auto !important;
+            right:auto !important;
         }
     }
     :global {

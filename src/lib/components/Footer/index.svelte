@@ -12,21 +12,16 @@
         <div class="column">
             <h2>Project Info</h2>
             <p><a href="/docs/" draggable="false" sveltekit:prefetch>Docs</a></p>
-            <!--
-            TODO
-            <p><a href="/blog/" draggable="false" sveltekit:prefetch>Blog</a></p>
-            -->
             <p><a href="/docs/roadmap/" draggable="false" sveltekit:prefetch>Roadmap</a></p>
-            <!--
-            TODO
-            <p><a href="/dao/" draggable="false" sveltekit:prefetch>DAO</a></p>
-            -->
+            <p><a href="/changelog/" draggable="false" sveltekit:prefetch>Changelog</a></p>
         </div>
         <div class="column">
             <h2>Socials</h2>
             <p><a href="https://github.com/natclark/arbucks" draggable="false" rel="external noopener" target="_blank">GitHub</a></p>
             <p><a href="https://twitter.com/arbucks_io" draggable="false" rel="external noopener" target="_blank">Twitter</a></p>
             <p><a href="https://t.me/arbuckscafe" draggable="false" rel="external noopener" target="_blank">Telegram</a></p>
+            <p><a href="https://www.coingecko.com/en/coins/arbucks" draggable="false" rel="external noopener" target="_blank">CoinGecko</a></p>
+            <p><a href="https://coinmarketcap.com/currencies/arbucks/" draggable="false" rel="external noopener" target="_blank">CoinMarketCap</a></p>
             <p><a href="mailto:contact@arbucks.io" draggable="false">contact@arbucks.io</a></p>
         </div>
     </div>
