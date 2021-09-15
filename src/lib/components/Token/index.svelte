@@ -9,21 +9,12 @@
     export let decimals;
     export let logo;
 
-    let row;
     let doc;
 
-    onMount(() => {
-        doc = document;
-        /*
-        TODO
-        row.addEventListener(`mousedown`, (e) => {
-            ripple(e, document);
-        }, true);
-        */
-    });
+    onMount(() => doc = document);
 </script>
 
-<tr bind:this={row} class="token">
+<tr class="token">
     <td class="logo">
         {#if logo !== ``}
             <img src={logo} loading="lazy" width="32px" height="32px" aria-hidden="true">
