@@ -90,9 +90,25 @@
 </script>
 
 <div bind:this={select} class="select">
-    <AutoComplete items={$tokens} bind:selectedItem={selectedToken} bind:value={selectedValue} labelFieldName="Symbol" valueFieldName="Contract" keywordsFunction={(token) => token.Symbol} placeholder="Token symbol">
+    <AutoComplete items={$tokens} bind:selectedItem={selectedToken} bind:value={selectedValue} labelFieldName="Symbol" valueFieldName="Contract" keywordsFunction={(token) => `${token.Symbol} ${token.Name} ${token.Contract}`} placeholder="Token symbol">
         <div slot="item" let:item={item}>
-            {item.Symbol}
+            <div class="select__item">
+                <div>
+                    <img src={item.Logo || `/placeholder.png`} width="32px" height="32px" alt="" aria-hidden="true">
+                </div>
+                <div class="select__item__text">
+                    {#if item.Symbol.length > 16}
+                        <p class="select__item__text__symbol">{item.Symbol.substring(0, 16)}...</p>
+                    {:else}
+                        <p class="select__item__text__symbol">{item.Symbol}</p>
+                    {/if}
+                    {#if item.Name.length > 16}
+                        <p class="select__item__text__name">{item.Name.substring(0, 16)}...</p>
+                    {:else}
+                        <p class="select__item__text__name">{item.Name}</p>
+                    {/if}
+                </div>
+            </div>
         </div>
         <div slot="no-results">
             <strong>NO RESULTS</strong>
@@ -105,6 +121,29 @@
         align-items: center;
         display: flex;
         justify-content: flex-end;
+        .select__item {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            margin: 8px;
+            > div:first:child {
+                width: 20%;
+            }
+            .select__item__text {
+                display: block;
+                text-align: left !important;
+                width: 80%;
+                p {
+                    margin: 0;
+                    &.select__item__text__symbol {
+                        margin-bottom: 8px;
+                    }
+                }
+            }
+        }
+        .autocomplete::after {
+            border-color: var(--fg-header) !important;
+        }
         input {
             background-color: var(--bg-autocomplete);
             border: 0;
@@ -123,16 +162,35 @@
                 opacity: 1;
             }
             &:focus {
+                box-shadow: rgba(0, 0, 0, .16) 0 1px 4px, var(--fg-header) 0 0 0 2px;
                 outline: none;
             }
         }
         .autocomplete-list {
             background-color: var(--bg-autocomplete) !important;
+            border: 0 !important;
+            border-radius: 8px;
+            outline: none !important;
+            scrollbar-color: var(--fg-scroll) var(--bg-scroll);
+            scrollbar-face-color: var(--fg-scroll);
+            scrollbar-track-color: var(--bg-scroll);
+            scrollbar-width: thin;
             .autocomplete-list-item {
                 color: var(--fg-autocomplete) !important;
+                will-change: background-color, color;
                 &.selected, &:hover {
+                    background-color: var(--bg-row-hover);
                     color: #fff !important;
                 }
+            }
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
+            ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {
+                background-color: var(--bg-scroll);
+            }
+            ::-webkit-scrollbar-thumb {
+                background-color: var(--fg-scroll);
             }
         }
     }
