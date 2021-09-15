@@ -17,6 +17,7 @@
 
 <h2>September 14, 2021</h2>
 <ul>
+    <li>Improved the search bar - you can now search by symbol, name, address, etc.</li>
     <li>Created this changelog page</li>
 </ul>
 
