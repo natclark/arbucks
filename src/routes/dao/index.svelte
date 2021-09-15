@@ -12,7 +12,7 @@
             const timestamp = Math.floor(new Date().getTime() / 1000);
             const history = await fetch(`https://api.covalenthq.com/v1/42161/address/${$wallet}/portfolio_v2/?key=${COVALENT_KEY}`);
             const jsonHistory = await history.json();
-            jsonHistory.items.forEach((item) => item.contract_address === `0xafd871f684f21ab9d7137608c71808f83d75e6fc` && (balance = item.holdings[0].close.balance));
+            jsonHistory.items.forEach((item) => item.contract_address === `0xafd871f684f21ab9d7137608c71808f83d75e6fc` && (balance = (item.holdings[0].close.balance)) / (10 ** 18));
         }
     };
 
