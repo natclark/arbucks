@@ -15,6 +15,11 @@
     <p>Here's all the small changes/updates we're making to the site!</p>
 </div>
 
+<h2>September 15, 2021</h2>
+<ul>
+    <li>First draft of the official portal for ArbiDAO governance</li>
+</ul>
+
 <h2>September 14, 2021</h2>
 <ul>
     <li>Improved the search bar - you can now search by symbol, name, address, etc.</li>
