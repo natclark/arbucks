@@ -29,6 +29,7 @@
     --bg-autocomplete: #3c096c;
     --bg-body: #10002b;
     --bg-button: #3f37c9;
+    --bg-button-edge: linear-gradient(to left, #06007a 0%, #0900bb 8%, #0900bb 92%, #080097 100%);
     --bg-hover: #3c096c;
     --bg-input: #5a189a;
     --bg-menu: #240046;
@@ -60,6 +61,7 @@
     --bg-autocomplete: #000;
     --bg-body: #111;
     --bg-button: #f72585;
+    --bg-button-edge: linear-gradient(to left, #520025 0%, #af004f 8%, #af004f 92%, #970044 100%);
     --bg-hover: #222;
     --bg-input: #5a189a;
     --bg-menu: #333;
@@ -220,6 +222,30 @@ a {
         transform: translateY(-4px);
         transition: transform .6s cubic-bezier(.3, .7, .4, 1);
         will-change: transform;
+    }
+    &.primary--primary {
+        .primary__edge {
+            background: var(--bg-button-edge);
+        }
+        .primary__front {
+            background-color: var(--bg-button);
+        }
+    }
+    &.primary--buy {
+        .primary__edge {
+            background: linear-gradient(to left, #002900 0%, #006300 8%, #006300 92%, #003500 100%);
+        }
+        .primary__front {
+            background-color: #008000;
+        }
+    }
+    &.primary--sell {
+        .primary__edge {
+            background: linear-gradient(to left, #330000 0%, #740000 8%, #740000 92%, #500000 100%);
+        }
+        .primary__front {
+            background-color: #a81818;
+        }
     }
     &:hover {
         filter: brightness(110%);

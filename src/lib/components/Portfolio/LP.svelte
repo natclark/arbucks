@@ -63,7 +63,7 @@
         height: 60px;
         overflow: hidden;
         position: relative;
-        transition: all .07s;
+        transition: box-shadow .07s;
         will-change: background-color, box-shadow;
         td {
             text-align: left;

@@ -47,7 +47,13 @@
         <a href="https://arbiscan.io/token/{address}" rel="external noopener" target="_blank">{address.substr(0, 6)}...{address.substr(address.length - 7, address.length - 1)}</a> <Copy text={address} />
     </td>
     <td class="actions">
-        <a class="button button--buy" href="https://app.sushi.com/add/{contractOne}/{contractTwo}" rel="external noopener" target="_blank" draggable="false" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)}>Liquidity</a>
+        <a class="primary primary--buy" href="https://app.sushi.com/add/{contractOne}/{contractTwo}" rel="external noopener" target="_blank" draggable="false">
+            <span class="primary__shadow"></span>
+            <span class="primary__edge"></span>
+            <span class="primary__front">
+                Liquidity
+            </span>
+        </a>
     </td>
 </tr>
 
@@ -59,7 +65,7 @@
         height: 60px;
         overflow: hidden;
         position: relative;
-        transition: all .07s;
+        transition: box-shadow .07s;
         will-change: background-color, box-shadow;
         td {
             text-align: left;
@@ -79,6 +85,9 @@
                 display: flex;
                 justify-content: space-between;
                 text-align: center;
+                .primary {
+                    display: block;
+                }
             }
         }
         &:hover {
