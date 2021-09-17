@@ -131,9 +131,11 @@
                 txCount = pair.txCount
                 volume = true;
                 volume24 = new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(pair.volumeUSD);
+                /*
                 swaps = pair.swaps.sort((a, b) => {
                     return a.timestamp - b.timestamp;
                 }).reverse();
+                */
                 try {
                     let reserveBasedPrice = pair.dayData[1].reserve1 / pair.dayData[1].reserve0;
                     if (token.Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
@@ -168,6 +170,11 @@
                 query: `{\n  pairs(where: {id: "${pair}"}) {\n    totalSupply\n    txCount\n    reserveETH\n    reserveUSD\n    volumeUSD\n    dayData(orderBy: date, orderDirection: desc) {\n      date\n      reserve0\n      reserve1\n    }\n    swaps {\n        timestamp\n        to\n        amountUSD\n        amount0In\n        amount1In\n        amount0Out\n        amount1Out\n        transaction {\n            id\n        }\n    }\n\t}\n}\n`,
                 variables: null,
             }));
+            const txReq = await fetch(`https://api2.sushipro.io/?action=get_transactions_by_pair&pair=${pair}&chainID=42161`);
+            const txJson = await txReq.json();
+            if (typeof txJson.error === `undefined`) {
+                swaps = txJson[1];
+            }
         } else {
             goto(`/tokens/`);
         }
@@ -261,7 +268,7 @@
                         </thead>
                         <tbody>
                             {#each swaps as swap}
-                                <Trade timestamp={swap.timestamp} type={swap.amount0In > 0 ? `Buy` : `Sell`} amount={swap.amountUSD} maker={swap.to} address={swap.transaction.id} />
+                                <Trade timestamp={swap.timestamp} type={`${swap.side.toLowerCase().charAt(0)}${swap.side.toLowerCase().slice(1)}`} amount={swap.volumeUSD} maker={swap.receiver} address={swap.txHash} />
                             {/each}
                         </tbody>
                     </table>
