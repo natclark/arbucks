@@ -209,7 +209,7 @@
             </div>
             <Search />
         </div>
-        <div class="flex flex--center">
+        <div class="flex flex--center flex--mobile">
             <div class="left">
                 <h2><span class="light">${zeroes}</span><span class="price">{price}</span> <span class="light">USDT</span> <span class={changeDir}>{changePctg}%</span></h2>
                 <br>
@@ -217,18 +217,29 @@
                 <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={token.Token_1_contract}" rel="external noopener" target="_blank" draggable="false">Buy {token.Token_1_symbol}</a>
                 <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={token.Token_2_contract}" rel="external noopener" target="_blank" draggable="false">Buy {token.Token_2_symbol}</a>
             </div>
-            <div class="right">
-                <div class="details">
-                    <p class="flex"><span class="bold">Exchange</span><span>Sushiswap</span></p>
-                    <p class="flex"><span class="bold">24H Volume (USDT)</span><span>{!!volume ? volume24 : 0}</span></p>
-                    <p class="flex"><span class="bold">Market Cap (Fully Diluted)</span><span>{fdmc}</span></p>
-                    <p class="flex"><span class="bold">Holders</span><span>{holders}</span></p>
-                    <p class="flex"><span class="bold">Transactions</span><span>{txCount}</span></p>
-                </div>
-            </div>
         </div>
 
-        <Chart id="0" pairAddress={token.Pair_ID} tokenOneAddress={token.Token_1_contract} tokenTwoAddress={token.Token_2_contract} tokenOnePrice={token.Token_1_price} tokenTwoPrice={token.Token_2_price} tokenOneSymbol={token.Token_1_symbol} tokenTwoSymbol={token.Token_2_symbol} {ethPrice} />
+        <div class="details details--mobile">
+            <p class="flex"><span class="bold">Exchange</span><span>Sushiswap</span></p>
+            <p class="flex"><span class="bold">24H Volume</span><span>{!!volume ? volume24 : 0}</span></p>
+            <p class="flex"><span class="bold">Market Cap (Fully Diluted)</span><span>{fdmc}</span></p>
+            <p class="flex"><span class="bold">Holders</span><span>{holders}</span></p>
+            <p class="flex"><span class="bold">Transactions</span><span>{txCount}</span></p>
+        </div>
+
+        <div class="details details--desktop">
+            <p class="details__price"><span class="light">${zeroes}</span><span class="price">{price}</span> <span class="light">USDT</span> <span class={changeDir}>{changePctg}%</span></p>
+            <p class="details__detail"><span class="bold">Exchange</span><span>Sushiswap</span></p>
+            <p class="details__detail"><span class="bold">24H Volume</span><span>{!!volume ? volume24 : 0}</span></p>
+            <p class="details__detail"><span class="bold">Market Cap (Fully Diluted)</span><span>{fdmc}</span></p>
+            <p class="details__detail"><span class="bold">Holders</span><span>{holders}</span></p>
+            <p class="details__detail"><span class="bold">Transactions</span><span>{txCount}</span></p>
+        </div>
+
+        <div class="flex flex--center flex--main">
+            <Chart id="0" pairAddress={token.Pair_ID} tokenOneAddress={token.Token_1_contract} tokenTwoAddress={token.Token_2_contract} tokenOnePrice={token.Token_1_price} tokenTwoPrice={token.Token_2_price} tokenOneSymbol={token.Token_1_symbol} tokenTwoSymbol={token.Token_2_symbol} {ethPrice} />
+            <iframe class="trade" src="https://app.sushi.com/swap?inputCurrency={token.Token_1_contract}&outputCurrency={token.Token_2_contract}" title="Trade on Sushiswap"></iframe>
+        </div>
 
         <br>
 
@@ -347,14 +358,30 @@
         .left, .right {
             margin-bottom: 24px;
         }
-    } 
+        &.flex--main {
+            > *:last-child {
+                display: none;
+            }
+        }
+    }
     .details {
         border: 1px solid var(--fg-border);
         border-width: 1px 0 1px 0;
         width: 100%;
         p.flex {
+            display: flex;
+            justify-content: space-between;
             margin: 12px 0;
         }
+        &.details--desktop {
+            display: none;
+        }
+    }
+    .trade {
+        border: 0;
+        border-radius: 8px;
+        box-shadow: rgba(0, 0, 0, .45) 0 25px 20px -20px;
+        height: 400px;
     }
     p {
         font-size: 14px;
@@ -376,6 +403,10 @@
             width: 100%;
             thead th {
                 text-align: left;
+            }
+            &.trades--small {
+                font-size: 12px;
+                width: 100%;
             }
         }
     }
@@ -400,9 +431,49 @@
             &.flex--center {
                 align-items: center;
             }
+            &.flex--mobile {
+                display: none;
+            }
+            &.flex--main {
+                column-gap: 12px;
+                > *:first-child {
+                    min-width: 65%;
+                }
+                > *:last-child {
+                    display: block;
+                    max-width: 35%;
+                }
+            }
+        }
+        .details.details--mobile {
+            display: none;
+        }
+        .details.details--desktop {
+            align-items: center;
+            border: 0;
+            display: flex;
+            column-gap: 24px;
+            width: 100%;
+            .details__price {
+                font-size: 20px;
+                margin-bottom: 0;
+            }
+            .details__detail {
+                margin-bottom: 0;
+                span:first-child {
+                    display: flex;
+                    font-size: 12px;
+                    flex-direction: column;
+                    margin-bottom: 8px;
+                    opacity: .75;
+                }
+            }
         }
         .scroller {
             overflow-x: hidden;
+        }
+        .trade {
+            height: 600px;
         }
     }
 </style>
