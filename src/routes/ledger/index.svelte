@@ -38,7 +38,7 @@
         xhr.open(`POST`, `https://api.thegraph.com/subgraphs/name/sushiswap/arbitrum-exchange`);
         xhr.setRequestHeader(`Content-Type`, `application/json`);
         xhr.send(JSON.stringify({
-            query: `{\n  swaps(where: {timestamp_gt: ${Math.floor(new Date().getTime() / 1000) - 86400}, amountUSD_gt: ${minValue}}, orderBy: timestamp, orderDirection: desc, first: ${maxResults}) {\n    id\n    timestamp\n    amount0In\n    pair {\n        id\n        name\n        token0 {\n          id\n          name\n        }\n        token1 {\n          id\n          name\n        }\n    }\n        sender\n    amountUSD\n  }\n\t}\n`,
+            query: `{\n  swaps(where: {timestamp_gt: ${Math.floor(new Date().getTime() / 1000) - 604800}, amountUSD_gt: ${minValue}}, orderBy: timestamp, orderDirection: desc, first: ${maxResults}) {\n    id\n    timestamp\n    amount0In\n    pair {\n        id\n        name\n        token0 {\n          id\n          name\n        }\n        token1 {\n          id\n          name\n        }\n    }\n        sender\n    amountUSD\n  }\n\t}\n`,
             variables: null,
         }));
 
