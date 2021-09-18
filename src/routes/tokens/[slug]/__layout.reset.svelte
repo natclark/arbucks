@@ -37,13 +37,23 @@
 <style>
     .container {
         display: grid;
-        grid-template-columns: 1fr min(160ch, 100%) 1fr;
+        grid-template-columns: .5fr min(200ch, 100%) .5fr;
         > * {
             grid-column: 2;
         }
         main {
             min-height: 100vh;
             padding: 0 8px;
+        }
+    }
+    @media screen and (min-width: 768px) {
+        .container main {
+            padding: 0 32px;
+        }
+    }
+    @media screen and (min-width: 1024px) {
+        .container main {
+            padding: 0 48px;
         }
     }
 </style>

@@ -112,6 +112,7 @@
         justify-content: center;
     }
     fieldset {
+        border-color: var(--bg-row);
         .flex {
             display: block;
             div {

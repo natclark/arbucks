@@ -141,7 +141,7 @@
     nav {
         align-items: center;
         background-color: var(--bg-navbar);
-        box-shadow: rgba(50, 50, 93, .25) 0 6px 12px -2px, rgba(0, 0, 0, .3) 0 3px 7px -3px;
+        //box-shadow: rgba(50, 50, 93, .25) 0 6px 12px -2px, rgba(0, 0, 0, .3) 0 3px 7px -3px;
         display: flex;
         height: 70px;
         justify-content: space-between;
@@ -211,9 +211,6 @@
                         transform: scale(.97);
                     }
                 }
-                &:not(.logo) {
-                    padding-top: 4px !important;
-                }
             }
             .menu {
                 &.menu--mobile {
@@ -266,6 +263,7 @@
                 margin-left: 12px;
                 &.highlight {
                     color: var(--fg-header);
+                    font-weight: 600;
                     margin-left: 0;
                 }
                 &.icon {

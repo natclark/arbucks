@@ -198,7 +198,7 @@
     </div>
 {:else}
     {#if !!token && !!valid}
-        <div class="flex">
+        <div class="flex flex--top">
             <div>
                 <h1 class="title">{token.Token_1_symbol} / {token.Token_2_symbol}</h1>
                 <p class="subtitle">
@@ -237,6 +237,35 @@
         </div>
 
         <div class="flex flex--center flex--main">
+            <div class="trades__mobile">
+                {#if !!swaps}
+                    {#if swaps.length > 0}
+                        <div class="scroller">
+                            <table class="trades trades--desktop">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <!--
+                                        <th>Type</th>
+                                        -->
+                                        <th>Amount (USDT)</th>
+                                        <!--
+                                        <th>Est. Price Impact (WIP)</th>
+                                        -->
+                                        <th>Maker</th>
+                                        <th>TX</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {#each swaps as swap}
+                                        <Trade timestamp={swap.timestamp} type={`${swap.side.toLowerCase().charAt(0)}${swap.side.toLowerCase().slice(1)}`} amount={swap.volumeUSD} maker={swap.receiver} address={swap.txHash} version="desktop" />
+                                    {/each}
+                                </tbody>
+                            </table>
+                        </div>
+                    {/if}
+                {/if}
+            </div>
             <Chart id="0" pairAddress={token.Pair_ID} tokenOneAddress={token.Token_1_contract} tokenTwoAddress={token.Token_2_contract} tokenOnePrice={token.Token_1_price} tokenTwoPrice={token.Token_2_price} tokenOneSymbol={token.Token_1_symbol} tokenTwoSymbol={token.Token_2_symbol} {ethPrice} />
             <iframe class="trade" src="https://app.sushi.com/swap?inputCurrency={token.Token_1_contract}&outputCurrency={token.Token_2_contract}" title="Trade on Sushiswap"></iframe>
         </div>
@@ -260,36 +289,42 @@
         {/if}
         -->
 
-        <h2>Trades</h2>
-        {#if !!swaps}
-            {#if swaps.length > 0}
-                <p>Showing the 100 most recent trades.</p>
-                <p><em>This doesn't yet update in real time, so you'll have to refresh the page to fetch new trades.</em></p>
-                <div class="scroller">
-                    <table class="trades">
-                        <thead>
-                            <tr>
-                                <th>Time</th>
-                                <th>Type</th>
-                                <th>Amount (USDT)</th>
-                                <th>Est. Price Impact (WIP)</th>
-                                <th>Maker</th>
-                                <th>TX Hash</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {#each swaps as swap}
-                                <Trade timestamp={swap.timestamp} type={`${swap.side.toLowerCase().charAt(0)}${swap.side.toLowerCase().slice(1)}`} amount={swap.volumeUSD} maker={swap.receiver} address={swap.txHash} />
-                            {/each}
-                        </tbody>
-                    </table>
-                </div>
+        <div class="trades__mobile">
+            <h2>Trades</h2>
+            {#if !!swaps}
+                {#if swaps.length > 0}
+                    <p>Showing the 100 most recent trades.</p>
+                    <p><em>This doesn't yet update in real time, so you'll have to refresh the page to fetch new trades.</em></p>
+                    <div class="scroller">
+                        <table class="trades">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <!--
+                                    <th>Type</th>
+                                    -->
+                                    <th>Amount (USDT)</th>
+                                    <!--
+                                    <th>Est. Price Impact (WIP)</th>
+                                    -->
+                                    <th>Maker</th>
+                                    <th>TX Hash</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {#each swaps as swap}
+                                    <Trade timestamp={swap.timestamp} type={`${swap.side.toLowerCase().charAt(0)}${swap.side.toLowerCase().slice(1)}`} amount={swap.volumeUSD} maker={swap.receiver} address={swap.txHash} version="mobile" />
+                                {/each}
+                            </tbody>
+                        </table>
+                    </div>
+                {:else}
+                    <p><em>There haven't been any transactions for this pair yet.</em></p>
+                {/if}
             {:else}
-                <p><em>There haven't been any transactions for this pair yet.</em></p>
+                <p>No transaction data is available for this pair.</p>
             {/if}
-        {:else}
-            <p>No transaction data is available for this pair.</p>
-        {/if}
+        </div>
 
         <h2>Info</h2>
         <div class="details">
@@ -341,6 +376,12 @@
     .flex {
         display: block;
         margin: 24px 0;
+        &.flex--top {
+            margin-bottom: 0;
+            p {
+                margin-bottom: 0;
+            }
+        }
     }
     .light {
         color: #888;
@@ -359,6 +400,9 @@
             margin-bottom: 24px;
         }
         &.flex--main {
+            > *:first-child {
+                display: none;
+            }
             > *:last-child {
                 display: none;
             }
@@ -403,14 +447,20 @@
             width: 100%;
             thead th {
                 text-align: left;
+                &:last-child {
+                    text-align: center;
+                }
             }
             &.trades--small {
                 font-size: 12px;
                 width: 100%;
             }
+            &.trades--desktop {
+                font-size: 8px;
+            }
         }
     }
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 1024px) {
         .flex {
             display: flex;
             justify-content: space-between;
@@ -435,13 +485,12 @@
                 display: none;
             }
             &.flex--main {
-                column-gap: 12px;
-                > *:first-child {
-                    min-width: 65%;
-                }
-                > *:last-child {
-                    display: block;
-                    max-width: 35%;
+                > * {
+                    &:first-child, &:last-child {
+                        display: block;
+                        max-width: 300px;
+                        width: 100%;
+                    }
                 }
             }
         }
@@ -468,6 +517,9 @@
                     opacity: .75;
                 }
             }
+        }
+        .trades__mobile {
+            display: none;
         }
         .scroller {
             overflow-x: hidden;

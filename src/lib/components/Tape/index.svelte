@@ -120,7 +120,6 @@
             justify-content: space-around;
             list-style: none;
             margin: 0;
-            padding-top: 3px;
             &:hover {
                 animation-play-state: paused;
             }

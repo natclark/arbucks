@@ -8,6 +8,7 @@
     export let amount;
     export let maker;
     export let address;
+    export let version;
 
     const difference = Math.floor(new Date().getTime() / 1000) - parseInt(timestamp);
     let time = ``;
@@ -32,15 +33,17 @@
     });
 </script>
 
-<tr bind:this={row} class="trade">
+<tr bind:this={row} class="trade{version === `desktop` ? ` trade--desktop` : ``}">
     <td>
         {time}
     </td>
+    <!--
     <td>
         <span class={type.toLowerCase()}>{type}</span>
     </td>
+    -->
     <td class="{type.toLowerCase()}Text">
-        {#if type === `Buy`}
+        {#if type === `buy`}
             {new Intl.NumberFormat(`en-US`, {
                 currency: `USD`,
                 style: 'currency',
@@ -52,14 +55,18 @@
             }).format(amount)})
         {/if}
     </td>
+    <!--
     <td>
         <p>0.00%</p>
     </td>
+    -->
     <td>
-        <a href="https://arbiscan.io/address/{maker}" rel="external noopener" target="_blank">{maker.substr(0, 6)}...{maker.substr(address.length - 7, maker.length - 1)}</a> <Copy text={maker} />
+        <a href="https://arbiscan.io/address/{maker}" rel="external noopener" target="_blank">{maker.substr(0, 6)}...</a> <Copy text={maker} small="true" />
     </td>
-    <td>
-        <a href="https://arbiscan.io/tx/{address}" rel="external noopener" target="_blank">{address.substr(0, 6)}...{address.substr(address.length - 7, address.length - 1)}</a> <Copy text={address} />
+    <td class="actions">
+        <a href="https://arbiscan.io/tx/{address}" rel="external noopener" target="_blank">
+            <img src="https://arbiscan.io/images/svg/brands/arbitrum.svg?v=1.3" alt="Arbiscan Logo" height="16px" width="16px" loading="lazy">
+        </a>
     </td>
 </tr>
 
@@ -108,6 +115,10 @@
                 justify-content: space-between;
                 text-align: center;
             }
+        }
+        &.trade--desktop {
+            font-size: 12px !important;
+            height: 28px;
         }
         &:hover {
             background-color: var(--bg-row-hover);
