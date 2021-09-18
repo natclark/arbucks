@@ -95,6 +95,12 @@
             {#each $pages as { token, }, id}
                 <TickerItem {id} {token} />
             {/each}
+            {#each $pages as { token, }, id}
+                <TickerItem {id} {token} />
+            {/each}
+            {#each $pages as { token, }, id}
+                <TickerItem {id} {token} />
+            {/each}
         </ul>
     </div>
 </div>
@@ -104,9 +110,8 @@
         0% {
             transform: translate3d(0, 0, 0);
         }
-
         100% {
-            transform: translate3d(-108rem, 0, 0);
+            transform: translate3d(-40rem, 0, 0);
         }
     }
     .tape {
