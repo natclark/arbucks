@@ -9,6 +9,9 @@
     let doc;
     let ls = null;
 
+    let menu;
+    let socials;
+
     const changeTheme = (e) => {
         ripple(e, doc);
         if (ls !== null) {
@@ -22,6 +25,11 @@
         } else {
             // TODO - notify user that their browser does not support this feature
         }
+    };
+
+    const close = (e) => {
+        menu.removeAttribute(`open`);
+        !menu.contains(e.target) && !socials.contains(e.target) && (socials.removeAttribute(`open`));
     };
 
     theme.subscribe((val) => (typeof doc !== `undefined` && (val === `midnight` || val === `cyberpunk`)) && (doc.querySelector(`html`).setAttribute(`data-theme`, val)));
@@ -49,12 +57,14 @@
     });
 </script>
 
+<svelte:body on:click={close} />
+
 <nav>
     <div class="left">
         <a class="logo" href="/" title="Home" draggable="false" aria-current="{$page.path === `/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>
             <img draggable="false" src="/img/arbucks-logo.svg" alt="Arbucks Logo" width="32px" height="32px">
         </a>
-        <details class="menu menu--mobile">
+        <details bind:this={menu} class="menu menu--mobile">
             <summary on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)}>
                 <svg width="26px" height="26px" viewBox="0 0 122.88 102.4">
                     <title>Menu</title>
@@ -103,7 +113,7 @@
                 Portfolio
             </span>
         </a>
-        <details>
+        <details bind:this={socials}>
             <summary>
                 <svg width="24px" height="24px" viewBox="0 0 29.96 122.88">
                     <path fill="#f8f8f8" fill-rule="evenodd" d="M15,0A15,15,0,1,1,0,15,15,15,0,0,1,15,0Zm0,92.93a15,15,0,1,1-15,15,15,15,0,0,1,15-15Zm0-46.47a15,15,0,1,1-15,15,15,15,0,0,1,15-15Z"></path>
