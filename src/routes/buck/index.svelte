@@ -54,7 +54,7 @@
 
         <h2>Around The Web</h2>
 
-        <div class="flex">
+        <div class="flex flex--cards">
             <a class="card" href="https://www.coingecko.com/en/coins/arbucks" draggable="false" rel="external noopener" target="_blank">
                 <img draggable="false" src="https://cloudflare-ipfs.com/ipfs/QmcP2gBPDXXAdSXtuypcsVhSHoatiRi3SBHS8qHeexPxW4" alt="CoinGecko Logo" loading="lazy">
                 <p>CoinGecko</p>
@@ -90,6 +90,13 @@
     }
     .flex {
         display: block;
+        &.flex--cards {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            row-gap: 12px;
+        }
     }
     .card {
         align-items: center;
@@ -107,11 +114,9 @@
         }
     }
     @media screen and (min-width: 768px) {
-        .flex {
-            align-items: center;
+        .flex.flex--cards {
             column-gap: 12px;
-            display: flex;
-            justify-content: center;
+            flex-direction: row;
         }
     }
 </style>
