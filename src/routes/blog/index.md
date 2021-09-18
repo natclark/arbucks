@@ -2,6 +2,13 @@
     import Post from '$lib/components/Blog/Post.svelte';
 </script>
 
+<svelte:head>
+    <title>Arbitrum Blog - Arbucks</title>
+    <link rel="canonical" href="https://arbucks.io/blog/">
+    <meta property="og:title" content="Arbitrum Blog - Arbucks">
+    <meta name=twitter:title content="Arbitrum Blog - Arbucks">
+</svelte:head>
+
 <h1 class="blog__title">Blog</h1>
 <p>A daily blog where we share our progress and publish Arbitrum tutorials, guides, and news.</p>
 <br>

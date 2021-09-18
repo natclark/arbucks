@@ -6,13 +6,6 @@
     export let thumbnail;
 </script>
 
-<svelte:head>
-    <title>{title} - Arbucks</title>
-    <link rel="canonical" href="https://arbucks.io/blog/{path}/">
-    <meta property="og:title" content="{title} - Arbucks">
-    <meta name=twitter:title content="{title} - Arbucks">
-</svelte:head>
-
 <a class="post" href="/blog/{path}/" sveltekit:prefetch>
     <img class="post__thumbnail" src="https://cloudflare-ipfs.com/ipfs/{thumbnail}" alt="{title} Preview">
     <div>
