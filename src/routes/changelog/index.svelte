@@ -28,7 +28,7 @@
 
 
 <h2>September 16, 2021</h2>
-<uk>
+<ul>
     <li>Began rolling out TradinView charts</li>
 </ul>
 
