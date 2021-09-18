@@ -15,6 +15,23 @@
     <p>Here's all the small changes/updates we're making to the site!</p>
 </div>
 
+<h2>September 18, 2021</h2>
+<ul>
+    <li>Release a new, Arbitrum-themed blog</li>
+    <li>Released a landing page for the BUCK token</li>
+</ul>
+
+<h2>September 17, 2021</h2>
+<ul>
+    <li>Began rolling out a slicker UI</li>
+</ul>
+
+
+<h2>September 16, 2021</h2>
+<uk>
+    <li>Began rolling out TradinView charts</li>
+</ul>
+
 <h2>September 15, 2021</h2>
 <ul>
     <li>First draft of the official portal for ArbiDAO governance</li>
