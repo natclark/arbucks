@@ -37,7 +37,7 @@
 <style>
     .container {
         display: grid;
-        grid-template-columns: .5fr min(200ch, 100%) .5fr;
+        grid-template-columns: .5fr min(185ch, 100%) .5fr;
         > * {
             grid-column: 2;
         }

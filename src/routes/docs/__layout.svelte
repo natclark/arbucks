@@ -102,4 +102,9 @@
             }
         }
     }
+    :global {
+        .docs {
+            line-height: 1.3em;
+        }
+    }
 </style>

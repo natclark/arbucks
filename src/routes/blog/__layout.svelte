@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <div class="container">
+    <div class="container blog__content">
         <slot />
     </div>
 </div>
@@ -27,6 +27,9 @@
             max-height: 500px;
             max-width: 768px;
             width: 100%;
+        }
+        .blog__content {
+            line-height: 1.3em;
         }
     }
 </style>

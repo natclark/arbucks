@@ -7,13 +7,7 @@
         <loc>https://arbucks.io/tokens/</loc>
     </url>
     <url>
-        <loc>https://arbucks.io/futures/</loc>
-    </url>
-    <url>
         <loc>https://arbucks.io/pools/</loc>
-    </url>
-    <url>
-        <loc>https://arbucks.io/farms/</loc>
     </url>
     <url>
         <loc>https://arbucks.io/ledger/</loc>
@@ -53,6 +47,9 @@
     </url>
     <url>
         <loc>https://arbucks.io/blog/launch-recap/</loc>
+    </url>
+    <url>
+        <loc>https://arbucks.io/pro/</loc>
     </url>
     <url>
         <loc>https://arbucks.io/buck/</loc>

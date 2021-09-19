@@ -79,10 +79,13 @@
                 <a href="/tokens/" draggable="false" aria-current="{$page.path.includes(`/tokens/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Tokens</a>
                 <a href="/pools/" draggable="false" aria-current="{$page.path === `/pools/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Pools</a>
                 <a href="/farms/" draggable="false" aria-current="{$page.path === `/farms/` ? `page` : ``}" on:mousedown={(e) =>ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Farms</a>
-                <a href="/futures/" draggable="false" aria-current="{$page.path === `/futures/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Futures</a>
-                <a href="/ledger/" draggable="false" aria-current="{$page.path === `/ledger/` ? `page` : ``}" on:mousedown={(e) =>ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Ledger</a>
+                <!--
+                <a href="/defi/" draggable="false" aria-current="{$page.path.includes(`/defi/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>DeFi</a>
+                <a href="/nfts/" draggable="false" aria-current="{$page.path.includes(`/nfts/`) ? `page` : ``}" on:mousedown={(e) =>ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>NFTs</a>
+                -->
                 <a href="/docs/" draggable="false" aria-current="{$page.path.includes(`/docs/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Docs</a>
                 <a href="/blog/" draggable="false" aria-current="{$page.path.includes(`/blog/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Blog</a>
+                <a class="highlight" href="/pro/" draggable="false" aria-current="{$page.path === `/pro/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Pro</a>
                 <a href="/buck/" draggable="false" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>$BUCK</a>
                 <a href="/portfolio/" draggable="false" aria-current="{$page.path.includes(`/portfolio/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Portfolio</a>
             </div>
@@ -94,11 +97,14 @@
             -->
             <a href="/tokens/" draggable="false" aria-current="{$page.path.includes(`/tokens/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Tokens</a>
             <a href="/pools/" draggable="false" aria-current="{$page.path === `/pools/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Pools</a>
-            <a href="/farms/" draggable="false" aria-current="{$page.path === `/farms/` ? `page` : ``}" on:mousedown={(e) =>ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Farms</a>
-            <a href="/futures/" draggable="false" aria-current="{$page.path === `/futures/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Futures</a>
+            <!--
+            <a href="/defi/" draggable="false" aria-current="{$page.path.includes(`/defi/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>DeFi</a>
+            <a href="/nfts/" draggable="false" aria-current="{$page.path.includes(`/nfts/`) ? `page` : ``}" on:mousedown={(e) =>ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>NFTs</a>
+            -->
             <a href="/ledger/" draggable="false" aria-current="{$page.path === `/ledger/` ? `page` : ``}" on:mousedown={(e) =>ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Ledger</a>
             <a href="/docs/" draggable="false" aria-current="{$page.path.includes(`/docs/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Docs</a>
             <a href="/blog/" draggable="false" aria-current="{$page.path.includes(`/blog/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Blog</a>
+            <a class="highlight" href="/pro/" draggable="false" aria-current="{$page.path === `/pro/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Pro</a>
         </div>
     </div>
     <div class="right">
@@ -183,6 +189,11 @@
                 &[aria-current="page"]:not(.logo) {
                     background-color: var(--bg-selected);
                     color: var(--fg-selected);
+                }
+                &.highlight {
+                    color: var(--fg-header);
+                    font-weight: 600;
+                    margin-left: 0;
                 }
                 &:hover {
                     text-shadow: 0 0 16px #fff, 0 0 8px #ccc;
@@ -273,11 +284,6 @@
             }
             a:not(.primary) {
                 margin-left: 12px;
-                &.highlight {
-                    color: var(--fg-header);
-                    font-weight: 600;
-                    margin-left: 0;
-                }
                 &.icon {
                     height: 40px;
                     margin-left: 0;

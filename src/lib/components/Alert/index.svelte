@@ -43,6 +43,7 @@
         padding: 10px 20px;
         width: 100%;
         p {
+            line-height: 1.3em;
             margin: 0;
         }
         button {

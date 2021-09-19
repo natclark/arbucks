@@ -123,6 +123,7 @@
             animation: ticker 30s linear infinite;
             display: flex;
             justify-content: space-around;
+            line-height: 1.5em;
             list-style: none;
             margin: 0;
             &:hover {

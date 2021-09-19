@@ -58,7 +58,7 @@
     <meta name=twitter:title content="Real-Time Arbitrum Order Book - Arbucks">
 </svelte:head>
 
-<h1>Ledger</h1>
+<h1>Arbitrum Token Swap Ledger</h1>
 
 <p>Real-time order book for the last hour of Sushiswap trades on Arbitrum One. This page updates every 10 seconds. <strong>Uniswap orders are coming soon!</strong></p>
 

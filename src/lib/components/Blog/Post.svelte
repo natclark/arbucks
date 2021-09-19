@@ -35,6 +35,7 @@
             .post__description {
                 color: var(--fg-body);
                 font-size: 18px;
+                line-height: 1.3em;
                 margin-bottom: 6px;
             }
         }

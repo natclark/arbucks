@@ -37,7 +37,7 @@
 <style>
     .container {
         display: grid;
-        grid-template-columns: 1fr min(160ch, 100%) 1fr;
+        grid-template-columns: 1fr min(135ch, 100%) 1fr;
         > * {
             grid-column: 2;
         }

@@ -48,7 +48,15 @@
         `Tending to the yield...`,
         `Shilling internet money to strangers...`,
         `Waiting for Offchain Labs to be the next Google...`,
-        `Powering the fourth industrial revolution...`
+        `Powering the fourth industrial revolution...`,
+        `Checking the digits...`,
+        `Refrigerating the wassies...`,
+        `Reorging the chain...`,
+        `We're all gonna make it...`,
+        `It's still early...`,
+        `Remember to drink some water...`,
+        `Right-clicking and saving JPEGs...`,
+        `Does anyone even read these messages?`
     ];
 
     const refresh = async () => {
@@ -84,6 +92,7 @@
             futures = [];
 
             const items = jsonHistory.items;
+            console.log(items);
             items.forEach(async (item) => {
                 if (item.holdings[0].close.balance !== `0`) {
                     if (item.contract_name === `SushiSwap LP Token`) {
