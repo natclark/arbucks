@@ -4,8 +4,6 @@
             <h2>Arbitrum Tools</h2>
             <p><a href="/tokens/" draggable="false" sveltekit:prefetch>Tokens</a></p>
             <p><a href="/pools/" draggable="false" sveltekit:prefetch>Pools</a></p>
-            <p><a href="/farms/" draggable="false" sveltekit:prefetch>Farms</a></p>
-            <p><a href="/futures/" draggable="false" sveltekit:prefetch>Futures</a></p>
             <p><a href="/ledger/" draggable="false" sveltekit:prefetch>Ledger</a></p>
             <p><a href="/portfolio/" draggable="false" sveltekit:prefetch>Portfolio</a></p>
         </div>
