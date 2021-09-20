@@ -179,10 +179,12 @@
                         const jsonTokenPairs = await tokenPairs.json();
                         let zeroes = ``;
                         let price = ``;
+                        let pair = ``;
 
                         try {
                             if (typeof jsonTokenPairs[0].error === `undefined`) {
                                 let found = false;
+                                pair = jsonTokenPairs[0].pair;
                                 let priceString = ``;
                                 let i = 0;
 
@@ -190,6 +192,7 @@
                                     if (found === false) {
                                         if (item.contract_address === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
                                             priceString = ethPrice.toFixed(32).toString();
+                                            foundPair = Token.
                                             found = true;
                                         } else if (token.Token_2_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
                                             priceString = parseFloat(token.Token_2_price * ethPrice).toFixed(32).toString();
@@ -252,6 +255,7 @@
                             logo: item.logo_url,
                             holdings: item.holdings,
                             price: zeroes + price,
+                            pair,
                             hidden,
                         });
 
@@ -296,7 +300,10 @@
             }).format(netWorth)}
         </h1>
         <p class="subtitle"><a href="https://arbiscan.io/address/{address}" rel="external noopener" target="_blank">{address}</a> <Copy text={address} /></p>
-        <p class="subtitle">A chart to track your portfolio value over time is coming soon!</p>
+        <!--
+            TODO
+            <Chart id="0" portfolioTokens={$portfolioTokens} />
+        -->
         <h2>Tokens</h2>
         <p>P&L, 24H change, support for USDT value of Uniswap token balances, and more is coming soon!!</p>
         {#if $portfolioTokens.length > 0}
