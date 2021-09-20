@@ -107,6 +107,7 @@
 }
 
 html {
+    overflow-x: hidden;
     scrollbar-color: var(--fg-scroll) var(--bg-scroll);
     scrollbar-width: thin;
 }

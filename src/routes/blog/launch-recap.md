@@ -2,7 +2,7 @@
     <title>Launch Recap & Future Plans - Arbucks</title>
     <link rel="canonical" href="https://arbucks.io/blog/launch-recap/">
     <meta property="og:title" content="Launch Recap & Future Plans - Arbucks">
-    <meta name=twitter:title content="Launch Recap & Future Plans - Arbucks">
+    <meta name="twitter:title" content="Launch Recap & Future Plans - Arbucks">
 </svelte:head>
 
 <h1 id="launch-recap--future-plans" class="blog__title">

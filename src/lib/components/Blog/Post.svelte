@@ -20,6 +20,7 @@
         background-color: var(--bg-row);
         border-radius: 16px;
         display: block;
+        margin-bottom: 24px;
         padding: 24px;
         .post__thumbnail {
             border-radius: 8px;
@@ -30,6 +31,7 @@
         div {
             .post__title {
                 font-size: 28px;
+                line-height: 1.2em;
                 margin: 0 0 8px;
             }
             .post__description {
