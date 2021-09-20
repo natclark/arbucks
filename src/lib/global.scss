@@ -107,7 +107,7 @@
 }
 
 html {
-    overflow-x: hidden;
+    overflow: hidden scroll;
     scrollbar-color: var(--fg-scroll) var(--bg-scroll);
     scrollbar-width: thin;
 }
@@ -119,7 +119,7 @@ body {
     color: var(--fg-body);
     font-family: Inter, Roboto, 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, system-ui, sans-serif;
     margin: 0;
-    overflow: hidden scroll;
+    overflow: hidden;
     scrollbar-face-color: var(--fg-scroll);
     scrollbar-track-color: var(--bg-scroll);
 }
