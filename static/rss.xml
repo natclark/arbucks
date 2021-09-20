@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+    <title>Arbucks</title>
+    <link>https://arbucks.io</link>
+    <description>Open-source charts &amp; analytics for Arbitrum</description>
+    <item>
+        <title>Our Manifesto: Helping Arbitrum Users "Make It"</title>
+        <link>https://arbucks.io/blog/our-manifesto/</link>
+        <description>Rollups are here to stay, but we strongly believe Arbitrum adoption will go ballistic this fall and coming winter. And we want to help you take advantage of that adoption.</description>
+    </item>
+    <item>
+        <title>Launch Recap &amp; Future Plans</title>
+        <link>https://arbucks.io/blog/launch-recap/</link>
+        <description>Calling our launch "bumpy" would be an understatement. Everything that could have gone wrong, DID go wrong. But we've re-emerged stronger than ever!</description>
+    </item>
+</channel>
