@@ -1,3 +1,10 @@
+<svelte:head>
+    <title>Docs - Arbucks</title>
+    <link rel="canonical" href="https://arbucks.io/docs/">
+    <meta property="og:title" content="Docs - Arbucks">
+    <meta name=twitter:title content="Docs - Arbucks">
+</svelte:head>
+
 # Arbucks Docs
 
 Welcome to the *official* Arbucks docs!

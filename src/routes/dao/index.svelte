@@ -41,7 +41,6 @@
     <link rel="canonical" href="https://arbucks.io/dao/">
     <meta property="og:title" content="DAO Portal - Arbucks">
     <meta name=twitter:title content="DAO Portal - Arbucks">
-    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 </svelte:head>
 
 <div class="top">

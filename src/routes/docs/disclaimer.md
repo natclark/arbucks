@@ -1,3 +1,10 @@
+<svelte:head>
+    <title>Disclaimer - Arbucks</title>
+    <link rel="canonical" href="https://arbucks.io/docs/disclaimer/">
+    <meta property="og:title" content="Disclaimer - Arbucks">
+    <meta name=twitter:title content="Disclaimer - Arbucks">
+</svelte:head>
+
 # Disclaimer
 
 Please don't shoot the messenger!

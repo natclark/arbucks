@@ -1,3 +1,10 @@
+<svelte:head>
+    <title>Arbitrum Token API - Arbucks</title>
+    <link rel="canonical" href="https://arbucks.io/docs/api/">
+    <meta property="og:title" content="Arbitrum Token API - Arbucks">
+    <meta name=twitter:title content="Arbitrum Token API - Arbucks">
+</svelte:head>
+
 # API
 
 Arbucks offers a few free and permissionless services for simplified Arbitrum analytics.

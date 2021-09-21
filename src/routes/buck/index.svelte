@@ -2,6 +2,13 @@
     import Copy from '$lib/components/Copy/index.svelte';
 </script>
 
+<svelte:head>
+    <title>BUCK Token - Arbucks</title>
+    <link rel="canonical" href="https://arbucks.io/buck/">
+    <meta property="og:title" content="BUCK Token - Arbucks">
+    <meta name=twitter:title content="BUCK Token - Arbucks">
+</svelte:head>
+
 <div class="wrapper">
     <div class="container">
         <div class="top">

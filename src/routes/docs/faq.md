@@ -4,7 +4,9 @@
 
 <svelte:head>
     <title>FAQ - Arbucks</title>
-    <link rel="canonical" href="https://arbucks.io/faq/">
+    <link rel="canonical" href="https://arbucks.io/docs/faq/">
+    <meta property="og:title" content="FAQ - Arbucks">
+    <meta name=twitter:title content="FAQ - Arbucks">
 </svelte:head>
 
 # Frequently Asked Questions

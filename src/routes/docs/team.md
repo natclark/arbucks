@@ -2,6 +2,13 @@
     import Profile from '$lib/components/Profile/index.svelte';
 </script>
 
+<svelte:head>
+    <title>Team - Arbucks</title>
+    <link rel="canonical" href="https://arbucks.io/docs/team/">
+    <meta property="og:title" content="Team - Arbucks">
+    <meta name=twitter:title content="Team - Arbucks">
+</svelte:head>
+
 # Team
 
 We are a worldwide, remote-first, and pseudonymous/semi-onymous team, focused on building a transparent and self-sustaining platform for Arbitrum analytics.

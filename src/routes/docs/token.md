@@ -1,3 +1,10 @@
+<svelte:head>
+    <title>Token Documentation - Arbucks</title>
+    <link rel="canonical" href="https://arbucks.io/docs/token/">
+    <meta property="og:title" content="Token Documentation - Arbucks">
+    <meta name=twitter:title content="Token Documentation - Arbucks">
+</svelte:head>
+
 # Token
 
 The Arbucks token had a presale at 8:30 P.M. UTC on Saturday, Septermber 11, 2021 and launched on Sushiswap at 10:00 P.M. UTC that same day.

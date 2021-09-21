@@ -1,3 +1,10 @@
+<svelte:head>
+    <title>Transparency - Arbucks</title>
+    <link rel="canonical" href="https://arbucks.io/docs/transparency/">
+    <meta property="og:title" content="Transparency - Arbucks">
+    <meta name=twitter:title content="Transparency - Arbucks">
+</svelte:head>
+
 # Transparency
 
 Arbucks is a competitively transparent project.
