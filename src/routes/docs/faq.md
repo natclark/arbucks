@@ -53,7 +53,7 @@ When new smart contracts launch, such as the Arbucks token contract, a step-by-s
 BUCK.
 
 ## What is the contract address of the token?
-<a href="https://arbiscan.io/address/0xafd871f684f21ab9d7137608c71808f83d75e6fc" draggable="false" rel="external noopener" target="_blank">0xafd871f684f21ab9d7137608c71808f83d75e6fc</a> <Copy text="0xafd871f684f21ab9d7137608c71808f83d75e6fc" />
+<a href="https://arbiscan.io/token/0xafd871f684f21ab9d7137608c71808f83d75e6fc" draggable="false" rel="external noopener" target="_blank">0xafd871f684f21ab9d7137608c71808f83d75e6fc</a> <Copy text="0xafd871f684f21ab9d7137608c71808f83d75e6fc" />
 
 ## Where are you guys based?
 As of writing this, there's one developer and four advisor. The developer is based in the United States and the advisors are based across the world, from APAC to Europe.

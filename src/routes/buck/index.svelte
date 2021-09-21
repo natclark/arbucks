@@ -19,7 +19,7 @@
                 <span class="primary__edge"></span>
                 <span class="primary__front">Swap on SushiSwap</span>
             </a>
-            <p><a href="https://arbiscan.io/address/0xafd871f684f21ab9d7137608c71808f83d75e6fc" draggable="false" rel="external noopener" target="_blank">0xafd871f684f21ab9d7137608c71808f83d75e6fc</a> <Copy text="0xafd871f684f21ab9d7137608c71808f83d75e6fc" /></p>
+            <p><a href="https://arbiscan.io/token/0xafd871f684f21ab9d7137608c71808f83d75e6fc" draggable="false" rel="external noopener" target="_blank">0xafd871f684f21ab9d7137608c71808f83d75e6fc</a> <Copy text="0xafd871f684f21ab9d7137608c71808f83d75e6fc" /></p>
         </div>
 
         <ul>
