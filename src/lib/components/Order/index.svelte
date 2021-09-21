@@ -65,7 +65,7 @@
         <a href="https://arbiscan.io/address/{pair}" rel="external noopener" target="_blank">{pair.substr(0, 6)}...{pair.substr(address.length - 7, pair.length - 1)}</a> <Copy text={pair} />
     </td>
     <td>
-        <a href="https://arbiscan.io/tx/{address}" rel="external noopener" target="_blank">{address.substr(0, 6)}...{address.substr(address.length - 7, address.length - 1)}</a> <Copy text={address} />
+        <a href="https://arbiscan.io/tx/{address.substring(0, address.length - 2)}" rel="external noopener" target="_blank">{address.substring(0, 6)}...{address.substring(address.length - 9, address.length - 2)}</a> <Copy text={address} />
     </td>
 </tr>
 
