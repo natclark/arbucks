@@ -18,6 +18,7 @@
             <div class="column">
                 <h2>Project Info</h2>
                 <p><a href="/docs/" draggable="false" sveltekit:prefetch>Docs</a></p>
+                <p><a href="/docs/team/" draggable="false" sveltekit:prefetch>Team</a></p>
                 <p><a href="/docs/roadmap/" draggable="false" sveltekit:prefetch>Roadmap</a></p>
                 <p><a href="/changelog/" draggable="false" sveltekit:prefetch>Changelog</a></p>
                 <p><a href="/dao/" draggable="false" sveltekit:prefetch>ArbiDAO Portal</a></p>

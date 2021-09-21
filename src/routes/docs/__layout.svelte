@@ -18,6 +18,9 @@
                 <a href="/docs/faq/" draggable="false" aria-current="{$page.path === `/docs/faq/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>FAQ</a>
             </li>
             <li>
+                <a href="/docs/team/" draggable="false" aria-current="{$page.path === `/docs/team/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Team</a>
+            </li>
+            <li>
                 <a href="/docs/roadmap/" draggable="false" aria-current="{$page.path === `/docs/roadmap/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Roadmap</a>
             </li>
             <li>
