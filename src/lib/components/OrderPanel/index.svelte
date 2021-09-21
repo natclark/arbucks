@@ -26,12 +26,15 @@
     };
 
     const connect = async () => {
-        if (typeof window.ethereum !== `undefined`) {
-            const currentAccounts = await window.ethereum.request({ method: `eth_requestAccounts`, });
-            wallet.update(() => currentAccounts[0]);
-            updateBalance();
-        } else {
-            alert(`You must have a web3-enabled Ethereum wallet like Metamask to do this!`);
+        if (typeof document !== `undefined`) {
+            if (typeof window.ethereum !== `undefined`) {
+                defaultChainStore.setBrowserProvider();
+                const currentAccounts = await window.ethereum.request({ method: `eth_requestAccounts`, });
+                wallet.update(() => currentAccounts[0]);
+                updateBalance();
+            } else {
+                alert(`You must have a web3-enabled Ethereum wallet like Metamask to do this!`);
+            }
         }
     };
 
@@ -53,7 +56,6 @@
 
     onMount(() => {
         doc = document;
-        defaultChainStore.setBrowserProvider();
         if (typeof window.ethereum !== `undefined`) {
             window.ethereum.on(`accountsChanged`, (newAccounts) => {
                 wallet.update(() => newAccounts[0]);

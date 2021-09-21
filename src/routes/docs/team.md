@@ -30,7 +30,7 @@ If you're interested in joining us, please feel free to reach out to a developer
 </div>
 
 <div class="flex">
-    <Profile picture="QmNQW8hPavpXn7XUotncph68ngvxSfuCPakQyAo5gpLCvc" telegram="Derevlean" title="Graphic Designer" description="7 years of cryptocurrency and blockchain experience in project management & trading/chart analysis." flag="🇷🇴" />
+    <Profile picture="QmbVX9Hqp827DftNoVCL9TjhYmC3D7pfVhLEPk76yyyVYR" telegram="Derevlean" title="Graphic Designer" description="Learn to see. Realize that everything connects to everything else." flag="🇷🇴" />
 </div>
 
 <style>

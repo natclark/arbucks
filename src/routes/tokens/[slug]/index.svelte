@@ -1,7 +1,6 @@
 <script>
-    import { onMount } from 'svelte';
-    import { defaultChainStore, web3, selectedAccount, connected, chainData } from 'svelte-web3';
-    import wallet from '$lib/stores/wallet';
+    //import { defaultChainStore, web3, selectedAccount, connected, chainData } from 'svelte-web3';
+    //import wallet from '$lib/stores/wallet';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
     import Loader from '$lib/components/Loader/index.svelte';
@@ -36,17 +35,19 @@
     let swaps = [];
 
     const addToken = async () => {
-        await window.ethereum.request({
-            method: `wallet_watchAsset`,
-            params: {
-                options: {
-                    address: $page.params.slug,
-                    decimals,
-                    symbol,
+        if (typeof document !== `undefined`) {
+            await window.ethereum.request({
+                method: `wallet_watchAsset`,
+                params: {
+                    options: {
+                        address: $page.params.slug,
+                        decimals,
+                        symbol,
+                    },
+                    type: `ERC20`,
                 },
-                type: `ERC20`,
-            },
-        });
+            });
+        }
     };
 
     const refresh = async () => {
@@ -205,8 +206,6 @@
 
         loading = false;
     };
-
-    onMount(() => defaultChainStore.setBrowserProvider());
 
     $: $page.params.slug, (typeof XMLHttpRequest !== `undefined`) && (refresh());
 </script>
