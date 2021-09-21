@@ -55,7 +55,7 @@
             font-size: 16px;
             font-weight: 700;
             margin-top: 10px;
-            outline: 0;
+            outline: none;
             padding: 4px;
         }
     }

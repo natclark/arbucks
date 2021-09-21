@@ -13,6 +13,10 @@
 <p>A daily blog where we share our progress and publish Arbitrum tutorials, guides, and news.</p>
 <br>
 
+<Post title="What's Next For Arbucks" path="whats-next" time="2021-09-20T23:30:35-07:00" thumbnail="QmYC4a8p7qaoqon1dAaSydexp5abru7QdExxE62k5UwbRL">
+    This past week has been a wild ride for Arbitrum, and the following weeks might be even wilder. Here's how we're preparing to serve the incoming waves of users.
+</Post>
+
 <Post title='Our Manifesto: Helping Arbitrum Users "Make It"' path="our-manifesto" time="2021-09-19T21:16:04-07:00" thumbnail="Qmcp1qATYdgitwTwqdHVSubXdU9rGih8R1p9nNT1J4Q5aJ">
     Rollups are here to stay, but we strongly believe Arbitrum adoption will go ballistic this fall and coming winter. And we want to help you take advantage of that adoption.
 </Post>

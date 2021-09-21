@@ -27,7 +27,7 @@
 
 <div class="container">
     <main>
-        <Alert title="Important" message="We're currently undergoing a transition to TradingView charts on this website. There may be some bugs and rendering issues. Also, our data is currently behind due to The Graph having issues resyncing with the latest blocks following Arbitrum Ones's brief outage on Monday. We expect all this to be fixed in the next couple of days. Thank you for your patience. We have so much in store for the future!" />
+        <Alert title="Important" message="We're currently undergoing a transition to TradingView charts on this website. There may be some bugs and rendering issues. Also, our data is currently behind due to The Graph having issues resyncing with the latest blocks following Arbitrum Ones's brief outage last Monday. We expect all this to be fixed in the next couple of days. Thank you for your patience. We have so much in store for the future!" />
         <slot />
     </main>
 </div>

@@ -1,6 +1,5 @@
 <script>
-    import Columns from '$lib/components/Layout/Columns.svelte';
-    import Column from '$lib/components/Layout/Column.svelte';
+    import Copy from '$lib/components/Copy/index.svelte';
 </script>
 
 <svelte:head>
@@ -28,7 +27,7 @@ It's by far more decentralized than any other publicly available Arbitrum charti
 There is no intention to shut this site down, and there are currently no known threats. Providers would be switched as soon as possible, and in the meantime, you'd have to build and run the code yourself.
 
 ## What if the developer disappears?
-The developer has no intention to purposefully disapper. However, gradual measures of decentralization are being taken to ensure the community can "keep the ball rolling", such as the formation of the DAC.
+The developer has no intention to purposefully disapper. However, gradual measures of decentralization are being taken to ensure the community can "keep the ball rolling", such as the formation of ArbiDAO.
 
 ## What if this domain gets deleted?
 There is no known threat to this domain, but it could in theory get deleted, such as if the registrar decides that it violates some policy. In any case, this site just mirrors `arbucks.pages.dev`, so that can be considered a backup. However, if that doesn't work, you'll have to build and run the code yourself until a new domain is set up. This site will eventually be available on at least one blockchain domain.
@@ -37,10 +36,10 @@ There is no known threat to this domain, but it could in theory get deleted, suc
 Currently, the [Telegram group](https://t.me/arbuckscafe) is the best place to drop your feedback. Please give the [roadmap](/docs/roadmap/) a quick check before you request a feature though!
 
 ## What if the Telegram group shuts down?
-The community can create a new one, although there are absolutely no plans to shut the group down. Still, there are edge cases which highlight the importance of the DAC.
+The community can create a new one, although there are absolutely no plans to shut the group down. Still, there are edge cases which highlight the importance of ArbiDAO.
 
 ## What if I get banned from the Telegram group?
-As of writing this, there haven't been any issues yet. But if you broke a rule, you'll have to create a new account. Otherwise, you'll have to trust the admin to not make bans that contradict the group rules or lose their account. This is the importance of the DAC, which will decentralize governance.
+As of writing this, there haven't been any issues yet. But if you broke a rule, you'll have to create a new account. Otherwise, you'll have to trust the admin to not make bans that contradict the group rules or lose their account. This is the importance of ArbiDAO, which will decentralize governance.
 
 ## When will the token launch?
 September 11, 2021 @ 10 PM UTC.
@@ -49,13 +48,13 @@ September 11, 2021 @ 10 PM UTC.
 When new smart contracts launch, such as the Arbucks token contract, a step-by-step walkthrough of the code will appear in this very documentation section. They'll be explained in mostly non-technical terms.
 
 ## What is the token symbol?
-Token metadata, including name and symbol, will **not** be released until the launch, to prevent scammers from creating fake tokens that mimic the real one.
+BUCK.
 
-## How will I know which token is authentic?
-https://token.arbucks.io will turn into a functioning redirect as soon as the token launches. The correct contract address will also be readily available on this website. Do not trust *any* other links, such as direct links to Sushiswap or Uniswap pairs. **Anyone can create a fake pair with the same name!**
+## What is the contract address of the token?
+<a href="https://arbiscan.io/address/0xafd871f684f21ab9d7137608c71808f83d75e6fc" draggable="false" rel="external noopener" target="_blank">0xafd871f684f21ab9d7137608c71808f83d75e6fc</a> <Copy text="0xafd871f684f21ab9d7137608c71808f83d75e6fc" />
 
 ## Where are you guys based?
-As of writing this, there's just one developer and one advisor. Both currently reside in different parts of the United States.
+As of writing this, there's one developer and four advisor. The developer is based in the United States and the advisors are based across the world, from APAC to Europe.
 
 ## Does this have anything to do with Starbucks Coffee?
 No.

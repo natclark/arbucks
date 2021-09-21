@@ -16,19 +16,18 @@
         }
     };
 
-    const connect = () => {
+    const connect = async () => {
         if (typeof window.ethereum !== `undefined`) {
-            window.ethereum.request({ method: `eth_requestAccounts`, });
+            const currentAccounts = await window.ethereum.request({ method: `eth_requestAccounts`, });
+            wallet.update(() => currentAccounts[0]);
+            updateBalance();
         } else {
             alert(`You must have a web3-enabled Ethereum wallet like Metamask to do this!`);
         }
     };
 
-    onMount(async () => {
+    onMount(() => {
         if (typeof window.ethereum !== `undefined`) {
-            const currentAccounts = await ethereum.request({ method: `eth_requestAccounts` });
-            wallet.update(() => currentAccounts[0]);
-            updateBalance();
             window.ethereum.on(`accountsChanged`, (newAccounts) => {
                 wallet.update(() => newAccounts[0]);
                 updateBalance();

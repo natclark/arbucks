@@ -23,6 +23,7 @@
         <h2>Tier 1</h2>
         <p><strong>15 SLP Tokens</strong></p>
         <ul>
+            <li><p>Multi-chart view</p></li>
             <li><p>Yield farm analytics</p></li>
             <li><p>NFT analytics</p></li>
             <li><p>Private Telegram group</p></li>
@@ -42,6 +43,7 @@
         <h2>Tier 2</h2>
         <p><strong>80 SLP Tokens</strong></p>
         <ul>
+            <li><p>Multi-chart view</p></li>
             <li><p>Yield farm analytics</p></li>
             <li><p>NFT analytics</p></li>
             <li><p>Private Telegram group</p></li>
@@ -61,6 +63,7 @@
         <h2>Tier 3</h2>
         <p><strong>100 SLP Tokens</strong></p>
         <ul>
+            <li><p>Multi-chart view</p></li>
             <li><p>Yield farm analytics</p></li>
             <li><p>NFT analytics</p></li>
             <li><p>Private Telegram group</p></li>

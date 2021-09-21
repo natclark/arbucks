@@ -1,10 +1,14 @@
 <script>
+    import { onMount } from 'svelte';
+    import { defaultChainStore, web3, selectedAccount, connected, chainData } from 'svelte-web3';
+    import wallet from '$lib/stores/wallet';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
     import Loader from '$lib/components/Loader/index.svelte';
     import Copy from '$lib/components/Copy/index.svelte';
     import Search from '$lib/components/Search/index.svelte';
     import Chart from '$lib/components/Chart/index.svelte';
+    import OrderPanel from '$lib/components/OrderPanel/index.svelte';
     import Trade from '$lib/components/Trade/index.svelte';
 
     let loading = true;
@@ -16,6 +20,8 @@
     let liquidity = null;
     let volume = null;
 
+    let symbol = ``;
+    let decimals = ``;
     let zeroes = ``;
     let price = ``;
     let change = ``;
@@ -28,6 +34,20 @@
     let txCount = 0;
     let holders = 0;
     let swaps = [];
+
+    const addToken = async () => {
+        await window.ethereum.request({
+            method: `wallet_watchAsset`,
+            params: {
+                options: {
+                    address: $page.params.slug,
+                    decimals,
+                    symbol,
+                },
+                type: `ERC20`,
+            },
+        });
+    };
 
     const refresh = async () => {
         loading = true;
@@ -43,6 +63,7 @@
 
             let found = false;
             let priceString = ``;
+            symbol = ``;
             zeroes = ``;
             price = ``;
             let i = 0;
@@ -55,11 +76,13 @@
                 jsonTokenPairs[1].forEach((p) => {
                     if (found === false) {
                         if (p.Token_2_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
+                            symbol = p.Token_1_symbol;
                             priceString = parseFloat(p.Token_2_price * ethPrice).toFixed(32).toString();
                             token = p;
                             pair = p.Pair_ID;
                             found = true;
                         } else if (p.Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
+                            symbol = p.Token_2_symbol;
                             priceString = parseFloat(ethPrice * p.Token_1_price).toFixed(32).toString();
                             token = p;
                             pair = p.Pair_ID;
@@ -110,13 +133,14 @@
             }
 
             // TODO console.log(liquidity, volume);
-            &/
+            */
 
             /* A more reliable and decentralized solution for fetching data is a high-priority upcoming feature. */
             try {
                 const COVALENT_KEY = `ckey_f02916bdd2b04038bc0808fb3bc`;
                 const holdersReq = await fetch(`https://api.covalenthq.com/v1/42161/tokens/${$page.params.slug}/token_holders/?key=${COVALENT_KEY}`);
                 const jsonHolders = await holdersReq.json();
+                decimals = jsonHolders.data.items[0].contract_decimals;
                 fdmc = new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(parseFloat(priceString) * (jsonHolders.data.items[0].total_supply / (10 ** jsonHolders.data.items[0].contract_decimals)));
                 holders = jsonHolders.data.pagination.total_count;
             } catch (e) {
@@ -127,7 +151,7 @@
             const xhr = new XMLHttpRequest();
             xhr.onload = async () => {
                 const json = JSON.parse(xhr.response); // TODO check for errors
-                const pair = json.data.pairs[0];
+                const pair = json.data.pairs[0]; // TODO rename this
                 txCount = pair.txCount
                 volume = true;
                 volume24 = new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(pair.volumeUSD);
@@ -182,7 +206,9 @@
         loading = false;
     };
 
-    $: $page.params.slug, refresh();
+    onMount(() => defaultChainStore.setBrowserProvider());
+
+    $: $page.params.slug, (typeof XMLHttpRequest !== `undefined`) && (refresh());
 </script>
 
 <svelte:head>
@@ -199,13 +225,16 @@
 {:else}
     {#if !!token && !!valid}
         <div class="flex flex--top">
-            <div>
-                <h1 class="title">{token.Token_1_symbol} / {token.Token_2_symbol}</h1>
-                <p class="subtitle">
-                    <span class="bold">{token.Token_1_name} / {token.Token_2_name}</span>
-                    &nbsp;
-                    (<a href="https://arbiscan.io/token/{$page.params.slug}" rel="external noopener" target="_blank">{$page.params.slug}</a> <Copy text={$page.params.slug} />)
-                </p>
+            <div class="flex flex--header">
+                <img class="image" src="/placeholder.png" aria-hidden="true">
+                <div>
+                    <h1 class="title">{token.Token_1_symbol} / {token.Token_2_symbol}</h1>
+                    <p class="subtitle">
+                        <span class="bold">{token.Token_1_name} / {token.Token_2_name}</span>
+                        &nbsp;
+                        (<a href="https://arbiscan.io/token/{$page.params.slug}" rel="external noopener" target="_blank">{$page.params.slug}</a> <Copy text={$page.params.slug} />)
+                    </p>
+                </div>
             </div>
             <Search />
         </div>
@@ -220,20 +249,25 @@
         </div>
 
         <div class="details details--mobile">
-            <p class="flex"><span class="bold">Exchange</span><span>Sushiswap</span></p>
+            <p class="flex"><span class="bold">Exchange</span><span>Sushiswap V2</span></p>
             <p class="flex"><span class="bold">24H Volume</span><span>{!!volume ? volume24 : 0}</span></p>
-            <p class="flex"><span class="bold">Market Cap (Fully Diluted)</span><span>{fdmc}</span></p>
+            <p class="flex"><span class="bold">Market Cap</span><span>{fdmc}</span></p>
             <p class="flex"><span class="bold">Holders</span><span>{holders}</span></p>
             <p class="flex"><span class="bold">Transactions</span><span>{txCount}</span></p>
         </div>
 
         <div class="details details--desktop">
-            <p class="details__price"><span class="light">${zeroes}</span><span class="price">{price}</span> <span class="light">USDT</span> <span class={changeDir}>{changePctg}%</span></p>
-            <p class="details__detail"><span class="bold">Exchange</span><span>Sushiswap</span></p>
-            <p class="details__detail"><span class="bold">24H Volume</span><span>{!!volume ? volume24 : 0}</span></p>
-            <p class="details__detail"><span class="bold">Market Cap (Fully Diluted)</span><span>{fdmc}</span></p>
-            <p class="details__detail"><span class="bold">Holders</span><span>{holders}</span></p>
-            <p class="details__detail"><span class="bold">Transactions</span><span>{txCount}</span></p>
+            <div>
+                <p class="details__price"><span class="light">${zeroes}</span><span class="price">{price}</span> <span class="light">USDT</span> <span class={changeDir}>{changePctg}%</span></p>
+                <p class="details__detail"><span class="bold">Exchange</span><span>Sushiswap V2</span></p>
+                <p class="details__detail"><span class="bold">24H Volume</span><span>{!!volume ? volume24 : 0}</span></p>
+                <p class="details__detail"><span class="bold">Market Cap</span><span>{fdmc}</span></p>
+                <p class="details__detail"><span class="bold">Holders</span><span>{holders}</span></p>
+                <p class="details__detail"><span class="bold">Transactions</span><span>{txCount}</span></p>
+            </div>
+            <div>
+                <button class="squareButton" on:click={addToken}>+&nbsp;Add&nbsp;{symbol}</button>
+            </div>
         </div>
 
         <div class="flex flex--center flex--main">
@@ -267,7 +301,10 @@
                 {/if}
             </div>
             <Chart id="0" pairAddress={token.Pair_ID} tokenOneAddress={token.Token_1_contract} tokenTwoAddress={token.Token_2_contract} tokenOnePrice={token.Token_1_price} tokenTwoPrice={token.Token_2_price} tokenOneSymbol={token.Token_1_symbol} tokenTwoSymbol={token.Token_2_symbol} {ethPrice} />
+            <!--
             <iframe class="trade" src="https://app.sushi.com/swap?inputCurrency={token.Token_1_contract}&outputCurrency={token.Token_2_contract}" title="Trade on Sushiswap"></iframe>
+            -->
+            <OrderPanel tokenOneSymbol={symbol} tokenTwoSymbol={token.Token_1_symbol === symbol ? token.Token_2_symbol : token.Token_1_symbol} pairAddress={token.Pair_ID} tokenOneAddress={token.Token_1_contract} tokenTwoAddress={token.Token_2_contract} />
         </div>
 
         <br>
@@ -362,9 +399,15 @@
         margin-top: 20px;
         justify-content: center;
     }
+    .image {
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+        height: 64px;
+        margin-right: 8px;
+        width: 64px;
+    }
     .title {
         font-size: 24px;
-        margin-bottom: 8px;
+        margin: 0 0 8px;
     }
     .subtitle {
         color: var(--fg-subtitle);
@@ -376,10 +419,21 @@
     .flex {
         display: block;
         margin: 24px 0;
+        .left, .right {
+            margin-bottom: 24px;
+        }
         &.flex--top {
             margin-bottom: 0;
             p {
                 margin-bottom: 0;
+            }
+        }
+        &.flex--header {
+            align-items: center;
+        }
+        &.flex--main {
+            > *:first-child {
+                display: none;
             }
         }
     }
@@ -395,19 +449,6 @@
     .negative {
         color: #ff6e6e;
     }
-    .flex {
-        .left, .right {
-            margin-bottom: 24px;
-        }
-        &.flex--main {
-            > *:first-child {
-                display: none;
-            }
-            > *:last-child {
-                display: none;
-            }
-        }
-    }
     .details {
         border: 1px solid var(--fg-border);
         border-width: 1px 0 1px 0;
@@ -421,17 +462,26 @@
             display: none;
         }
     }
-    .trade {
-        border: 0;
-        border-radius: 8px;
-        box-shadow: rgba(0, 0, 0, .45) 0 25px 20px -20px;
-        height: 400px;
-    }
     p {
         font-size: 14px;
     }
     h2 {
         font-size: 20px;
+    }
+    .squareButton {
+        background-color: var(--bg-row);
+        border: 0;
+        border-radius: 8px;
+        color: #fafafa;
+        cursor: pointer;
+        font-size: 16px;
+        height: 38px;
+        margin-top: 14px;
+        outline: 0;
+        padding: 0 8px;
+        &:hover {
+            opacity: .8;
+        }
     }
     .scroller {
         background-color: var(--bg-table);
@@ -485,8 +535,9 @@
                 display: none;
             }
             &.flex--main {
+                align-items: flex-start;
                 > * {
-                    &:first-child, &:last-child {
+                    &:first-child {
                         display: block;
                         max-width: 300px;
                         width: 100%;
@@ -501,20 +552,25 @@
             align-items: center;
             border: 0;
             display: flex;
-            column-gap: 24px;
-            width: 100%;
-            .details__price {
-                font-size: 20px;
-                margin-bottom: 0;
-            }
-            .details__detail {
-                margin-bottom: 0;
-                span:first-child {
-                    display: flex;
-                    font-size: 12px;
-                    flex-direction: column;
-                    margin-bottom: 8px;
-                    opacity: .75;
+            justify-content: space-between;
+            > div:first-child {
+                align-items: center;
+                display: flex;
+                column-gap: 24px;
+                width: 100%;
+                .details__price {
+                    font-size: 20px;
+                    margin-bottom: 0;
+                }
+                .details__detail {
+                    margin-bottom: 0;
+                    span:first-child {
+                        display: flex;
+                        font-size: 12px;
+                        flex-direction: column;
+                        margin-bottom: 8px;
+                        opacity: .75;
+                    }
                 }
             }
         }
@@ -523,9 +579,6 @@
         }
         .scroller {
             overflow-x: hidden;
-        }
-        .trade {
-            height: 600px;
         }
     }
 </style>

@@ -41,7 +41,7 @@
         `Microwaving some tendies...`,
         `Staring at the charts...`,
         `Replying to ChainLinkGod's latest thread...`,
-        `Scowering Crypto Twitter for alpha...`,
+        `Scouring Crypto Twitter for alpha...`,
         `Refreshing /biz/...`,
         `Waiting for the flippening...`,
         `TOKEN NOT NEEDED!`,

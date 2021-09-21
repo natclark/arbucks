@@ -6,7 +6,7 @@ While it would be a technical misnomer to consider the following services an API
 
 ## Charts
 
-So far, the only service offered is a handy way to embed Arbucks charts on your website.
+So far, the only service offered is a handy way to embed Arbucks charts on your website. **However, this service is temporarily unavailable as we transition our primary charts to TradingView charts.**
 
 While it's appreviated if you link back to `arbucks.io`, it's certainly not required.
 
