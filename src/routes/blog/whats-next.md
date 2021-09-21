@@ -6,7 +6,7 @@
 </svelte:head>
 
 <h1 id="whats-next-for-arbucks" class="blog__title">
-    <a href="whats-next-for-arbucks">What's Next For Arbucks</a>
+    <a href="#whats-next-for-arbucks">What's Next For Arbucks</a>
 </h1>
 
 <p><time datetime="2021-09-20T23:30:35-07:00">September 20, 2021</time></p>
