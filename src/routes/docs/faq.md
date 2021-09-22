@@ -17,7 +17,7 @@ Here's some of the questions that either get asked a lot on Telegram or are inev
 Arbucks is an open-source charting and analytics web app for [Arbitrum](https://arbitrum.io)!
 
 ## Is there a token?
-There is a token! See the [token page](/docs/token/) for details.
+There is a token! See the [token documentation](/docs/token/) for details.
 
 ## Can I help out?
 Anyone is welcome to open an issue or submit a pull request to the [project GitHub page](https://github.com/natclark/arbucks). If you want, you can share some relevant DRM-free artwork in the [Telegram group](https://t.me/arbuckscafe), and we might use it with your permission. Credit will be given!
@@ -41,13 +41,16 @@ Currently, the [Telegram group](https://t.me/arbuckscafe) is the best place to d
 The community can create a new one, although there are absolutely no plans to shut the group down. Still, there are edge cases which highlight the importance of ArbiDAO.
 
 ## What if I get banned from the Telegram group?
-As of writing this, there haven't been any issues yet. But if you broke a rule, you'll have to create a new account. Otherwise, you'll have to trust the admin to not make bans that contradict the group rules or lose their account. This is the importance of ArbiDAO, which will decentralize governance.
+We've had a few issues with scammers attempting to hassle our group members. So we have had to ban some users. If you break a rule (there aren't many), you'll have to create a new account. Otherwise, you'll have to trust the admin to not lose their account or make bans that contradict the group's rules. This is one example of the importance of ArbiDAO, which will decentralize governance.
 
-## When will the token launch?
-September 11, 2021 @ 10 PM UTC.
+## Who is operating the Telegram group?
+The developer is the owner, while each of the four advisors are group administrators, spanning across multiple timezones. Each username is visible on the [team page](/docs/team/).
+
+## When did the token launch?
+September 11, 2021 @ 10 P.M. UTC. This was followed by a presale at 8:30 P.M. UTC the same day.
 
 ## How can I be sure the smart contracts are safe?
-When new smart contracts launch, such as the Arbucks token contract, a step-by-step walkthrough of the code will appear in this very documentation section. They'll be explained in mostly non-technical terms.
+Arbiscan currently has a bug in which new tokens cannot verify their contract code. In the meantime, the [source code](https://pastebin.com/1bpJcP50) is available on Pastebin. Furthermore, a step-by-step walkthrough of the code will appear in this very documentation section once we get around to writing it. It'll be explained in mostly non-technical terms.
 
 ## What is the token symbol?
 BUCK.
@@ -56,7 +59,7 @@ BUCK.
 <a href="https://arbiscan.io/token/0xafd871f684f21ab9d7137608c71808f83d75e6fc" draggable="false" rel="external noopener" target="_blank">0xafd871f684f21ab9d7137608c71808f83d75e6fc</a> <Copy text="0xafd871f684f21ab9d7137608c71808f83d75e6fc" />
 
 ## Where are you guys based?
-As of writing this, there's one developer and four advisor. The developer is based in the United States and the advisors are based across the world, from APAC to Europe.
+As of writing this, there's one developer and four advisors. The developer is based in the United States and the advisors are based across the world, from APAC to Europe. For more information, you can check out the [team page](/team/).
 
 ## Does this have anything to do with Starbucks Coffee?
 No.
