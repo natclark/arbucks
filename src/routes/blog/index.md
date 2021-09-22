@@ -12,7 +12,7 @@
 <h1 class="blog__title">Blog</h1>
 <p>A daily blog where we share our progress and publish Arbitrum tutorials, guides, and news.</p>
 <div class="flex">
-    <a class="primary" href="/rss.xml" draggable="false" sveltekit:prefetch>
+    <a class="primary" href="https://arbucks.io/rss.xml" draggable="false">
         <span class="primary__shadow"></span>
         <span class="primary__edge"></span>
         <span class="primary__front">
