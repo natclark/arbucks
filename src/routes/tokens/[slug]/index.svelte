@@ -1,6 +1,5 @@
 <script>
-    //import { defaultChainStore, web3, selectedAccount, connected, chainData } from 'svelte-web3';
-    //import wallet from '$lib/stores/wallet';
+    import { onMount } from 'svelte';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
     import Loader from '$lib/components/Loader/index.svelte';
@@ -9,6 +8,7 @@
     import Chart from '$lib/components/Chart/index.svelte';
     import OrderPanel from '$lib/components/OrderPanel/index.svelte';
     import Trade from '$lib/components/Trade/index.svelte';
+    import ripple from '$lib/services/ripple';
 
     let loading = true;
     let valid = false;
@@ -34,7 +34,12 @@
     let holders = 0;
     let swaps = [];
 
-    const addToken = async () => {
+    let liquidityUSDT = -1;
+
+    let doc;
+
+    const addToken = async (e) => {
+        !!doc && (ripple(e, doc));
         if (typeof document !== `undefined`) {
             await window.ethereum.request({
                 method: `wallet_watchAsset`,
@@ -153,7 +158,7 @@
             xhr.onload = async () => {
                 const json = JSON.parse(xhr.response); // TODO check for errors
                 const pair = json.data.pairs[0]; // TODO rename this
-                txCount = pair.txCount
+                txCount = pair.txCount;
                 volume = true;
                 volume24 = new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(pair.volumeUSD);
                 /*
@@ -169,6 +174,11 @@
                     change = parseFloat(priceString) - (parseFloat(reserveBasedPrice * ethPrice).toFixed(32).toString());
                     changePctg = ((change / parseFloat(priceString)) * 100).toFixed(2);
                     changeDir = change >= 0 ? `positive` : `negative`;
+                    if (token.Token_2_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
+                        liquidityUSDT = new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(pair.token0.liquidity * parseFloat(priceString) * 2);
+                    } else if (token.Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
+                        liquidityUSDT = new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(pair.token1.liquidity * parseFloat(priceString) * 2);
+                    }
                 } catch (e) {
                     try {
                         let reserveBasedPrice = pair.dayData[0].reserve1 / pair.dayData[0].reserve0;
@@ -192,7 +202,7 @@
             xhr.open(`POST`, `https://api.thegraph.com/subgraphs/name/sushiswap/arbitrum-exchange`);
             xhr.setRequestHeader(`Content-Type`, `application/json`);
             xhr.send(JSON.stringify({
-                query: `{\n  pairs(where: {id: "${pair}"}) {\n    totalSupply\n    txCount\n    reserveETH\n    reserveUSD\n    volumeUSD\n    dayData(orderBy: date, orderDirection: desc) {\n      date\n      reserve0\n      reserve1\n    }\n    swaps {\n        timestamp\n        to\n        amountUSD\n        amount0In\n        amount1In\n        amount0Out\n        amount1Out\n        transaction {\n            id\n        }\n    }\n\t}\n}\n`,
+                query: `{\n  pairs(where: {id: "${pair}"}) {\n    token0 {\n      liquidity    }\n    token1 {\n      liquidity    }\n    totalSupply\n    txCount\n    reserveETH\n    reserveUSD\n    volumeUSD\n    dayData(orderBy: date, orderDirection: desc) {\n      date\n      reserve0\n      reserve1\n    }\n    swaps {\n        timestamp\n        to\n        amountUSD\n        amount0In\n        amount1In\n        amount0Out\n        amount1Out\n        transaction {\n            id\n        }\n    }\n\t}\n}\n`,
                 variables: null,
             }));
             const txReq = await fetch(`https://api2.sushipro.io/?action=get_transactions_by_pair&pair=${pair}&chainID=42161`);
@@ -206,6 +216,8 @@
 
         loading = false;
     };
+
+    onMount(() => doc = document);
 
     $: $page.params.slug, (typeof XMLHttpRequest !== `undefined`) && (refresh());
 </script>
@@ -261,11 +273,14 @@
                 <p class="details__detail"><span class="bold">Exchange</span><span>Sushiswap V2</span></p>
                 <p class="details__detail"><span class="bold">24H Volume</span><span>{!!volume ? volume24 : 0}</span></p>
                 <p class="details__detail"><span class="bold">Market Cap</span><span>{fdmc}</span></p>
+                <p class="details__detail"><span class="bold">Liquidity</span><span>~{liquidityUSDT}</span></p>
                 <p class="details__detail"><span class="bold">Holders</span><span>{holders}</span></p>
                 <p class="details__detail"><span class="bold">Transactions</span><span>{txCount}</span></p>
             </div>
             <div>
-                <button class="squareButton" on:click={addToken}>+&nbsp;Add&nbsp;{symbol}</button>
+                <button class="squareButton" on:click={addToken} on:mousedown={(e) => !!doc && (ripple(e, doc))}>
+                    <img height="28px" width="28px" draggable="false" src="https://cloudflare-ipfs.com/ipfs/QmWZk7iimf2AN8Rc9DRHvJUdwuqsqTL5TVwNdZuLWfDNgf" alt="MetaMask logo" loading="lazy"><span>+</span>
+                </button>
             </div>
         </div>
 
@@ -468,16 +483,22 @@
         font-size: 20px;
     }
     .squareButton {
+        align-items: center;
         background-color: var(--bg-row);
         border: 0;
         border-radius: 8px;
-        color: #fafafa;
+        color: var(--fg-title);
+        column-gap: 4px;
         cursor: pointer;
-        font-size: 16px;
+        display: flex;
+        font-size: 18px;
         height: 38px;
+        justify-content: space-between;
         margin-top: 14px;
         outline: 0;
+        overflow: hidden;
         padding: 0 8px;
+        position: relative;
         &:hover {
             opacity: .8;
         }
