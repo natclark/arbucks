@@ -458,7 +458,7 @@
     </div>
     <div class="panel__flex">
         <span>Liquidity</span>
-        <span>{pairLiquidity}</span>
+        <span>~{pairLiquidity}</span>
     </div>
     <!--
         TODO
