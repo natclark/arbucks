@@ -27,7 +27,7 @@
 
 <div class="container">
     <main>
-        <Alert title="Important" message="We're currently undergoing a transition to TradingView charts on this website. Real-time data has been restored after last Monday's outage, but we're still working tirelessly to get charts synced again. Thank you for your patience!" />
+        <Alert title="Important" message="We're currently undergoing a transition to TradingView charts on this website, and we're still working tirelessly to get charts synced again after issues with the Arbitrum RPC. Also, our new DEX aggregator, Arbigator, is still very WIP and may be missing some features. Thank you for your patience!" />
         <slot />
     </main>
 </div>

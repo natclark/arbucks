@@ -5,6 +5,8 @@ import mdsvexConfig from './mdsvex.config.js';
 import adapter from '@sveltejs/adapter-static';
 import preprocess from 'svelte-preprocess';
 import autoprefixer from 'autoprefixer';
+import fs from 'fs';
+const pkg = JSON.parse(fs.readFileSync(new URL('package.json', import.meta.url), 'utf8'));
 
 export default {
     extensions: [`.svelte`, ...mdsvexConfig.extensions],
@@ -25,6 +27,11 @@ export default {
         floc: false,
         target: `body`,
         trailingSlash: `always`,
+        vite: () => ({
+            ssr: {
+                noExternal: Object.keys(pkg.dependencies || {}).filter((pkgName) => pkgName.startsWith(`@smui`)),
+            },
+        }),
     },
     preprocess: [
         mdsvex(mdsvexConfig),

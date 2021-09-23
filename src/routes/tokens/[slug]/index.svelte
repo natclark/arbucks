@@ -6,7 +6,7 @@
     import Copy from '$lib/components/Copy/index.svelte';
     import Search from '$lib/components/Search/index.svelte';
     import Chart from '$lib/components/Chart/index.svelte';
-    import OrderPanel from '$lib/components/OrderPanel/index.svelte';
+    import Arbigator from '$lib/components/Arbigator/index.svelte';
     import Trade from '$lib/components/Trade/index.svelte';
     import ripple from '$lib/services/ripple';
 
@@ -20,7 +20,8 @@
     let volume = null;
 
     let symbol = ``;
-    let decimals = ``;
+    let decimalsBase = 18;
+    let decimalsQuote = 18;
     let zeroes = ``;
     let price = ``;
     let change = ``;
@@ -46,7 +47,7 @@
                 params: {
                     options: {
                         address: $page.params.slug,
-                        decimals,
+                        decimals: decimalsBase,
                         symbol,
                     },
                     type: `ERC20`,
@@ -146,8 +147,8 @@
                 const COVALENT_KEY = `ckey_f02916bdd2b04038bc0808fb3bc`;
                 const holdersReq = await fetch(`https://api.covalenthq.com/v1/42161/tokens/${$page.params.slug}/token_holders/?key=${COVALENT_KEY}`);
                 const jsonHolders = await holdersReq.json();
-                decimals = jsonHolders.data.items[0].contract_decimals;
-                fdmc = new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(parseFloat(priceString) * (jsonHolders.data.items[0].total_supply / (10 ** jsonHolders.data.items[0].contract_decimals)));
+                decimalsBase = jsonHolders.data.items[0].contract_decimals;
+                fdmc = new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(parseFloat(priceString) * (jsonHolders.data.items[0].total_supply / (10 ** decimalsBase)));
                 holders = jsonHolders.data.pagination.total_count;
             } catch (e) {
                 fdmc = `Error`;
@@ -318,7 +319,7 @@
             <!--
             <iframe class="trade" src="https://app.sushi.com/swap?inputCurrency={token.Token_1_contract}&outputCurrency={token.Token_2_contract}" title="Trade on Sushiswap"></iframe>
             -->
-            <OrderPanel tokenOneSymbol={symbol} tokenTwoSymbol={token.Token_1_symbol === symbol ? token.Token_2_symbol : token.Token_1_symbol} pairAddress={token.Pair_ID} tokenOneAddress={token.Token_1_contract} tokenTwoAddress={token.Token_2_contract} />
+            <Arbigator tokenOneSymbol={symbol} tokenTwoSymbol={token.Token_1_symbol === symbol ? token.Token_2_symbol : token.Token_1_symbol} pairAddress={token.Pair_ID} pairLiquidity={liquidityUSDT} tokenOneAddress={token.Token_1_contract} tokenTwoAddress={token.Token_2_contract} tokenOneDecimals={decimalsBase} tokenTwoDecimals={decimalsQuote} />
         </div>
 
         <br>

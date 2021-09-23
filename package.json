@@ -2,8 +2,10 @@
     "name": "arbucks",
     "version": "0.0.0",
     "scripts": {
+        "prepare": "npm run smui-theme",
+        "smui-theme": "smui-theme compile static/smui.css -i src/theme/dark",
         "dev": "svelte-kit dev",
-        "build": "svelte-kit build",
+        "build": "npm run prepare && svelte-kit build",
         "preview": "svelte-kit preview"
     },
     "devDependencies": {
@@ -22,9 +24,18 @@
         "svelte-preprocess": "^4.9.2"
     },
     "dependencies": {
+        "@smui/button": "^5.0.0-beta.5",
+        "@smui/form-field": "^5.0.0-beta.5",
+        "@smui/slider": "^5.0.0-beta.5",
+        "@smui/snackbar": "^5.0.0-beta.5",
+        "@smui/switch": "^5.0.0-beta.5",
+        "@smui/tab": "^5.0.0-beta.5",
+        "@smui/tab-bar": "^5.0.0-beta.5",
+        "@smui/textfield": "^5.0.0-beta.5",
         "canvas-confetti": "^1.4.0",
         "lightweight-charts": "^3.5.0",
         "simple-svelte-autocomplete": "^2.2.3",
+        "smui-theme": "^5.0.0-beta.5",
         "svelte-simple-modal": "^1.0.3",
         "svelte-web3": "^2.2.0",
         "web3modal": "^1.9.4"
