@@ -26,6 +26,10 @@
 
 <br>
 
+<Post title="Introducing Arbigator, a DEX Aggregator on Arbitrum" path="introducing-arbigator" time="2021-09-23T23:38:32-07:00" thumbnail="QmZteJdSu8vPFp7VrWerfQWqAj2J6Thf3YSKstFcfknvvF">
+    With a slick user interface and no extra fees, Arbigator is a useful trading companion and great addition to the Arbitrum charting tools we offer on this site.
+</Post>
+
 <Post title="6 Resources for Getting Started With Arbitrum" path="getting-started-with-arbitrum" time="2021-09-22T00:38:55-07:00" thumbnail="QmZUnhHk4PJZ5AFCP5YjrNbbLgcYLnobEwP3bx9dTLnMB3">
     Arbitrum is definitely a "wild west" of new protocols, tokens, and projects. Here's some resources to get your bearings in this fast-paced but exciting new world.
 </Post>

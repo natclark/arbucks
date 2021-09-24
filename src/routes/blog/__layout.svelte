@@ -16,6 +16,7 @@
     }
     :global {
         .blog__title {
+            line-height: 1.3em;
             text-align: center;
             & + p {
                 text-align: center;
