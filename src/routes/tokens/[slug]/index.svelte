@@ -5,7 +5,8 @@
     import Loader from '$lib/components/Loader/index.svelte';
     import Copy from '$lib/components/Copy/index.svelte';
     import Search from '$lib/components/Search/index.svelte';
-    import Chart from '$lib/components/Chart/index.svelte';
+    //import Chart from '$lib/components/Chart/index.svelte';
+    import SimpleChart from '$lib/components/Chart/SimpleChart.svelte';
     import Arbigator from '$lib/components/Arbigator/index.svelte';
     import Trade from '$lib/components/Trade/index.svelte';
     import ripple from '$lib/services/ripple';
@@ -315,7 +316,10 @@
                     {/if}
                 {/if}
             </div>
+            <SimpleChart id="0" pairAddress={token.Pair_ID} tokenOneAddress={token.Token_1_contract} tokenTwoAddress={token.Token_2_contract} tokenOnePrice={token.Token_1_price} tokenTwoPrice={token.Token_2_price} tokenOneSymbol={token.Token_1_symbol} tokenTwoSymbol={token.Token_2_symbol} {ethPrice} />
+            <!--
             <Chart id="0" pairAddress={token.Pair_ID} tokenOneAddress={token.Token_1_contract} tokenTwoAddress={token.Token_2_contract} tokenOnePrice={token.Token_1_price} tokenTwoPrice={token.Token_2_price} tokenOneSymbol={token.Token_1_symbol} tokenTwoSymbol={token.Token_2_symbol} {ethPrice} />
+            -->
             <!--
             <iframe class="trade" src="https://app.sushi.com/swap?inputCurrency={token.Token_1_contract}&outputCurrency={token.Token_2_contract}" title="Trade on Sushiswap"></iframe>
             -->

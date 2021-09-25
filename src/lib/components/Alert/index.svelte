@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
 
     export let title;
+    export let background;
     export let message;
 
     let show = false;
@@ -29,7 +30,7 @@
 </script>
 
 {#if show}
-    <div class="alert">
+    <div class="alert {background}">
         <p><strong>{title}:</strong> {message}</p>
         <button on:click={close}>Close</button>
     </div>
@@ -57,6 +58,12 @@
             margin-top: 10px;
             outline: none;
             padding: 4px;
+        }
+        &.warning {
+            background-color: rgba(255, 255, 0, .15) !important;
+            button {
+                background-color: rgba(255, 255, 0, .4) !important;
+            }
         }
     }
 </style>

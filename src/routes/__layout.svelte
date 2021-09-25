@@ -27,7 +27,7 @@
 
 <div class="container">
     <main>
-        <Alert title="Important" message="Our ongoing transition to TradingView charts on this website is undergoing a final stretch of maintenance. Also, our new DEX aggregator, Arbigator, is still very WIP and may be missing some features. Thank you for your patience!" />
+        <Alert title="Important" background="warning" message="We've temporarily switched to line charts as we perform maintenance on our TradingView charts integration. Also, our new DEX aggregator, Arbigator, is still very WIP and may be missing some features. Thank you for your patience!" />
         <slot />
     </main>
 </div>
