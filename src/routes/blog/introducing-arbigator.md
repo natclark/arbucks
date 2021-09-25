@@ -9,7 +9,7 @@
     <a href="#introducing-arbigator-a-dex-aggregator-on-arbitrum">Introducing Arbigator, a DEX Aggregator on Arbitrum</a>
 </h1>
 
-<p><time datetime="2021-09-23T23:38:32-07:00">September 23, 2021</time></p>
+<p><time datetime="2021-09-25T00:56:41-07:00">September 23, 2021</time></p>
 
 <img class="blog__image blog__image--contain" src="https://cloudflare-ipfs.com/ipfs/QmZteJdSu8vPFp7VrWerfQWqAj2J6Thf3YSKstFcfknvvF" alt="$BUCK Token Chart" loading="lazy">
 

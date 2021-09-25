@@ -13,6 +13,8 @@
 
 <img class="blog__image blog__image--contain" src="https://cloudflare-ipfs.com/ipfs/QmYC4a8p7qaoqon1dAaSydexp5abru7QdExxE62k5UwbRL" alt="Image of the Arbucks logo" loading="lazy">
 
+*Some information in this post is now outdated. Please see the [following status update](/blog/the-path-going-forward/) for more recent info.*
+
 This last week has been a wild ride.
 
 Not just for Arbucks, but for the entire Arbitrum ecosystem.

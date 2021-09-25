@@ -26,6 +26,10 @@
 
 <br>
 
+<Post title="The Path Going Forward" path="the-path-going-forward" time="2021-09-25T00:56:41-07:00" thumbnail="QmaHxZEZv6CwZ1TsNFvoga77CaxUVMp8MPZn93YkFAzL7m">
+    This past week has been moving a bit slow for Arbucks (and Arbitrum overall). Here's a recap of what's been going on and what the new plan is going forward.
+</Post>
+
 <Post title="Introducing Arbigator, a DEX Aggregator on Arbitrum" path="introducing-arbigator" time="2021-09-23T23:38:32-07:00" thumbnail="QmZteJdSu8vPFp7VrWerfQWqAj2J6Thf3YSKstFcfknvvF">
     With a slick user interface and no extra fees, Arbigator is a useful trading companion and great addition to the Arbitrum charting tools we offer on this site.
 </Post>
