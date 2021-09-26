@@ -62,11 +62,13 @@
     };
 
     const getReserves = async () => {
-        const reqPair = await fetch(`https://api2.sushipro.io/?action=get_pair&pair=${pairAddress}&chainID=42161`);
-        const jsonPair = await reqPair.json();
-        if (typeof jsonPair.error === `undefined`) {
-            tokenOneReserve = jsonPair[0].Token_1_reserve;
-            tokenTwoReserve = jsonPair[0].Token_2_reserve;
+        if (!!$connected) {
+            const reqPair = await fetch(`https://api2.sushipro.io/?action=get_pair&pair=${pairAddress}&chainID=42161`);
+            const jsonPair = await reqPair.json();
+            if (typeof jsonPair.error === `undefined`) {
+                tokenOneReserve = jsonPair[0].Token_1_reserve;
+                tokenTwoReserve = jsonPair[0].Token_2_reserve;
+            }
         }
     };
 
@@ -77,6 +79,10 @@
             const adjustedInput = parseFloat(amountQuote) * (10 ** tokenTwoDecimals);
             amountBase = (adjustedInput * 997 * amountOut) / (amountIn + (adjustedInput * 997)) / (10 ** tokenOneDecimals);
             minReceived = amountBase - ((amountBase / 100) * slippageTolerance);
+            if (!!isNaN(amountBase)) {
+                amountBase = 0;
+                minReceived = 0;
+            }
         }
     };
 
@@ -87,6 +93,12 @@
             const adjustedInput = parseFloat(amountBase) * (10 ** tokenOneDecimals);
             amountQuote = (adjustedInput * 997 * amountOut) / (amountIn + (adjustedInput * 997)) / (10 ** tokenTwoDecimals);
             minReceived = amountQuote - ((amountQuote / 100) * slippageTolerance);
+            if (!!isNaN(amountQuote)) {
+                amountQuote = 0;
+                minReceived = 0;
+            } else {
+                console.log(amountQuote);
+            }
         }
     };
 
@@ -542,11 +554,10 @@
 </Snackbar>
 
 <style>
-    // TODO use #02c77a and #ff3b69 for buy/sell colors...
     .panel {
         background-color: #000;
         border: 0;
-        border-radius: 8px;
+        border-radius: 0 8px 8px 0;
         box-shadow: rgba(0, 0, 0, .45) 0 25px 20px -20px;
         display: none;
         height: 400px;

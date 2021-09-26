@@ -55,6 +55,9 @@
     --fg-scroll: #9d4edd;
     --fg-selected: #eee;
     --fg-subtitle: #ccc;
+
+    --mdc-theme-primary: #00eaff;
+    --mdc-theme-on-primary: #000;
 }
 
 :root[data-theme="cyberpunk"] {
@@ -289,4 +292,29 @@ span.ripple {
 
 .ripple {
     animation: ripple .3s linear;
+}
+
+.mdc-tab {
+    .mdc-tab__ripple::before, .mdc-tab .mdc-tab__ripple::after {
+        background-color: #02c77a !important;
+    }
+    &.mdc-tab--active .mdc-tab__text-label {
+        color: #02c77a !important;
+    }
+    .mdc-tab-indicator .mdc-tab-indicator__content--underline {
+        border-color: #02c77a !important;
+        
+    }
+    &:last-child {
+        .mdc-tab__ripple::before, .mdc-tab .mdc-tab__ripple::after {
+            background-color: #ff3b69 !important;
+        }
+        &.mdc-tab--active .mdc-tab__text-label {
+            color: #ff3b69 !important;
+        }
+        .mdc-tab-indicator .mdc-tab-indicator__content--underline {
+            border-color: #ff3b69 !important;
+            
+        }
+    }
 }

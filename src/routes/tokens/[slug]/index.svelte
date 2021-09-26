@@ -290,7 +290,7 @@
             <div class="trades__mobile">
                 {#if !!swaps}
                     {#if swaps.length > 0}
-                        <div class="scroller">
+                        <div class="scroller scroller--dark">
                             <table class="trades trades--desktop">
                                 <thead>
                                     <tr>
@@ -602,8 +602,21 @@
         .trades__mobile {
             display: none;
         }
-        .scroller {
+        .scroller--dark {
+            background-color: #000;
+            border-radius: 8px 0 0 8px;
             overflow-x: hidden;
+            padding: 0;
+        }
+    }
+    :global {
+        @media screen and (min-width: 1024px) {
+            .scroller--dark tbody tr {
+                background-color: #111 !important;
+                &:hover {
+                    background-color: #222 !important;
+                }
+            }
         }
     }
 </style>
