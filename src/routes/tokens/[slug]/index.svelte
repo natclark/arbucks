@@ -330,7 +330,7 @@
                         </thead>
                         <tbody>
                             {#each swaps as swap}
-                                <Trade timestamp={swap.timestamp} type={`${swap.side.toLowerCase().charAt(0)}${swap.side.toLowerCase().slice(1)}`} amount={swap.volumeUSD} maker={swap.receiver} address={swap.txHash} version="desktop" />
+                                <Trade timestamp={swap.timestamp} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} type={`${swap.side.toLowerCase().charAt(0)}${swap.side.toLowerCase().slice(1)}`} amount={swap.volumeUSD} maker={swap.receiver} address={swap.txHash} version="desktop" />
                             {/each}
                         </tbody>
                     </table>
@@ -397,7 +397,7 @@
                     </thead>
                     <tbody>
                         {#each swaps as swap}
-                            <Trade timestamp={swap.timestamp} type={`${swap.side.toLowerCase().charAt(0)}${swap.side.toLowerCase().slice(1)}`} amount={swap.volumeUSD} maker={swap.receiver} address={swap.txHash} version="mobile" />
+                            <Trade timestamp={swap.timestamp} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} type={`${swap.side.toLowerCase().charAt(0)}${swap.side.toLowerCase().slice(1)}`} amount={swap.volumeUSD} maker={swap.receiver} address={swap.txHash} version="mobile" />
                         {/each}
                     </tbody>
                 </table>

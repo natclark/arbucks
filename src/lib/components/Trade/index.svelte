@@ -4,6 +4,8 @@
     import Copy from '$lib/components/Copy/index.svelte';
 
     export let timestamp;
+    export let tokenOneAddress;
+    export let tokenTwoAddress;
     export let type;
     export let amount;
     export let maker;
@@ -21,6 +23,10 @@
 
     let row;
     let doc;
+
+    if (tokenOneAddress === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
+        type = type === `buy` ? `sell` : `buy`;
+    }
 
     onMount(() => {
         doc = document;
