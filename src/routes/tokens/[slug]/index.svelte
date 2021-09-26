@@ -36,6 +36,16 @@
     let holders = 0;
     let swaps = [];
 
+    let Token_1_name = `--------`;
+    let Token_2_name = `--------`;
+    let Token_1_symbol = `----`;
+    let Token_2_symbol = `----`;
+    let Pair_ID = `0x000000000000000000000000000000000000`;
+    let Token_1_contract = `0x000000000000000000000000000000000000`;
+    let Token_2_contract = `0x000000000000000000000000000000000000`;
+    let Token_1_price = `0.00`;
+    let Token_2_price = `0.00`;
+
     let liquidityUSDT = -1;
 
     let doc;
@@ -87,12 +97,30 @@
                             symbol = p.Token_1_symbol;
                             priceString = parseFloat(p.Token_2_price * ethPrice).toFixed(32).toString();
                             token = p;
+                            Token_1_name = token.Token_1_name;
+                            Token_2_name = token.Token_2_name;
+                            Token_1_symbol = token.Token_1_symbol;
+                            Token_2_symbol = token.Token_2_symbol;
+                            Pair_ID = token.Pair_ID;
+                            Token_1_contract = token.Token_1_contract;
+                            Token_2_contract = token.Token_2_contract;
+                            Token_1_price = token.Token_1_price;
+                            Token_2_price = token.Token_2_price;
                             pair = p.Pair_ID;
                             found = true;
                         } else if (p.Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
                             symbol = p.Token_2_symbol;
                             priceString = parseFloat(ethPrice * p.Token_1_price).toFixed(32).toString();
                             token = p;
+                            Token_1_name = token.Token_1_name;
+                            Token_2_name = token.Token_2_name;
+                            Token_1_symbol = token.Token_1_symbol;
+                            Token_2_symbol = token.Token_2_symbol;
+                            Pair_ID = token.Pair_ID;
+                            Token_1_contract = token.Token_1_contract;
+                            Token_2_contract = token.Token_2_contract;
+                            Token_1_price = token.Token_1_price;
+                            Token_2_price = token.Token_2_price;
                             pair = p.Pair_ID;
                             found = true;
                         }
@@ -231,185 +259,175 @@
     <meta name=twitter:title content="Live Arbitrum Charts & Analytics - Arbucks">
 </svelte:head>
 
-{#if !!loading}
-    <div class="loading">
-        <Loader />
+<div class="flex flex--top">
+    <div class="flex flex--header">
+        <img class="image" src="/placeholder.png" aria-hidden="true">
+        <div>
+            <h1 class="title">{Token_1_symbol} / {Token_2_symbol}</h1>
+            <p class="subtitle">
+                <span class="bold">{Token_1_name} / {Token_2_name}</span>
+                &nbsp;
+                (<a href="https://arbiscan.io/token/{$page.params.slug}" rel="external noopener" target="_blank">{$page.params.slug}</a> <Copy text={$page.params.slug} />)
+            </p>
+        </div>
     </div>
-{:else}
-    {#if !!token && !!valid}
-        <div class="flex flex--top">
-            <div class="flex flex--header">
-                <img class="image" src="/placeholder.png" aria-hidden="true">
-                <div>
-                    <h1 class="title">{token.Token_1_symbol} / {token.Token_2_symbol}</h1>
-                    <p class="subtitle">
-                        <span class="bold">{token.Token_1_name} / {token.Token_2_name}</span>
-                        &nbsp;
-                        (<a href="https://arbiscan.io/token/{$page.params.slug}" rel="external noopener" target="_blank">{$page.params.slug}</a> <Copy text={$page.params.slug} />)
-                    </p>
-                </div>
-            </div>
-            <Search />
-        </div>
-        <div class="flex flex--center flex--mobile">
-            <div class="left">
-                <h2><span class="light">${zeroes}</span><span class="price">{price}</span> <span class="light">USDT</span> <span class={changeDir}>{changePctg}%</span></h2>
-                <br>
-                <!--<p class="light">(TODO ETH)</p>-->
-                <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={token.Token_1_contract}" rel="external noopener" target="_blank" draggable="false">Buy {token.Token_1_symbol}</a>
-                <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={token.Token_2_contract}" rel="external noopener" target="_blank" draggable="false">Buy {token.Token_2_symbol}</a>
-            </div>
-        </div>
-
-        <div class="details details--mobile">
-            <p class="flex"><span class="bold">Exchange</span><span>Sushiswap V2</span></p>
-            <p class="flex"><span class="bold">24H Volume</span><span>{!!volume ? volume24 : 0}</span></p>
-            <p class="flex"><span class="bold">Market Cap</span><span>{fdmc}</span></p>
-            <p class="flex"><span class="bold">Holders</span><span>{holders}</span></p>
-            <p class="flex"><span class="bold">Transactions</span><span>{txCount}</span></p>
-        </div>
-
-        <div class="details details--desktop">
-            <div>
-                <p class="details__price"><span class="light">${zeroes}</span><span class="price">{price}</span> <span class="light">USDT</span> <span class={changeDir}>{changePctg}%</span></p>
-                <p class="details__detail"><span class="bold">Exchange</span><span>Sushiswap V2</span></p>
-                <p class="details__detail"><span class="bold">24H Volume</span><span>{!!volume ? volume24 : 0}</span></p>
-                <p class="details__detail"><span class="bold">Market Cap</span><span>{fdmc}</span></p>
-                <p class="details__detail"><span class="bold">Liquidity</span><span>~{liquidityUSDT}</span></p>
-                <p class="details__detail"><span class="bold">Holders</span><span>{holders}</span></p>
-                <p class="details__detail"><span class="bold">Transactions</span><span>{txCount}</span></p>
-            </div>
-            <div>
-                <button class="squareButton" on:click={addToken} on:mousedown={(e) => !!doc && (ripple(e, doc))}>
-                    <img height="28px" width="28px" draggable="false" src="https://cloudflare-ipfs.com/ipfs/QmWZk7iimf2AN8Rc9DRHvJUdwuqsqTL5TVwNdZuLWfDNgf" alt="MetaMask logo" loading="lazy"><span>+</span>
-                </button>
-            </div>
-        </div>
-
-        <div class="flex flex--center flex--main">
-            <div class="trades__mobile">
-                {#if !!swaps}
-                    {#if swaps.length > 0}
-                        <div class="scroller scroller--dark">
-                            <table class="trades trades--desktop">
-                                <thead>
-                                    <tr>
-                                        <th>Time</th>
-                                        <!--
-                                        <th>Type</th>
-                                        -->
-                                        <th>Amount (USDT)</th>
-                                        <!--
-                                        <th>Est. Price Impact (WIP)</th>
-                                        -->
-                                        <th>Maker</th>
-                                        <th>TX</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {#each swaps as swap}
-                                        <Trade timestamp={swap.timestamp} type={`${swap.side.toLowerCase().charAt(0)}${swap.side.toLowerCase().slice(1)}`} amount={swap.volumeUSD} maker={swap.receiver} address={swap.txHash} version="desktop" />
-                                    {/each}
-                                </tbody>
-                            </table>
-                        </div>
-                    {/if}
-                {/if}
-            </div>
-            <SimpleChart id="0" pairAddress={token.Pair_ID} tokenOneAddress={token.Token_1_contract} tokenTwoAddress={token.Token_2_contract} tokenOnePrice={token.Token_1_price} tokenTwoPrice={token.Token_2_price} tokenOneSymbol={token.Token_1_symbol} tokenTwoSymbol={token.Token_2_symbol} {ethPrice} />
-            <!--
-            <Chart id="0" pairAddress={token.Pair_ID} tokenOneAddress={token.Token_1_contract} tokenTwoAddress={token.Token_2_contract} tokenOnePrice={token.Token_1_price} tokenTwoPrice={token.Token_2_price} tokenOneSymbol={token.Token_1_symbol} tokenTwoSymbol={token.Token_2_symbol} {ethPrice} />
-            -->
-            <!--
-            <iframe class="trade" src="https://app.sushi.com/swap?inputCurrency={token.Token_1_contract}&outputCurrency={token.Token_2_contract}" title="Trade on Sushiswap"></iframe>
-            -->
-            <Arbigator tokenOneSymbol={symbol} tokenTwoSymbol={token.Token_1_symbol === symbol ? token.Token_2_symbol : token.Token_1_symbol} pairAddress={token.Pair_ID} pairLiquidity={liquidityUSDT} tokenOneAddress={token.Token_1_contract} tokenTwoAddress={token.Token_2_contract} tokenOneDecimals={decimalsBase} tokenTwoDecimals={decimalsQuote} />
-        </div>
-
+    <Search />
+</div>
+<div class="flex flex--center flex--mobile">
+    <div class="left">
+        <h2><span class="light">${zeroes}</span><span class="price">{price}</span> <span class="light">USDT</span> <span class={changeDir}>{changePctg}%</span></h2>
         <br>
+        <!--<p class="light">(TODO ETH)</p>-->
+        <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={Token_1_contract}" rel="external noopener" target="_blank" draggable="false">Buy {Token_1_symbol}</a>
+        <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={Token_2_contract}" rel="external noopener" target="_blank" draggable="false">Buy {Token_2_symbol}</a>
+    </div>
+</div>
 
-        <!--
-            TODO
-        <h2>Liquidity</h2>
-        {#if !!liquidity}
-            <p><em>Coming soon!</em></p>
-        {:else}
-            <p>No liquidity data is available for this pair.</p>
-        {/if}
+<div class="details details--mobile">
+    <p class="flex"><span class="bold">Exchange</span><span>Sushiswap V2</span></p>
+    <p class="flex"><span class="bold">24H Volume</span><span>{!!volume ? volume24 : 0}</span></p>
+    <p class="flex"><span class="bold">Market Cap</span><span>{fdmc}</span></p>
+    <p class="flex"><span class="bold">Holders</span><span>{holders}</span></p>
+    <p class="flex"><span class="bold">Transactions</span><span>{txCount}</span></p>
+</div>
 
-        <h2>Volume</h2>
-        {#if !!volume}
-            <p><em>Coming soon!</em></p>
-        {:else}
-            <p>No volume data is available for this pair.</p>
-        {/if}
-        -->
+<div class="details details--desktop">
+    <div>
+        <p class="details__price"><span class="light">${zeroes}</span><span class="price">{price}</span> <span class="light">USDT</span> <span class={changeDir}>{changePctg}%</span></p>
+        <p class="details__detail"><span class="bold">Exchange</span><span>Sushiswap V2</span></p>
+        <p class="details__detail"><span class="bold">24H Volume</span><span>{!!volume ? volume24 : 0}</span></p>
+        <p class="details__detail"><span class="bold">Market Cap</span><span>{fdmc}</span></p>
+        <p class="details__detail"><span class="bold">Liquidity</span><span>~{liquidityUSDT}</span></p>
+        <p class="details__detail"><span class="bold">Holders</span><span>{holders}</span></p>
+        <p class="details__detail"><span class="bold">Transactions</span><span>{txCount}</span></p>
+    </div>
+    <div>
+        <button class="squareButton" on:click={addToken} on:mousedown={(e) => !!doc && (ripple(e, doc))}>
+            <img height="28px" width="28px" draggable="false" src="https://cloudflare-ipfs.com/ipfs/QmWZk7iimf2AN8Rc9DRHvJUdwuqsqTL5TVwNdZuLWfDNgf" alt="MetaMask logo" loading="lazy"><span>+</span>
+        </button>
+    </div>
+</div>
 
-        <div class="trades__mobile">
-            <h2>Trades</h2>
-            {#if !!swaps}
-                {#if swaps.length > 0}
-                    <p>Showing the 100 most recent trades.</p>
-                    <p><em>This doesn't yet update in real time, so you'll have to refresh the page to fetch new trades.</em></p>
-                    <div class="scroller">
-                        <table class="trades">
-                            <thead>
-                                <tr>
-                                    <th>Time</th>
-                                    <!--
-                                    <th>Type</th>
-                                    -->
-                                    <th>Amount (USDT)</th>
-                                    <!--
-                                    <th>Est. Price Impact (WIP)</th>
-                                    -->
-                                    <th>Maker</th>
-                                    <th>TX Hash</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {#each swaps as swap}
-                                    <Trade timestamp={swap.timestamp} type={`${swap.side.toLowerCase().charAt(0)}${swap.side.toLowerCase().slice(1)}`} amount={swap.volumeUSD} maker={swap.receiver} address={swap.txHash} version="mobile" />
-                                {/each}
-                            </tbody>
-                        </table>
-                    </div>
-                {:else}
-                    <p><em>There haven't been any transactions for this pair yet.</em></p>
-                {/if}
-            {:else}
-                <p>No transaction data is available for this pair.</p>
+<div class="flex flex--center flex--main">
+    <div class="trades__mobile">
+        {#if !!swaps}
+            {#if swaps.length > 0}
+                <div class="scroller scroller--dark">
+                    <table class="trades trades--desktop">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <!--
+                                <th>Type</th>
+                                -->
+                                <th>Amount (USDT)</th>
+                                <!--
+                                <th>Est. Price Impact (WIP)</th>
+                                -->
+                                <th>Maker</th>
+                                <th>TX</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {#each swaps as swap}
+                                <Trade timestamp={swap.timestamp} type={`${swap.side.toLowerCase().charAt(0)}${swap.side.toLowerCase().slice(1)}`} amount={swap.volumeUSD} maker={swap.receiver} address={swap.txHash} version="desktop" />
+                            {/each}
+                        </tbody>
+                    </table>
+                </div>
             {/if}
-        </div>
-
-        <h2>Info</h2>
-        <div class="details">
-            <p class="flex"><span class="bold">Website</span><span><em>Coming soon!</em></span></p>
-            <p class="flex"><span class="bold">Telegram</span><span><em>Coming soon!</em></span></p>
-            <p class="flex"><span class="bold">Discord</span><span><em>Coming soon!</em></span></p>
-            <p class="flex"><span class="bold">Twitter</span><span><em>Coming soon!</em></span></p>
-            <p class="flex"><span class="bold">GitHub</span><span><em>Coming soon!</em></span></p>
-            <p class="flex"><span class="bold">4chan</span><span><em>Coming soon!</em></span></p>
-            <p class="flex"><span class="bold">Reddit</span><span><em>Coming soon!</em></span></p>
-            <p class="flex"><span class="bold">TikTok</span><span><em>Coming soon!</em></span></p>
-        </div>
-        <p><em>Token descriptions are coming soon!</em></p>
-
-        <h2>Other {token.Token_1_name} Pairs</h2>
-        <p><em>"Other pairs" coming soon!</em></p>
-
-        <h2>Share</h2>
-        <p><em>Share buttons are coming soon!</em></p>
-    {:else if token === null && valid === false}
-        <h1>Invalid Token</h1>
-
-        <p><em>Redirecting...</em></p>
+        {/if}
+    </div>
+    {#if !!token && loading === false}
+        <SimpleChart id="0" pairAddress={Pair_ID} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} tokenOnePrice={Token_1_price} tokenTwoPrice={Token_2_price} tokenOneSymbol={Token_1_symbol} tokenTwoSymbol={Token_2_symbol} {ethPrice} />
     {:else}
-        <h1>No Pairs Found</h1>
-
-        <p><em>Redirecting...</em></p>
+        <div class="loading">
+            <Loader />
+        </div>
     {/if}
+    <!--
+    <Chart id="0" pairAddress={Pair_ID} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} tokenOnePrice={Token_1_price} tokenTwoPrice={Token_2_price} tokenOneSymbol={Token_1_symbol} tokenTwoSymbol={Token_2_symbol} {ethPrice} />
+    -->
+    <!--
+    <iframe class="trade" src="https://app.sushi.com/swap?inputCurrency={Token_1_contract}&outputCurrency={Token_2_contract}" title="Trade on Sushiswap"></iframe>
+    -->
+    <Arbigator tokenOneSymbol={symbol} tokenTwoSymbol={Token_1_symbol === symbol ? Token_2_symbol : Token_1_symbol} pairAddress={Pair_ID} pairLiquidity={liquidityUSDT} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} tokenOneDecimals={decimalsBase} tokenTwoDecimals={decimalsQuote} />
+</div>
+
+<br>
+
+<!--
+    TODO
+<h2>Liquidity</h2>
+{#if !!liquidity}
+    <p><em>Coming soon!</em></p>
+{:else}
+    <p>No liquidity data is available for this pair.</p>
 {/if}
+
+<h2>Volume</h2>
+{#if !!volume}
+    <p><em>Coming soon!</em></p>
+{:else}
+    <p>No volume data is available for this pair.</p>
+{/if}
+-->
+
+<div class="trades__mobile">
+    <h2>Trades</h2>
+    {#if !!swaps}
+        {#if swaps.length > 0}
+            <p>Showing the 100 most recent trades.</p>
+            <p><em>This doesn't yet update in real time, so you'll have to refresh the page to fetch new trades.</em></p>
+            <div class="scroller">
+                <table class="trades">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <!--
+                            <th>Type</th>
+                            -->
+                            <th>Amount (USDT)</th>
+                            <!--
+                            <th>Est. Price Impact (WIP)</th>
+                            -->
+                            <th>Maker</th>
+                            <th>TX Hash</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {#each swaps as swap}
+                            <Trade timestamp={swap.timestamp} type={`${swap.side.toLowerCase().charAt(0)}${swap.side.toLowerCase().slice(1)}`} amount={swap.volumeUSD} maker={swap.receiver} address={swap.txHash} version="mobile" />
+                        {/each}
+                    </tbody>
+                </table>
+            </div>
+        {:else}
+            <p><em>There haven't been any transactions for this pair yet.</em></p>
+        {/if}
+    {:else}
+        <p>No transaction data is available for this pair.</p>
+    {/if}
+</div>
+
+<h2>Info</h2>
+<div class="details">
+    <p class="flex"><span class="bold">Website</span><span><em>Coming soon!</em></span></p>
+    <p class="flex"><span class="bold">Telegram</span><span><em>Coming soon!</em></span></p>
+    <p class="flex"><span class="bold">Discord</span><span><em>Coming soon!</em></span></p>
+    <p class="flex"><span class="bold">Twitter</span><span><em>Coming soon!</em></span></p>
+    <p class="flex"><span class="bold">GitHub</span><span><em>Coming soon!</em></span></p>
+    <p class="flex"><span class="bold">4chan</span><span><em>Coming soon!</em></span></p>
+    <p class="flex"><span class="bold">Reddit</span><span><em>Coming soon!</em></span></p>
+    <p class="flex"><span class="bold">TikTok</span><span><em>Coming soon!</em></span></p>
+</div>
+<p><em>Token descriptions are coming soon!</em></p>
+
+<h2>Other {Token_1_name} Pairs</h2>
+<p><em>"Other pairs" coming soon!</em></p>
+
+<h2>Share</h2>
+<p><em>Share buttons are coming soon!</em></p>
 
 <style>
     .loading {
