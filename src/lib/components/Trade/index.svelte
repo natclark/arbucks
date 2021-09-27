@@ -110,10 +110,10 @@
                 font-weight: 500;
             }
             &.buyText {
-                color: #00c900;
+                color: #02c77a;
             }
             &.sellText {
-                color: #ff6e6e;
+                color: #ff3b69;
             }
             &.actions {
                 align-items: center;

@@ -481,10 +481,10 @@
         color: #f8f8f8;
     }
     .positive {
-        color: #00f000;
+        color: #02c77a;
     }
     .negative {
-        color: #ff6e6e;
+        color: #ff3b69;
     }
     .details {
         border: 1px solid var(--fg-border);
@@ -629,10 +629,25 @@
     }
     :global {
         @media screen and (min-width: 1024px) {
-            .scroller--dark tbody tr {
-                background-color: #111 !important;
-                &:hover {
-                    background-color: #222 !important;
+            .scroller--dark {
+                ::-webkit-scrollbar-thumb {
+                    background-color: #333;
+                }
+                scrollbar-color: #333 var(--bg-scroll);
+                scrollbar-face-color: #333;
+                thead tr {
+                    color: #aaa;
+                    height: 28px;
+                    th {
+                        padding: 2px;
+                    }
+                }
+                tbody tr {
+                    background-color: #000 !important;
+                    color: #fafafa;
+                    &:hover {
+                        background-color: #111 !important;
+                    }
                 }
             }
         }

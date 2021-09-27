@@ -131,7 +131,7 @@
                 low: 0,
                 close: 0,
             };
-            let color = `rgba(0, 150, 136, .4)`;
+            let color = `rgba(2, 199, 122, .4)`;
             let volume = 0;
             const matches = array.filter((e) => (i + 900 > parseInt(e.timestamp) && i <= parseInt(e.timestamp))).sort((a, b) => parseInt(a.timestamp) - parseInt(b.timestamp));
             if (matches.length > 0) {
@@ -159,7 +159,7 @@
                         close = value;
                     }
                 }
-                open > close && (color = `rgba(255, 82, 82, .4)`);
+                open > close && (color = `rgba(255, 59, 105, .4)`);
                 candle.open = open;
                 candle.high = high;
                 candle.low = low;
