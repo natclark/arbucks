@@ -96,8 +96,6 @@
             if (!!isNaN(amountQuote)) {
                 amountQuote = 0;
                 minReceived = 0;
-            } else {
-                console.log(amountQuote);
             }
         }
     };
@@ -147,6 +145,9 @@
     };
 
     const encodeSwap = (amountIn, amountOut, decimalInput, decimalOutput, tokens) => {
+        console.log(amountIn, amountOut, decimalInput, decimalOutput, tokens);
+        console.log($web3.utils.toWei(amountIn.toFixed(decimalInput).toString(), getWei(decimalInput)), $web3.utils.toWei(amountOut.toFixed(decimalOutput).toString(), getWei(decimalOutput)), tokens, $selectedAccount.toString(), Math.floor(Date.now() / 1000) + 1800);
+        const timeout = Math.floor(Date.now() / 1000) + 1800; // 30 minutes is default tx timeout
         return $web3.eth.abi.encodeFunctionCall(
             {
                 inputs: [
@@ -178,8 +179,8 @@
                 $web3.utils.toWei(amountIn.toFixed(decimalInput).toString(), getWei(decimalInput)),
                 $web3.utils.toWei(amountOut.toFixed(decimalOutput).toString(), getWei(decimalOutput)),
                 tokens,
-                $selectedAccount,
-                Math.floor(Date.now() / 1000) + 1800, // 30 minutes is default tx timeout
+                $selectedAccount.toString(),
+                timeout,
             ]
         );
     };
@@ -192,6 +193,7 @@
     const updateAllowance = async () => {
         tokenOneAllowance = await getAllowance(tokenOneAddress);
         tokenTwoAllowance = await getAllowance(tokenTwoAddress);
+        console.log(tokenOneAllowance, tokenTwoAllowance);
         return active === `buy` ? tokenOneAllowance : tokenTwoAllowance;
     };
 
@@ -273,12 +275,12 @@
     };
 
     const placeOrder = async () => {
-        const amountIn = parseFloat(amountBase);
-        const amountOut = parseFloat(amountQuote);
-        const tokenInput = tokenOneAddress;
-        const tokenOutput = tokenTwoAddress;
-        const decimalInput = tokenOneDecimals;
-        const decimalOutput = tokenTwoDecimals;
+        const amountIn = parseFloat(active === `buy` ? amountBase : amountQuote);
+        const amountOut = parseFloat(active === `buy` ? amountQuote : amountBase);
+        const tokenInput = active === `buy` ? tokenOneAddress : tokenTwoAddress;
+        const tokenOutput = active === `buy` ? tokenTwoAddress : tokenOneAddress;
+        const decimalInput = active === `buy` ? tokenOneDecimals : tokenTwoDecimals;
+        const decimalOutput = active === `buy` ? tokenTwoDecimals : tokenOneDecimals;
 
         const allowance = await updateAllowance();
 
@@ -307,10 +309,12 @@
                         approving = false;
                         await updateAllowance();
                     });
-                }
-            );
+            }).catch((error) => {
+                // RPC ERROR
+                snackbar.open();
+            });
         } else {
-            const data = encodeSwap(amountIn, minReceived, decimalInput, decimalOutput, [tokenInput, tokenOutput]);
+            const data = encodeSwap(amountIn, minReceived, decimalOutput, decimalInput, [tokenOutput, tokenInput]);
             $web3.eth.estimateGas({
                 data,
                 from: $selectedAccount,
@@ -321,7 +325,7 @@
                         data,
                         from: $selectedAccount,
                         gas: gasLimit,
-                        gasPrice: $web3.utils.toWei(`2`, `Gwei`),
+                        gasPrice: $web3.utils.toWei(`20`, `Gwei`),
                         to: pairAddress.toString(),
                     }).once(`error`, () => {
                         swapping = false;
@@ -333,8 +337,7 @@
                         await updateBalance();
                         await updateAllowance();
                     });
-                }
-            ).catch((error) => {
+            }).catch((error) => {
                 // RPC ERROR
                 snackbar.open();
             });
@@ -389,13 +392,13 @@
     </div>
     {#if active === `buy`}
         <div class="panel__flex panel__flex--tall">
-            <Textfield type="text" bind:value={amountBase} label="Amount ({tokenTwoSymbol})" style={styleTextfield} />
+            <Textfield type="text" bind:value={amountBase} label="Amount ({tokenOneSymbol})" style={styleTextfield} />
         </div>
         <div class="panel__flex">
             <p><small>Balance: <strong>{balanceBase}</strong></small></p>
         </div>
         <div class="panel__flex panel__flex--tall">
-            <Textfield type="text" bind:value={amountQuote} label="Amount ({tokenOneSymbol})" style={styleTextfield} />
+            <Textfield type="text" bind:value={amountQuote} label="Amount ({tokenTwoSymbol})" style={styleTextfield} />
         </div>
         <div class="panel__flex">
             <p><small>Balance: <strong>{balanceQuote}</strong></small></p>
@@ -412,7 +415,7 @@
                 {#if !!$connected && $chainData.chainId === 42161 && balanceBase > 0}
                     <Button on:click={() => (amountBase = balanceBase)}>Max</Button>
                 {:else}
-                    <Button disabled on:click={() => (amountBase = balanceBase)}>Max</Button>
+                    <Button disabled>Max</Button>
                 {/if}
             </div>
         </div>
@@ -427,13 +430,13 @@
         </div>
     {:else}
         <div class="panel__flex panel__flex--tall">
-            <Textfield type="text" bind:value={amountQuote} label="Amount ({tokenOneSymbol})" style={styleTextfield} />
+            <Textfield type="text" bind:value={amountQuote} label="Amount ({tokenTwoSymbol})" style={styleTextfield} />
         </div>
         <div class="panel__flex">
             <p><small>Balance: <strong>{balanceQuote}</strong></small></p>
         </div>
         <div class="panel__flex panel__flex--tall">
-            <Textfield type="text" bind:value={amountBase} label="Amount ({tokenTwoSymbol})" style={styleTextfield} />
+            <Textfield type="text" bind:value={amountBase} label="Amount ({tokenOneSymbol})" style={styleTextfield} />
         </div>
         <div class="panel__flex">
             <p><small>Balance: <strong>{balanceBase}</strong></small></p>
@@ -450,7 +453,7 @@
                 {#if !!$connected && $chainData.chainId === 42161 && balanceQuote > 0}
                     <Button on:click={() => (amountQuote = balanceQuote)}>Max</Button>
                 {:else}
-                    <Button disabled on:click={() => (amountQuote = balanceQuote)}>Max</Button>
+                    <Button disabled>Max</Button>
                 {/if}
             </div>
         </div>
@@ -516,11 +519,11 @@
                     {#if (active === `buy` && tokenOneAllowance == 0) || (active === `sell` && tokenTwoAllowance == 0)}
                         {#if !!approving}
                             <Button variant="raised" style={styleButton}>
-                                <Label>Approving {active === `buy` ? tokenTwoSymbol : tokenOneSymbol}...</Label>
+                                <Label>Approving {active === `buy` ? tokenOneSymbol : tokenTwoSymbol}...</Label>
                             </Button>
                         {:else}
                             <Button on:click={placeOrder} variant="raised" style={styleButton}>
-                                <Label>Approve {active === `buy` ? tokenTwoSymbol : tokenOneSymbol}</Label>
+                                <Label>Approve {active === `buy` ? tokenOneSymbol : tokenTwoSymbol}</Label>
                             </Button>
                         {/if}
                     {:else}
@@ -534,8 +537,8 @@
                                     <Label>Swapping...</Label>
                                 </Button>
                             {:else}
-                                <Button on:click={placeOrder} variant="raised" style={styleButton}>
-                                    <Label>Place Order</Label>
+                                <Button disabled on:click={placeOrder} variant="raised" style={styleButton}>
+                                    <Label>Coming Soon</Label>
                                 </Button>
                             {/if}
                         {/if}

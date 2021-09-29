@@ -24,10 +24,6 @@
     let row;
     let doc;
 
-    if (tokenOneAddress === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
-        type = type === `buy` ? `sell` : `buy`;
-    }
-
     onMount(() => {
         doc = document;
         /*
@@ -43,12 +39,7 @@
     <td>
         {time}
     </td>
-    <!--
-    <td>
-        <span class={type.toLowerCase()}>{type}</span>
-    </td>
-    -->
-    <td class="{type.toLowerCase()}Text">
+    <td class="{type}Text">
         {#if type === `buy`}
             {new Intl.NumberFormat(`en-US`, {
                 currency: `USD`,

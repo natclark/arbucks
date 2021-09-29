@@ -1,5 +1,7 @@
 <script>
     import { onMount } from 'svelte';
+    import SegmentedButton, { Segment, Icon } from '@smui/segmented-button';
+    import Wrapper from '@smui/touch-target';
     export let id;
     export let pairAddress;
     export let tokenOneAddress;
@@ -9,6 +11,11 @@
     export let tokenOneSymbol;
     export let tokenTwoSymbol;
     export let ethPrice;
+    export let timeframe;
+
+    let seconds = 0;
+
+    let switching = false;
 
     let localization = {
         priceFormatter: (price) => `$${price}`,
@@ -73,6 +80,7 @@
     };
     const renderChart = async (priceData, volumeData) => {
         await import('lightweight-charts/dist/lightweight-charts.standalone.production.js');
+        document.querySelector(`[data-id="chart-${id}"]`).innerHTML = ``;
         const chart = LightweightCharts.createChart(document.querySelector(`[data-id="chart-${id}"]`), chartOptions);
         const priceSeries = chart.addCandlestickSeries(priceSeriesOptions);
         priceSeries.setData(priceData);
@@ -82,6 +90,14 @@
         const resizeChart = () => window.screen.height > 768 ? chart.resize(window.getComputedStyle(document.querySelector(`.chart`)).width.slice(0, -2), 600) : chart.resize(window.getComputedStyle(document.querySelector(`.chart`)).width.slice(0, -2), 400);
         resizeChart();
         window.addEventListener(`resize`, resizeChart, true);
+        switching = false;
+    };
+    const updateChart = () => {
+        try {
+            //priceSeries.update(); TODO
+            //volumeSeries.update(); TODO
+        } catch (e) {}
+        switching = false;
     };
     const calculateValue = (value) => {
         let zeroes = ``;
@@ -117,13 +133,13 @@
         if (array.length > 0) {
             startTime = parseInt(array[0].timestamp);
             endTime = parseInt(array[array.length - 1].timestamp);
-            while (startTime % 900 !== 0) startTime--;
+            while (startTime % timeframe.seconds !== 0) startTime--;
         }
         let priceData = [];
         let volumeData = [];
         let currentBar = [];
         let previousBar = null;
-        for (let i = startTime; i < endTime; i += 900) {
+        for (let i = startTime; i < endTime; i += timeframe.seconds) {
             let candle = {
                 time: i,
                 open: 0,
@@ -133,7 +149,7 @@
             };
             let color = `rgba(2, 199, 122, .4)`;
             let volume = 0;
-            const matches = array.filter((e) => (i + 900 > parseInt(e.timestamp) && i <= parseInt(e.timestamp))).sort((a, b) => parseInt(a.timestamp) - parseInt(b.timestamp));
+            const matches = array.filter((e) => (i + timeframe.seconds > parseInt(e.timestamp) && i <= parseInt(e.timestamp))).sort((a, b) => parseInt(a.timestamp) - parseInt(b.timestamp));
             if (matches.length > 0) {
                 let open;
                 let high;
@@ -185,57 +201,90 @@
             volumeData,
         };
     };
-    onMount(() => {
-        let i = 0;
-        let priceData = [];
-        let volumeData = [];
-        let previousLastTimestamp = -1;
-        const xhr = new XMLHttpRequest();
-        xhr.onload = () => {
-            const json = JSON.parse(xhr.response); // TODO check for errors
-            const result = buildSeries(json);
-            if (i === 0) {
-                priceData = result.priceData;
-                volumeData = result.volumeData;
-                if (result.lastTimestamp !== null && result.priceData.length > 0) {
-                    previousLastTimestamp = result.lastTimestamp;
-                    xhr.open(`POST`, `https://api.thegraph.com/subgraphs/name/sushiswap/arbitrum-exchange`);
-                    xhr.setRequestHeader(`Content-Type`, `application/json`);
-                    xhr.send(JSON.stringify({
-                        query: `{\n  swaps(first: 1000, where: {pair: "${pairAddress}", timestamp_lte: "${result.lastTimestamp}"}, orderBy: timestamp, orderDirection: desc) {\n    id\n    pair {\n      id\n    token0Price\n    token1Price\n    }\n    amount0In\n    amount1In\n    amount0Out\n    amount1Out\n    amountUSD\n    timestamp\n\t}\n}\n`,
-                        variables: null,
-                    }));
-                } else {
-                    renderChart([], []);
-                }
-            } else {
-                priceData = result.priceData.concat(priceData);
-                volumeData = result.volumeData.concat(volumeData);
-                if (result.lastTimestamp !== null && result.priceData.length > 0 && result.lastTimestamp !== previousLastTimestamp) {
-                    previousLastTimestamp = result.lastTimestamp;
-                    xhr.open(`POST`, `https://api.thegraph.com/subgraphs/name/sushiswap/arbitrum-exchange`);
-                    xhr.setRequestHeader(`Content-Type`, `application/json`);
-                    xhr.send(JSON.stringify({
-                        query: `{\n  swaps(first: 1000, where: {pair: "${pairAddress}", timestamp_lte: "${result.lastTimestamp}"}, orderBy: timestamp, orderDirection: desc) {\n    id\n    pair {\n      id\n    token0Price\n    token1Price\n    }\n    amount0In\n    amount1In\n    amount0Out\n    amount1Out\n    amountUSD\n    timestamp\n\t}\n}\n`,
-                        variables: null,
-                    }));
-                } else {
-                    renderChart(priceData, volumeData);
-                }
+    let priceData = [];
+    let volumeData = [];
+    let previousLastTimestamp = -1;
+    const autoRefresh = (mode) => {
+        if (seconds !== timeframe.seconds) {
+            seconds = timeframe.seconds;
+            if (mode === `hard`) {
+                switching = true;
+                let i = 0;
+                const xhr = new XMLHttpRequest();
+                xhr.onload = () => {
+                    const json = JSON.parse(xhr.response); // TODO check for errors
+                    const result = buildSeries(json);
+                    if (i === 0) {
+                        priceData = result.priceData;
+                        volumeData = result.volumeData;
+                        if (result.lastTimestamp !== null && result.priceData.length > 0) {
+                            previousLastTimestamp = result.lastTimestamp;
+                            xhr.open(`POST`, `https://api.thegraph.com/subgraphs/name/sushiswap/arbitrum-exchange`);
+                            xhr.setRequestHeader(`Content-Type`, `application/json`);
+                            xhr.send(JSON.stringify({
+                                query: `{\n  swaps(first: 1000, where: {pair: "${pairAddress}", timestamp_lte: "${result.lastTimestamp}"}, orderBy: timestamp, orderDirection: desc) {\n    id\n    pair {\n      id\n    token0Price\n    token1Price\n    }\n    amount0In\n    amount1In\n    amount0Out\n    amount1Out\n    amountUSD\n    timestamp\n\t}\n}\n`,
+                                variables: null,
+                            }));
+                        } else {
+                            renderChart([], []);
+                        }
+                    } else {
+                        priceData = result.priceData.concat(priceData);
+                        volumeData = result.volumeData.concat(volumeData);
+                        if (result.lastTimestamp !== null && result.priceData.length > 0 && result.lastTimestamp !== previousLastTimestamp) {
+                            previousLastTimestamp = result.lastTimestamp;
+                            xhr.open(`POST`, `https://api.thegraph.com/subgraphs/name/sushiswap/arbitrum-exchange`);
+                            xhr.setRequestHeader(`Content-Type`, `application/json`);
+                            xhr.send(JSON.stringify({
+                                query: `{\n  swaps(first: 1000, where: {pair: "${pairAddress}", timestamp_lte: "${result.lastTimestamp}"}, orderBy: timestamp, orderDirection: desc) {\n    id\n    pair {\n      id\n    token0Price\n    token1Price\n    }\n    amount0In\n    amount1In\n    amount0Out\n    amount1Out\n    amountUSD\n    timestamp\n\t}\n}\n`,
+                                variables: null,
+                            }));
+                        } else {
+                            renderChart(priceData, volumeData);
+                            //setInterval(() => autoRefresh(), 10000);
+                        }
+                    }
+                    i++;
+                };
+                xhr.onerror = () => {
+                    console.log(`Request failed.`);
+                };
+                /* The Graph has issues, but it'll have to do for now. */
+                xhr.open(`POST`, `https://api.thegraph.com/subgraphs/name/sushiswap/arbitrum-exchange`);
+                xhr.setRequestHeader(`Content-Type`, `application/json`);
+                xhr.send(JSON.stringify({
+                    query: `{\n  swaps(first: 1000, where: {pair: "${pairAddress}"}, orderBy: timestamp, orderDirection: desc) {\n    id\n    pair {\n      id\n    token0Price\n    token1Price\n    }\n    amount0In\n    amount1In\n    amount0Out\n    amount1Out\n    amountUSD\n    timestamp\n\t}\n}\n`,
+                    variables: null,
+                }));
+            } else if (mode === `soft`) {
+                switching = true;
+                const xhr = new XMLHttpRequest();
+                xhr.onload = () => {
+                    const json = JSON.parse(xhr.response); // TODO check for errors
+                    const result = buildSeries(json);
+                    priceData = result.priceData;
+                    volumeData = result.volumeData;
+                    updateChart(priceData, volumeData);
+                };
+                xhr.onerror = () => {
+                    console.log(`Request failed.`);
+                };
+                /* The Graph has issues, but it'll have to do for now. */
+                xhr.open(`POST`, `https://api.thegraph.com/subgraphs/name/sushiswap/arbitrum-exchange`);
+                xhr.setRequestHeader(`Content-Type`, `application/json`);
+                xhr.send(JSON.stringify({
+                    query: `{\n  swaps(first: 1000, where: {pair: "${pairAddress}"}, orderBy: timestamp, orderDirection: desc) {\n    id\n    pair {\n      id\n    token0Price\n    token1Price\n    }\n    amount0In\n    amount1In\n    amount0Out\n    amount1Out\n    amountUSD\n    timestamp\n\t}\n}\n`,
+                    variables: null,
+                }));
             }
-            i++;
-        };
-        xhr.onerror = () => {
-            console.log(`Request failed.`);
-        };
-        /* The Graph has issues, but it'll have to do for now. */
-        xhr.open(`POST`, `https://api.thegraph.com/subgraphs/name/sushiswap/arbitrum-exchange`);
-        xhr.setRequestHeader(`Content-Type`, `application/json`);
-        xhr.send(JSON.stringify({
-            query: `{\n  swaps(first: 1000, where: {pair: "${pairAddress}"}, orderBy: timestamp, orderDirection: desc) {\n    id\n    pair {\n      id\n    token0Price\n    token1Price\n    }\n    amount0In\n    amount1In\n    amount0Out\n    amount1Out\n    amountUSD\n    timestamp\n\t}\n}\n`,
-            variables: null,
-        }));
+        }
+    };
+
+    onMount(() => {
+        //setInterval(() => autoRefresh(`soft`), 10000); TODO
     });
+
+    $: timeframe, (typeof document !== `undefined` && switching === false) && (autoRefresh(`hard`));
 </script>
 
 <div class="chart" data-id="chart-{id}"></div>

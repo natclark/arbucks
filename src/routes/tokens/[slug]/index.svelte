@@ -5,11 +5,54 @@
     import Loader from '$lib/components/Loader/index.svelte';
     import Copy from '$lib/components/Copy/index.svelte';
     import Search from '$lib/components/Search/index.svelte';
+    import Trade from '$lib/components/Trade/index.svelte';
     //import Chart from '$lib/components/Chart/index.svelte';
     import SimpleChart from '$lib/components/Chart/SimpleChart.svelte';
     import Arbigator from '$lib/components/Arbigator/index.svelte';
-    import Trade from '$lib/components/Trade/index.svelte';
+    import SegmentedButton, { Segment, Icon } from '@smui/segmented-button';
+    import Wrapper from '@smui/touch-target';
     import ripple from '$lib/services/ripple';
+
+    const timeframes = [
+        {
+            name: `1M`,
+            seconds: 60,
+        },
+        {
+            name: `5M`,
+            seconds: 300,
+        },
+        {
+            name: `15M`,
+            seconds: 900,
+        },
+        {
+            name: `30M`,
+            seconds: 1800,
+        },
+        {
+            name: `1H`,
+            seconds: 3600,
+        },
+        {
+            name: `2H`,
+            seconds: 7200,
+        },
+        {
+            name: `4H`,
+            seconds: 14400,
+        },
+        {
+            name: `12H`,
+            seconds: 43200,
+        },
+        {
+            name: `1D`,
+            seconds: 86400,
+        },
+    ];
+
+    let timeframe = timeframes[2]; // 15M chart is default
 
     let loading = true;
     let valid = false;
@@ -64,6 +107,57 @@
                     type: `ERC20`,
                 },
             });
+        }
+    };
+
+    const autoRefresh = async () => {
+        const tokenPairs = await fetch(`https://api2.sushipro.io/?action=get_pairs_by_token&token=${$page.params.slug}&chainID=42161`);
+        const jsonTokenPairs = await tokenPairs.json();
+
+        if (typeof jsonTokenPairs.error === `undefined`) {
+            let priceString = ``;
+            let newZeroes = ``;
+            let newPrice = ``;
+            let i = 0;
+
+            const ethPriceReq = await fetch(`https://api2.sushipro.io/?action=get_pair&pair=0xcb0e5bfa72bbb4d16ab5aa0c60601c438f04b4ad&chainID=42161`);
+            const jsonEthPrice = await ethPriceReq.json();
+            typeof jsonEthPrice.error === `undefined` && (ethPrice = jsonEthPrice[0].Token_2_price);
+
+            try {
+                jsonTokenPairs[1].forEach((p) => {
+                    if (p.Token_2_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) priceString = parseFloat(p.Token_2_price * ethPrice).toFixed(32).toString();
+                    else if (p.Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) priceString = parseFloat(ethPrice * p.Token_1_price).toFixed(32).toString();
+                });
+            } catch (e) {}
+
+            for (let j = 0; j < priceString.length; j++) {
+                if (priceString[0] === `0`) {
+                    if (!newZeroes.includes(`.`)) {
+                        newZeroes += priceString[j];
+                    } else if (priceString[j] === `0` && i === 0) {
+                        newZeroes += priceString[j];
+                    } else if (newZeroes.includes(`.`) && i < 4) {
+                        newPrice += priceString[j];
+                        i++;
+                    } else if (i >= 4) {
+                        break;
+                    }
+                } else {
+                    newPrice += priceString[j];
+                    if (newPrice.includes(`.`) && i < 2) i++;
+                    else if (i >= 2) break;
+                }
+            }
+            zeroes = newZeroes;
+            price = newPrice;
+        }
+
+        const txReq = await fetch(`https://api2.sushipro.io/?action=get_transactions_by_pair&pair=${Pair_ID}&chainID=42161`);
+        const txJson = await txReq.json();
+        // console.log(swaps[0], txJson[1][0]);
+        if (typeof txJson.error === `undefined`) {
+            swaps[0] !== txJson[1][0] && (swaps = txJson[1]);
         }
     };
 
@@ -191,11 +285,6 @@
                 txCount = pair.txCount;
                 volume = true;
                 volume24 = new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(pair.volumeUSD);
-                /*
-                swaps = pair.swaps.sort((a, b) => {
-                    return a.timestamp - b.timestamp;
-                }).reverse();
-                */
                 try {
                     let reserveBasedPrice = pair.dayData[1].reserve1 / pair.dayData[1].reserve0;
                     if (token.Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
@@ -247,7 +336,10 @@
         loading = false;
     };
 
-    onMount(() => doc = document);
+    onMount(() => {
+        doc = document
+        setInterval(() => autoRefresh(), 10000);
+    });
 
     $: $page.params.slug, (typeof XMLHttpRequest !== `undefined`) && (refresh());
 </script>
@@ -330,7 +422,7 @@
                         </thead>
                         <tbody>
                             {#each swaps as swap}
-                                <Trade timestamp={swap.timestamp} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} type={`${swap.side.toLowerCase().charAt(0)}${swap.side.toLowerCase().slice(1)}`} amount={swap.volumeUSD} maker={swap.receiver} address={swap.txHash} version="desktop" />
+                                <Trade timestamp={swap.timestamp} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} type={((swap.side === `BUY` && Token_1_contract !== `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) || (swap.side === `SELL` && Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`)) ? `buy` : `sell`} amount={swap.volumeUSD} maker={swap.receiver} address={swap.txHash} version="desktop" />
                             {/each}
                         </tbody>
                     </table>
@@ -339,7 +431,7 @@
         {/if}
     </div>
     {#if !!token && loading === false}
-        <SimpleChart id="0" pairAddress={Pair_ID} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} tokenOnePrice={Token_1_price} tokenTwoPrice={Token_2_price} tokenOneSymbol={Token_1_symbol} tokenTwoSymbol={Token_2_symbol} {ethPrice} />
+        <SimpleChart id="0" pairAddress={Pair_ID} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} tokenOnePrice={Token_1_price} tokenTwoPrice={Token_2_price} tokenOneSymbol={Token_1_symbol} tokenTwoSymbol={Token_2_symbol} {ethPrice} {timeframe} />
     {:else}
         <div class="loading">
             <Loader />
@@ -352,6 +444,16 @@
     <iframe class="trade" src="https://app.sushi.com/swap?inputCurrency={Token_1_contract}&outputCurrency={Token_2_contract}" title="Trade on Sushiswap"></iframe>
     -->
     <Arbigator tokenOneSymbol={symbol} tokenTwoSymbol={Token_1_symbol === symbol ? Token_2_symbol : Token_1_symbol} pairAddress={Pair_ID} pairLiquidity={liquidityUSDT} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} tokenOneDecimals={decimalsBase} tokenTwoDecimals={decimalsQuote} />
+</div>
+
+<div class="timeframes">
+    <SegmentedButton segments={timeframes} let:segment singleSelect bind:selected={timeframe} key={(segment) => segment.name}>
+        <Wrapper>
+            <Segment {segment} touch title={segment.name}>
+                {segment.name}
+            </Segment>
+        </Wrapper>
+    </SegmentedButton>
 </div>
 
 <br>
@@ -384,9 +486,6 @@
                     <thead>
                         <tr>
                             <th>Time</th>
-                            <!--
-                            <th>Type</th>
-                            -->
                             <th>Amount (USDT)</th>
                             <!--
                             <th>Est. Price Impact (WIP)</th>
@@ -397,7 +496,7 @@
                     </thead>
                     <tbody>
                         {#each swaps as swap}
-                            <Trade timestamp={swap.timestamp} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} type={`${swap.side.toLowerCase().charAt(0)}${swap.side.toLowerCase().slice(1)}`} amount={swap.volumeUSD} maker={swap.receiver} address={swap.txHash} version="mobile" />
+                            <Trade timestamp={swap.timestamp} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} type={((swap.side === `BUY` && Token_1_contract !== `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) || (swap.side === `SELL` && Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`)) ? `buy` : `sell`} amount={swap.volumeUSD} maker={swap.receiver} address={swap.txHash} version="mobile" />
                         {/each}
                     </tbody>
                 </table>
@@ -552,6 +651,11 @@
                 font-size: 8px;
             }
         }
+    }
+    .timeframes {
+        align-items: center;
+        display: flex;
+        justify-content: center;
     }
     @media screen and (min-width: 1024px) {
         .flex {
