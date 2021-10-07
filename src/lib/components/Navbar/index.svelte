@@ -122,7 +122,7 @@
             align-items: center;
             display: flex;
             justify-content: space-between;
-            width: calc(auto + 16px);
+            //width: calc(auto + 16px);
             a:not(.primary) {
                 align-items: center;
                 border-radius: 4px;
