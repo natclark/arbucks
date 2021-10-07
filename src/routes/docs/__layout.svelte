@@ -76,13 +76,12 @@
                         font-size: 19px;
                         font-weight: 400;
                         overflow: hidden;
-                        padding: 4px;
+                        padding: 6px;
                         position: relative;
                         text-decoration: none;
                         width: 100%;
                         &[aria-current="page"] {
-                            background-color: var(--bg-selected) !important;
-                            color: var(--fg-selected);
+                            background-color: var(--ac-alt) !important;
                         }
                         &:hover {
                             background-color: var(--bg-hover);
@@ -108,6 +107,15 @@
     :global {
         .docs {
             line-height: 1.3em;
+            h1 {
+                margin-bottom: .75em;
+            }
+            h1, h2, h3, h4, h5, h6 {
+                text-align: left;
+                a {
+                    color: var(--ac-light) !important;
+                }
+            }
         }
     }
 </style>

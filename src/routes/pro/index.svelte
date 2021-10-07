@@ -32,10 +32,8 @@
             <li><p>-</p></li>
         </ul>
         <div class="tier__button">
-            <button class="primary" draggable="false" on:click={click}>
-                <span class="primary__shadow"></span>
-                <span class="primary__edge"></span>
-                <span class="primary__front">Stake SLP Tokens</span>
+            <button class="secondary" draggable="false" on:click={click}>
+                Stake SLP Tokens
             </button>
         </div>
     </div>
@@ -52,10 +50,8 @@
             <li><p>-</p></li>
         </ul>
         <div class="tier__button">
-            <button class="primary" draggable="false" on:click={click}>
-                <span class="primary__shadow"></span>
-                <span class="primary__edge"></span>
-                <span class="primary__front">Stake SLP Tokens</span>
+            <button class="secondary" draggable="false" on:click={click}>
+                Stake SLP Tokens
             </button>
         </div>
     </div>
@@ -72,10 +68,8 @@
             <li><p>Arbitrage scanner</p></li>
         </ul>
         <div class="tier__button">
-            <button class="primary" draggable="false" on:click={click}>
-                <span class="primary__shadow"></span>
-                <span class="primary__edge"></span>
-                <span class="primary__front">Stake SLP Tokens</span>
+            <button class="secondary" draggable="false" on:click={click}>
+                Stake SLP Tokens
             </button>
         </div>
     </div>
@@ -98,7 +92,7 @@
         margin-bottom: 40px;
     }
     .tier {
-        background-color: #000;
+        background-image: linear-gradient(#0d357f, #05437a);
         border-radius: 16px;
         box-shadow: rgba(0, 0, 0, .19) 0 10px 20px, rgba(0, 0, 0, .23) 0 6px 6px;
         margin-bottom: 40px;
@@ -127,8 +121,22 @@
             align-items: center;
             display: flex;
             justify-content: center;
-            .primary {
-                display: block;
+            .secondary {
+                align-items: center;
+                background-color: var(--fg);
+                border: 0;
+                border-radius: 24px;
+                cursor: pointer;
+                display: flex;
+                font-size: 16px;
+                height: 30px;
+                outline: none;
+                padding: 8px 32px;
+                transition: opacity .1s;
+                will-change: opacity;
+                &:hover {
+                    opacity: .8;
+                }
             }
         }
     }

@@ -71,11 +71,10 @@
 
 <style>
     .trade {
-        background-color: var(--bg-row-dark);
+        background-color: var(--bg);
         border-radius: 8px;
-        box-shadow: rgba(99, 99, 99, .1) 0 2px 8px 0;
         font-size: 12px;
-        height: 20px;
+        height: 40px;
         overflow: hidden;
         position: relative;
         will-change: background-color, box-shadow;
@@ -88,25 +87,24 @@
             span {
                 border-radius: 8px;
                 color: #000;
-                font-size: 12px;
                 padding: 7px 4px 4px;
                 &.buy {
                     background-color: rgb(0, 201, 0, .2);
-                    color: #00c900;
+                    color: var(--ac-btn);
                 }
                 &.sell {
                     background-color: rgb(255, 110, 110, .2);
-                    color: #ff6e6e;
+                    color: var(--ac-red);
                 }
             }
             &.buyText, &.sellText {
                 font-weight: 500;
             }
             &.buyText {
-                color: #00c900;
+                color: var(--ac-btn);
             }
             &.sellText {
-                color: #ff6e6e;
+                color: var(--ac-red);
             }
             &.actions {
                 align-items: center;
@@ -115,14 +113,10 @@
                 text-align: center;
             }
         }
-        &:hover {
-            background-color: var(--bg-row-hover);
-            box-shadow: rgba(99, 99, 99, .2) 0 4px 12px 0;
-        }
     }
     @media screen and (min-width: 768px) {
         .trade {
-            font-size: 16px;
+            font-size: 18px;
             td {
                 &.actions {
                     display: table-cell;

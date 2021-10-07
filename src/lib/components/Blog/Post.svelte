@@ -17,7 +17,7 @@
 
 <style>
     .post {
-        background-color: var(--bg-row);
+        background-color: var(--bg-soft);
         border-radius: 16px;
         display: block;
         margin-bottom: 24px;
@@ -33,16 +33,21 @@
                 font-size: 28px;
                 line-height: 1.2em;
                 margin: 0 0 8px;
+                text-align: left;
+            }
+            .post__date {
+                color: var(--fg);
+                font-size: 16px;
             }
             .post__description {
-                color: var(--fg-body);
+                color: var(--fg);
                 font-size: 18px;
                 line-height: 1.3em;
                 margin-bottom: 6px;
             }
         }
         &:hover {
-            background-color: var(--bg-row-hover);
+            background-color: var(--bg-hover);
             text-decoration: none;
         }
     }

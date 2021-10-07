@@ -37,6 +37,8 @@
 <style>
     .container {
         display: grid;
+        font-family: var(--font-bold);
+        letter-spacing: normal;
         grid-template-columns: .5fr min(185ch, 100%) .5fr;
         > * {
             grid-column: 2;

@@ -32,30 +32,17 @@
         <a href="https://arbiscan.io/token/{address}" rel="external noopener" target="_blank">{address.substr(0, 6)}...{address.substr(address.length - 7, address.length - 1)}</a> <Copy text={address} />
     </td>
     <td class="actions">
-        <a class="primary primary--buy" href="https://app.sushi.com/swap?outputCurrency={address}" rel="external noopener" target="_blank" draggable="false">
-            <span class="primary__shadow"></span>
-            <span class="primary__edge"></span>
-            <span class="primary__front">
-                Trade
-            </span>
-        </a>
-        <a class="primary primary--primary" href="/tokens/{address}/" draggable="false" sveltekit:prefetch>
-            <span class="primary__shadow"></span>
-            <span class="primary__edge"></span>
-            <span class="primary__front">
-                View
-            </span>
-        </a>
+        <a class="actions__buy" href="https://app.sushi.com/swap?outputCurrency={address}" rel="external noopener" target="_blank" draggable="false">Trade</a>
+        <a class="actions__view" href="/tokens/{address}/" draggable="false" sveltekit:prefetch>View</a>
     </td>
 </tr>
 
 <style>
     .token {
-        background-color: var(--bg-row);
+        background-color: var(--bg-soft);
         border-radius: 8px;
-        box-shadow: rgba(99, 99, 99, .2) 0 2px 8px 0;
         font-size: 12px;
-        height: 60px;
+        height: 40px;
         overflow: hidden;
         position: relative;
         transition: box-shadow .07s;
@@ -64,7 +51,7 @@
             text-align: left;
             width: auto;
             &.logo {
-                padding: 0 8px;
+                padding: 4px 8px 0;
                 img {
                     height: 16px;
                     width: 16px;
@@ -78,13 +65,16 @@
                 display: flex;
                 justify-content: space-between;
                 text-align: center;
-            }
-            .primary {
-                display: block;
+                .actions__buy {
+                    color: var(--ac-btn);
+                }
+                .actions__view {
+                    color: var(--ac);
+                }
             }
         }
         &:hover {
-            background-color: var(--bg-row-hover);
+            background-color: var(--bg-hover);
             box-shadow: rgba(99, 99, 99, .2) 0 4px 12px 0;
         }
     }
@@ -101,7 +91,7 @@
                     display: flex;
                     justify-content: center;
                     column-gap: 12px;
-                    height: 60px;
+                    height: 40px;
                 }
             }
         }

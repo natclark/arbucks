@@ -60,21 +60,18 @@
 
 <h1>Arbitrum Token Swap Ledger</h1>
 
-<p>Real-time order book for the last hour of Sushiswap trades on Arbitrum One. This page updates every 10 seconds. <strong>Uniswap orders are coming soon!</strong></p>
+<p class="subtitle">Real-time order book for the last hour of Sushiswap trades on Arbitrum One. This page updates every 10 seconds. <strong>Uniswap orders are coming soon!</strong></p>
 
-<fieldset>
-    <legend>Control Panel</legend>
-    <div class="flex">
-        <div>
-            <label for="maxResults">Results</label>
-            <input bind:value={maxResults} id="maxResults" type="number" min="1" max="1000" />
-        </div>
-        <div>
-            <label for="minValue">Minimum Value (USDT)</label>
-            <input bind:value={minValue} id="minValue" type="number" min="0" />
-        </div>
+<div class="flex">
+    <div>
+        <label for="maxResults">Results</label>
+        <input bind:value={maxResults} id="maxResults" type="number" min="1" max="1000" />
     </div>
-</fieldset>
+    <div>
+        <label for="minValue">Minimum Value (USDT)</label>
+        <input bind:value={minValue} id="minValue" type="number" min="0" />
+    </div>
+</div>
 
 <br>
 
@@ -111,40 +108,37 @@
         display: flex;
         justify-content: center;
     }
-    fieldset {
-        border-color: var(--bg-row);
-        .flex {
-            display: block;
-            div {
-                align-items: center;
-                display: flex;
-                justify-content: space-between;
-                input {
-                    background-color: var(--bg-input);
-                    border: 0;
-                    border-radius: 16px;
-                    color: #fff;
-                    font-size: 1rem;
-                    letter-spacing: .2px;
-                    line-height: 1.25rem;
-                    text-shadow: 0 0 16px rgba(60, 100, 255, .2);
-                    outline: none;
-                    padding: .3rem;
-                    transition: all .08s ease-in;
-                    width: 200px;
-                    will-change: box-shadow;
-                    &::-ms-input-placeholder, &:-ms-input-placeholder, *::placeholder {
-                        color: #888;
-                    }
-                    &::placeholder {
-                        opacity: 1;
-                    }
-                    &:hover, &:focus, &:active {
-                        box-shadow: rgba(0, 0, 0, .4) 0 30px 90px;
-                    }
-                    &:focus {
-                        box-shadow: rgba(0, 0, 0, .16) 0 1px 4px, var(--fg-header) 0 0 0 2px;
-                    }
+    .flex {
+        display: block;
+        div {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            input {
+                background-color: var(--bg-soft);
+                border: 0;
+                border-radius: 16px;
+                color: #fff;
+                font-size: 1rem;
+                letter-spacing: .2px;
+                line-height: 1.25rem;
+                text-shadow: 0 0 16px rgba(60, 100, 255, .2);
+                outline: none;
+                padding: .3rem;
+                transition: all .08s ease-in;
+                width: 200px;
+                will-change: box-shadow;
+                &::-ms-input-placeholder, &:-ms-input-placeholder, *::placeholder {
+                    color: #888;
+                }
+                &::placeholder {
+                    opacity: 1;
+                }
+                &:hover, &:focus, &:active {
+                    box-shadow: rgba(0, 0, 0, .4) 0 30px 90px;
+                }
+                &:focus {
+                    box-shadow: rgba(0, 0, 0, .16) 0 1px 4px, var(--ac) 0 0 0 2px;
                 }
             }
         }
@@ -157,6 +151,8 @@
             margin-bottom: 32px;
             width: 100%;
             thead th {
+                font-family: var(--font-bold);
+                font-size: 20px;
                 text-align: left;
             }
         }

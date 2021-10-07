@@ -38,31 +38,36 @@
 
 <style>
     .alert {
-        background-color: rgba(255, 0, 0, .15) !important;
+        align-items: center;
+        background-color: var(--bg-soft) !important;
+        border-radius: 8px;
         color: #fff;
-        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        left: 0;
         padding: 10px 20px;
-        width: 100%;
         p {
+            strong {
+                font-family: var(--fg-bold);
+            }
             line-height: 1.3em;
             margin: 0;
         }
         button {
-            background-color: rgba(255, 0, 0, .4);
+            align-items: center;
+            background-color: var(--fg);
             border: 0;
-            border-radius: 4px;
+            border-radius: 24px;
             cursor: pointer;
-            color: #fff;
-            font-size: 16px;
-            font-weight: 700;
-            margin-top: 10px;
+            color: var(--bg);
+            display: flex;
+            font-size: 18px;
             outline: none;
-            padding: 4px;
-        }
-        &.warning {
-            background-color: rgba(255, 255, 0, .15) !important;
-            button {
-                background-color: rgba(255, 255, 0, .4) !important;
+            padding: 4px 16px;
+            transition: opacity .1s;
+            will-change: opacity;
+            &:hover {
+                opacity: .8;
             }
         }
     }

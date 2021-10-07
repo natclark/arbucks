@@ -93,17 +93,17 @@
     <AutoComplete items={$tokens} bind:selectedItem={selectedToken} bind:value={selectedValue} labelFieldName="Symbol" valueFieldName="Contract" keywordsFunction={(token) => `${token.Symbol} ${token.Name} ${token.Contract}`} placeholder="Token symbol">
         <div slot="item" let:item={item}>
             <div class="select__item">
-                <div>
+                <div class="select__item__image">
                     <img src={item.Logo || `/placeholder.png`} width="32px" height="32px" alt="" aria-hidden="true">
                 </div>
                 <div class="select__item__text">
                     {#if item.Symbol.length > 16}
-                        <p class="select__item__text__symbol">{item.Symbol.substring(0, 16)}...</p>
+                        <p class="select__item__text__symbol"><strong>{item.Symbol.substring(0, 16)}...</strong></p>
                     {:else}
                         <p class="select__item__text__symbol">{item.Symbol}</p>
                     {/if}
                     {#if item.Name.length > 16}
-                        <p class="select__item__text__name">{item.Name.substring(0, 16)}...</p>
+                        <p class="select__item__text__name"><strong>{item.Name.substring(0, 16)}...</strong></p>
                     {:else}
                         <p class="select__item__text__name">{item.Name}</p>
                     {/if}
@@ -126,7 +126,8 @@
             display: flex;
             justify-content: space-between;
             margin: 8px;
-            > div:first:child {
+            .select__item__image {
+                margin-top: 2px;
                 width: 20%;
             }
             .select__item__text {
@@ -136,21 +137,26 @@
                 p {
                     margin: 0;
                     &.select__item__text__symbol {
-                        margin-bottom: 8px;
+                        font-family: var(--font-bold);
+                        margin-bottom: 4px;
+                    }
+                    &.select__item__text__name {
+                        font-size: 14px;
                     }
                 }
             }
         }
         .autocomplete::after {
-            border-color: var(--fg-header) !important;
+            border-color: var(--fg) !important;
+            border-width: 2px !important;
         }
         input {
-            background-color: var(--bg-autocomplete);
+            background-color: var(--bg-soft);
             border: 0;
-            border-radius: 8px;
+            border-radius: 24px;
             box-shadow: rgba(0, 0, 0, .24) 0 1px 4px;
-            color: var(--fg-autocomplete);
-            font-size: 20px !important;
+            color: var(--fg);
+            font-family: var(--font) !important;
             max-width: 360px;
             opacity: .8;
             padding: 8px !important;
@@ -162,24 +168,29 @@
                 opacity: 1;
             }
             &:focus {
-                box-shadow: rgba(0, 0, 0, .16) 0 1px 4px, var(--fg-header) 0 0 0 2px;
+                box-shadow: rgba(0, 0, 0, .16) 0 1px 4px, var(--ac) 0 0 0 2px;
                 outline: none;
             }
         }
         .autocomplete-list {
-            background-color: var(--bg-autocomplete) !important;
+            background-color: var(--bg-soft) !important;
             border: 0 !important;
-            border-radius: 8px;
+            border-radius: 24px;
+            max-height: 200px !important;
+            max-width: 213px;
             outline: none !important;
             scrollbar-color: var(--fg-scroll) var(--bg-scroll);
             scrollbar-face-color: var(--fg-scroll);
             scrollbar-track-color: var(--bg-scroll);
             scrollbar-width: thin;
             .autocomplete-list-item {
-                color: var(--fg-autocomplete) !important;
+                color: var(--fg) !important;
                 will-change: background-color, color;
+                .select__item {
+                    margin: 0;
+                }
                 &.selected, &:hover {
-                    background-color: var(--bg-row-hover);
+                    background-color: var(--bg-hover);
                     color: #fff !important;
                 }
             }
@@ -188,9 +199,11 @@
             }
             ::-webkit-scrollbar-corner, ::-webkit-scrollbar-track {
                 background-color: var(--bg-scroll);
+                border-radius: 24px;
             }
             ::-webkit-scrollbar-thumb {
-                background-color: var(--fg-scroll);
+                background-image: var(--gr-scroll);
+                border-radius: 24px;
             }
         }
     }

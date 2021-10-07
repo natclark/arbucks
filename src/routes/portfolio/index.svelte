@@ -92,7 +92,7 @@
         justify-content: center;
         margin-top: 80px;
         .input__field {
-            background-color: var(--bg-input);
+            background-color: var(--bg-soft);
             border: 0;
             border-radius: 24px;
             color: #fff;
@@ -115,7 +115,7 @@
                 box-shadow: rgba(0, 0, 0, .4) 0 30px 90px;
             }
             &:focus {
-                box-shadow: rgba(0, 0, 0, .16) 0 1px 4px, var(--fg-header) 0 0 0 2px;
+                box-shadow: rgba(0, 0, 0, .16) 0 1px 4px, var(--ac) 0 0 0 2px;
             }
         }
     }

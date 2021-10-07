@@ -15,9 +15,7 @@
             <h1 class="title">$BUCK</h1>
             <p class="subtitle">A fixed-supply, Arbitrum-native "blue chip" utility token.</p>
             <a class="primary" href="https://app.sushi.com/swap?outputCurrency=0xafd871f684f21ab9d7137608c71808f83d75e6fc" draggable="false" rel="external noopener" target="_blank">
-                <span class="primary__shadow"></span>
-                <span class="primary__edge"></span>
-                <span class="primary__front">Swap on SushiSwap</span>
+                Swap on SushiSwap
             </a>
             <p><a href="https://arbiscan.io/token/0xafd871f684f21ab9d7137608c71808f83d75e6fc" draggable="false" rel="external noopener" target="_blank">0xafd871f684f21ab9d7137608c71808f83d75e6fc</a> <Copy text="0xafd871f684f21ab9d7137608c71808f83d75e6fc" /></p>
         </div>
@@ -90,10 +88,17 @@
         text-align: center;
     }
     .primary {
-        display: block;
+        display: flex;
+        height: 32px;
+        justify-content: center;
+        margin: 0 auto;
+        max-width: 277px;
     }
     h2 {
         text-align: center;
+    }
+    h3 {
+        text-align: left;
     }
     .flex {
         display: block;
@@ -107,8 +112,9 @@
     }
     .card {
         align-items: center;
-        background-color: var(--bg-row);
+        background-color: var(--bg-soft);
         border-radius: 16px;
+        color: var(--fg);
         display: flex;
         flex-direction: column;
         height: 200px;

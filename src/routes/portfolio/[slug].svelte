@@ -423,7 +423,7 @@
         margin-bottom: 8px;
     }
     .subtitle {
-        color: var(--fg-subtitle);
+        color: var(--fg);
         font-size: 14px;
     }
     .bold {
@@ -432,25 +432,15 @@
     .flex {
         display: block;
         margin: 24px 0;
+        .left, .right {
+            margin-bottom: 24px;
+        }
     }
     .light {
         color: #888;
     }
     .price {
         color: #f8f8f8;
-    }
-    .flex {
-        .left, .right {
-            margin-bottom: 24px;
-        }
-    } 
-    .details {
-        border: 1px solid var(--fg-border);
-        border-width: 1px 0 1px 0;
-        width: 100%;
-        p.flex {
-            margin: 12px 0;
-        }
     }
     p {
         font-size: 14px;

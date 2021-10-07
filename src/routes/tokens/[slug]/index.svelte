@@ -544,6 +544,7 @@
     .title {
         font-size: 24px;
         margin: 0 0 8px;
+        text-align: left;
     }
     .subtitle {
         color: var(--fg-subtitle);
@@ -617,7 +618,7 @@
         height: 38px;
         justify-content: space-between;
         margin-top: 14px;
-        outline: 0;
+        outline: none;
         overflow: hidden;
         padding: 0 8px;
         position: relative;

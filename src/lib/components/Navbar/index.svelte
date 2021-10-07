@@ -7,54 +7,14 @@
     import Tape from '$lib/components/Tape/index.svelte';
 
     let doc;
-    let ls = null;
 
     let menu;
     let socials;
-
-    const changeTheme = (e) => {
-        ripple(e, doc);
-        if (ls !== null) {
-            if ($theme === `midnight`) {
-                ls.setItem(`arbucks::v0:theme`, `cyberpunk`);
-                theme.update(() => `cyberpunk`);
-            } else {
-                ls.setItem(`arbucks::v0:theme`, `midnight`);
-                theme.update(() => `midnight`);
-            }
-        } else {
-            // TODO - notify user that their browser does not support this feature
-        }
-    };
 
     const close = (e) => {
         menu.removeAttribute(`open`);
         !menu.contains(e.target) && !socials.contains(e.target) && (socials.removeAttribute(`open`));
     };
-
-    theme.subscribe((val) => (typeof doc !== `undefined` && (val === `midnight` || val === `cyberpunk`)) && (doc.querySelector(`html`).setAttribute(`data-theme`, val)));
-
-    onMount(() => {
-        doc = document;
-        typeof window.localStorage !== `undefined` && (ls = localStorage);
-        if (ls !== null) {
-            if (ls.getItem(`arbucks::v0:theme`)) {
-                const currentTheme = ls.getItem(`arbucks::v0:theme`);
-                if (currentTheme === `midnight` || currentTheme === `cyberpunk`) {
-                    theme.update(() => currentTheme);
-                } else {
-                    ls.setItem(`arbucks::v0:theme`, `midnight`);
-                    theme.update(() => `midnight`);
-                }
-            } else {
-                ls.setItem(`arbucks::v0:theme`, `midnight`);
-                theme.update(() => `midnight`);
-            }
-            doc.querySelector(`html`).setAttribute(`data-theme`, $theme);
-        } else {
-            doc.querySelector(`html`).setAttribute(`data-theme`, `midnight`);
-        }
-    });
 </script>
 
 <svelte:body on:click={close} />
@@ -62,7 +22,7 @@
 <nav>
     <div class="left">
         <a class="logo" href="/" title="Home" draggable="false" aria-current="{$page.path === `/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>
-            <img draggable="false" src="/img/arbucks-logo.svg" alt="Arbucks Logo" width="32px" height="32px">
+            <img draggable="false" src="/img/arbucks-logo.svg" alt="Arbucks Logo" width="36px" height="36px">
         </a>
         <details bind:this={menu} class="menu menu--mobile">
             <summary on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)}>
@@ -72,10 +32,6 @@
                 </svg>
             </summary>
             <div class="menu__links">
-                <!--
-                <a href="/charts/" draggable="false" aria-current="{$page.path.includes(`/charts/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Charts</a>
-                <a href="/pairs/" draggable="false" aria-current="{$page.path === `/pairs/` ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Pairs</a>
-                -->
                 <a href="/tokens/" draggable="false" aria-current="{$page.path.includes(`/tokens/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Tokens</a>
                 <a href="/pools/" draggable="false" aria-current="{$page.path === `/pools/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Pools</a>
                 <!--
@@ -85,16 +41,12 @@
                 <a href="/ledger/" draggable="false" aria-current="{$page.path === `/ledger/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Ledger</a>
                 <a href="/docs/" draggable="false" aria-current="{$page.path.includes(`/docs/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Docs</a>
                 <a href="/blog/" draggable="false" aria-current="{$page.path.includes(`/blog/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Blog</a>
-                <a class="highlight" href="/pro/" draggable="false" aria-current="{$page.path === `/pro/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Pro</a>
+                <a href="/pro/" draggable="false" aria-current="{$page.path === `/pro/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Go Pro</a>
                 <a href="/buck/" draggable="false" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>$BUCK</a>
                 <a href="/portfolio/" draggable="false" aria-current="{$page.path.includes(`/portfolio/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Portfolio</a>
             </div>
         </details>
         <div class="menu menu--desktop">
-            <!--
-            <a href="/charts/" draggable="false" aria-current="{$page.path.includes(`/charts/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Charts</a>
-            <a href="/pairs/" draggable="false" aria-current="{$page.path === `/pairs/` ? `page` : ``}" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Pairs</a>
-            -->
             <a href="/tokens/" draggable="false" aria-current="{$page.path.includes(`/tokens/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Tokens</a>
             <a href="/pools/" draggable="false" aria-current="{$page.path === `/pools/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Pools</a>
             <!--
@@ -104,7 +56,7 @@
             <a href="/ledger/" draggable="false" aria-current="{$page.path === `/ledger/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Ledger</a>
             <a href="/docs/" draggable="false" aria-current="{$page.path.includes(`/docs/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Docs</a>
             <a href="/blog/" draggable="false" aria-current="{$page.path.includes(`/blog/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Blog</a>
-            <a class="highlight" href="/pro/" draggable="false" aria-current="{$page.path === `/pro/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Pro</a>
+            <a class="primary highlight" href="/pro/" draggable="false" aria-current="{$page.path === `/pro/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Go Pro</a>
         </div>
     </div>
     <div class="right">
@@ -112,12 +64,18 @@
             <Search />
         </div>
         <a class="highlight" href="/buck/" draggable="false" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>$BUCK</a>
-        <a class="primary" href="/portfolio/" draggable="false" aria-current="{$page.path.includes(`/portfolio/`) ? `page` : ``}" sveltekit:prefetch>
-            <span class="primary__shadow"></span>
-            <span class="primary__edge"></span>
-            <span class="primary__front">
-                Portfolio
-            </span>
+        <a class="primary" href="/portfolio/" draggable="false" aria-current="{$page.path.includes(`/portfolio/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>
+            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 200 200" style="enable-background:new 0 0 200 200;" xml:space="preserve">
+                <g>
+                    <g>
+                        <path fill="#fff" d="M143.1,64.2H134V49.4c0-7.3-5.9-13.2-13.2-13.2H79.2c-7.3,0-13.2,5.9-13.2,13.2v14.8h-9.1V49.4    c0-12.3,10-22.2,22.2-22.2h41.6c12.3,0,22.2,10,22.2,22.2V64.2z" />
+                    </g>
+                    <g>
+                        <path fill="#fff" d="M145.5,172.9H54.5c-16.5,0-29.9-13.4-29.9-29.9V89.6c0-16.5,13.4-29.9,29.9-29.9h90.9    c16.5,0,29.9,13.4,29.9,29.9V143C175.4,159.5,161.9,172.9,145.5,172.9z M54.5,68.7c-11.5,0-20.8,9.4-20.8,20.8V143    c0,11.5,9.4,20.8,20.8,20.8h90.9c11.5,0,20.8-9.4,20.8-20.8V89.6c0-11.5-9.4-20.8-20.8-20.8H54.5z" />
+                    </g>
+                </g>
+            </svg>
+            Portfolio
         </a>
         <details bind:this={socials}>
             <summary>
@@ -126,13 +84,6 @@
                 </svg>
             </summary>
             <div class="socials">
-                <a class="icon" role="button" title="Change Theme" on:mousedown={(e) => ripple(e, doc)} on:click={changeTheme}>
-                    <svg version="1.1" width="24px" height="24px" x="0px" y="0px" viewBox="0 0 122.88 122.88" style="enable-background:new 0 0 122.88 122.88" xml:space="preserve">
-                        <g>
-                            <path clip-rule="evenodd" fill-rule="evenodd" d="M122.88,61.44L122.88,61.44L122.88,61.44c0,8.47-1.5,16.34-4.5,23.58c-0.49,1.19-1.02,2.35-1.59,3.49 c-2.92,5.89-6.89,11.35-11.92,16.36l0,0l0,0l0,0l0,0l0,0c-1.67,1.68-3.4,3.24-5.17,4.68c-1.78,1.45-3.61,2.78-5.48,3.98 c-9.65,6.23-20.58,9.34-32.78,9.34h0v0c-8.47,0-16.33-1.5-23.58-4.5c-1.19-0.49-2.35-1.02-3.49-1.59 c-5.89-2.92-11.35-6.89-16.36-11.92l0,0l0,0l0,0l0,0l0,0c-1.68-1.67-3.24-3.4-4.68-5.17c-1.45-1.78-2.78-3.61-3.98-5.48 C3.11,84.58,0,73.64,0,61.44v0h0c0-8.47,1.5-16.33,4.5-23.58c0.49-1.19,1.02-2.35,1.59-3.49c2.92-5.89,6.89-11.35,11.92-16.36l0,0 l0,0l0,0l0,0l0,0c1.67-1.68,3.4-3.24,5.17-4.68c1.78-1.45,3.61-2.78,5.48-3.98C38.3,3.11,49.24,0,61.44,0h0v0 c8.47,0,16.33,1.5,23.58,4.5c1.19,0.49,2.35,1.02,3.49,1.59c5.89,2.92,11.35,6.89,16.36,11.92l0,0l0,0l0,0l0,0l0,0 c1.68,1.67,3.24,3.4,4.68,5.17c1.45,1.78,2.78,3.61,3.98,5.48C119.77,38.3,122.88,49.24,122.88,61.44L122.88,61.44z M61.44,10.96 c0.11,0,0.22,0,0.32,0v100.96c-0.11,0-0.22,0-0.32,0c-27.88,0-50.48-22.6-50.48-50.48C10.96,33.56,33.56,10.96,61.44,10.96 L61.44,10.96z"></path>
-                        </g>
-                    </svg>
-                </a>
                 <a class="icon" href="https://github.com/natclark/arbucks" title="GitHub" draggable="false" rel="external noopener" target="_blank" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)}>
                     <svg width="24px" height="24px" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 640 640">
                         <path d="M319.988 7.973C143.293 7.973 0 151.242 0 327.96c0 141.392 91.678 261.298 218.826 303.63 16.004 2.964 21.886-6.957 21.886-15.414 0-7.63-.319-32.835-.449-59.552-89.032 19.359-107.8-37.772-107.8-37.772-14.552-36.993-35.529-46.831-35.529-46.831-29.032-19.879 2.209-19.442 2.209-19.442 32.126 2.245 49.04 32.954 49.04 32.954 28.56 48.922 74.883 34.76 93.131 26.598 2.882-20.681 11.15-34.807 20.315-42.803-71.08-8.067-145.797-35.516-145.797-158.14 0-34.926 12.52-63.485 32.965-85.88-3.33-8.078-14.291-40.606 3.083-84.674 0 0 26.87-8.61 88.029 32.8 25.512-7.075 52.878-10.642 80.056-10.76 27.2.118 54.614 3.673 80.162 10.76 61.076-41.386 87.922-32.8 87.922-32.8 17.398 44.08 6.485 76.631 3.154 84.675 20.516 22.394 32.93 50.953 32.93 85.879 0 122.907-74.883 149.93-146.117 157.856 11.481 9.921 21.733 29.398 21.733 59.233 0 42.792-.366 77.28-.366 87.804 0 8.516 5.764 18.473 21.992 15.354 127.076-42.354 218.637-162.274 218.637-303.582 0-176.695-143.269-319.988-320-319.988l-.023.107z"></path>
@@ -153,15 +104,16 @@
     </div>
 </nav>
 
+<!--
 <Tape />
+-->
 
 <style>
     nav {
         align-items: center;
-        background-color: var(--bg-navbar);
-        //box-shadow: rgba(50, 50, 93, .25) 0 6px 12px -2px, rgba(0, 0, 0, .3) 0 3px 7px -3px;
+        background-color: var(--bg);
         display: flex;
-        height: 70px;
+        height: 80px;
         justify-content: space-between;
         position: sticky;
         top: 0;
@@ -170,14 +122,15 @@
             align-items: center;
             display: flex;
             justify-content: space-between;
+            width: calc(auto + 16px);
             a:not(.primary) {
                 align-items: center;
                 border-radius: 4px;
-                color: var(--fg-navbar);
+                color: var(--fg);
                 display: flex;
-                font-size: 16px;
+                font-size: 20px;
                 font-weight: 400;
-                height: 30px;
+                height: 36px;
                 overflow: hidden;
                 padding: 0 8px;
                 position: relative;
@@ -187,20 +140,22 @@
                     fill: var(--fg-fill);
                 }
                 &[aria-current="page"]:not(.logo) {
-                    background-color: var(--bg-selected);
-                    color: var(--fg-selected);
+                    font-family: var(--font-bold);
                 }
                 &.highlight {
-                    color: var(--fg-header);
-                    font-weight: 600;
                     margin-left: 0;
                 }
                 &:hover {
                     text-shadow: 0 0 16px #fff, 0 0 8px #ccc;
                 }
             }
-            summary svg:not(.nofill) path {
-                fill: var(--fg-fill);
+            summary {
+                svg {
+                    margin-top: -2px;
+                    &:not(.nofill) path {
+                        fill: var(--fg-fill);
+                    }
+                }
             }
             button:not(.primary) {
                 align-items: center;
@@ -258,7 +213,7 @@
                         }
                     }
                     .menu__links {
-                        background-color: var(--bg-menu);
+                        background-color: var(--bg-soft);
                         left: 0;
                         position: absolute;
                         top: 70px;
@@ -278,6 +233,7 @@
             display: none;
         }
         .right {
+            display: none;
             .search {
                 margin-right: 8px;
                 margin-top: 4px;
@@ -320,7 +276,7 @@
                     }
                 }
                 .socials {
-                    background-color: var(--bg-body);
+                    background-color: var(--bg);
                     right: 0;
                     max-width: 40px;
                     position: fixed;
@@ -333,9 +289,19 @@
             }
         }
     }
+    .primary {
+        svg {
+            height: 20px;
+            margin: 0 6px 2px 0;
+            width: 20px;
+        }
+    }
     @media screen and (min-width: 1024px) {
         nav {
             justify-content: space-around;
+            .right {
+                display: flex;
+            }
         }
         .menu {
             &.menu--mobile {
@@ -350,11 +316,9 @@
             margin-bottom: 4px;
         }
         .primary {
-            display: block;
+            font-size: 20px;
+            height: 36px;
             margin-left: 12px;
-            .primary__front {
-                display: block;
-            }
         }
         .socials {
             left: auto !important;

@@ -47,12 +47,8 @@
         <a href="https://arbiscan.io/token/{address}" rel="external noopener" target="_blank">{address.substr(0, 6)}...{address.substr(address.length - 7, address.length - 1)}</a> <Copy text={address} />
     </td>
     <td class="actions">
-        <a class="primary primary--buy" href="https://app.sushi.com/add/{contractOne}/{contractTwo}" rel="external noopener" target="_blank" draggable="false">
-            <span class="primary__shadow"></span>
-            <span class="primary__edge"></span>
-            <span class="primary__front">
-                Liquidity
-            </span>
+        <a class="primary" href="https://app.sushi.com/add/{contractOne}/{contractTwo}" rel="external noopener" target="_blank" draggable="false">
+            Liquidity
         </a>
     </td>
 </tr>
@@ -86,7 +82,9 @@
                 justify-content: space-between;
                 text-align: center;
                 .primary {
-                    display: block;
+                    display: flex;
+                    height: 32px;
+                    justify-content: center;
                 }
             }
         }

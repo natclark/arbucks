@@ -63,27 +63,29 @@
         tokens.update(() => newTokens);
 
         /* A more reliable and decentralized solution for fetching data is a high-priority upcoming feature. */
-        const pagesReq = await fetch(`https://simpleanalytics.com/arbucks.io.json?version=5&fields=pages&info=false`);
-        const pagesJson = await pagesReq.json();
-        let i = 0;
-        pagesJson.pages.forEach((page) => {
-            if (i < 10) {
-                if (page.value.includes(`/tokens/`)) { // TODO - sanitize by just taking substring of first part of string
-                    const address = page.value.replace(`/tokens/`, ``);
-                    const index = $tokens.indexOf($tokens.find((e) => e.Contract === address));
-                    if (index > -1) {
-                        newPages.push({
-                            token: $tokens[index],
-                            path: page.value,
-                            views: page.pageviews,
-                            uniques: page.visitors,
-                        });
-                        i++;
+        try {
+            const pagesReq = await fetch(`https://simpleanalytics.com/arbucks.io.json?version=5&fields=pages&info=false`);
+            const pagesJson = await pagesReq.json();
+            let i = 0;
+            pagesJson.pages.forEach((page) => {
+                if (i < 10) {
+                    if (page.value.includes(`/tokens/`)) { // TODO - sanitize by just taking substring of first part of string
+                        const address = page.value.replace(`/tokens/`, ``);
+                        const index = $tokens.indexOf($tokens.find((e) => e.Contract === address));
+                        if (index > -1) {
+                            newPages.push({
+                                token: $tokens[index],
+                                path: page.value,
+                                views: page.pageviews,
+                                uniques: page.visitors,
+                            });
+                            i++;
+                        }
                     }
                 }
-            }
-        });
-        pages.update(() => newPages); // TODO - check for error(s) w/ "pagesJson.ok"
+            });
+            pages.update(() => newPages); // TODO - check for error(s) w/ "pagesJson.ok"
+        } catch (e) {}
 
         loading = false;
     });

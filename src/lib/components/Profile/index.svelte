@@ -25,7 +25,7 @@
             max-width: 128px;
         }
         .profile__telegram {
-            color: var(--fg-link) !important;
+            color: var(--ac-light) !important;
         }
         .profile__description {
             font-style: italic;
