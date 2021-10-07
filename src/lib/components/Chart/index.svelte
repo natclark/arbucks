@@ -12,7 +12,7 @@
     export let ethPrice;
 </script>
 
-<iframe class="chart" src="https://charts.arbucks.io/#{tokenTwoAddress === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1` ? tokenOneAddress : tokenTwoAddress}::{tokenTwoAddress === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1` ? tokenOneSymbol : tokenTwoSymbol}" width="100%" height="400px" />
+<iframe class="chart" src="https://charts.arbucks.io/#{tokenTwoAddress === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1` ? tokenOneAddress : tokenTwoAddress}::{tokenTwoAddress === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1` ? tokenOneSymbol : tokenTwoSymbol}::{tokenOneAddress}::{tokenTwoAddress}::{pairAddress}" width="100%" height="400px" />
 
 <style global>
     .chart {

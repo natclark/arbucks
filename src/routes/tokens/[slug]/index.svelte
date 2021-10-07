@@ -6,8 +6,8 @@
     import Copy from '$lib/components/Copy/index.svelte';
     import Search from '$lib/components/Search/index.svelte';
     import Trade from '$lib/components/Trade/index.svelte';
-    //import Chart from '$lib/components/Chart/index.svelte';
-    import SimpleChart from '$lib/components/Chart/SimpleChart.svelte';
+    import Chart from '$lib/components/Chart/index.svelte';
+    //import SimpleChart from '$lib/components/Chart/SimpleChart.svelte';
     import Arbigator from '$lib/components/Arbigator/index.svelte';
     import SegmentedButton, { Segment, Icon } from '@smui/segmented-button';
     import Wrapper from '@smui/touch-target';
@@ -218,7 +218,7 @@
                             pair = p.Pair_ID;
                             found = true;
                         }
-                        if (!!token && typeof document !== `undefined`) document.title = `$${symbol} ($${zeroes}${price}) - Live Arbitrum Charts & Analytics - Arbucks`;
+                        if (!!token && typeof document !== `undefined`) document.title = `$${zeroes}${price} - $${symbol} Live Arbitrum Charts & Analytics - Arbucks`;
                     }
                 });
             } catch (e) {
@@ -345,7 +345,7 @@
 </script>
 
 <svelte:head>
-    <title>${symbol} (${zeroes}{price}) - Live Arbitrum Charts & Analytics - Arbucks</title>
+    <title>${zeroes}{price} - ${symbol} Live Arbitrum Charts & Analytics - Arbucks</title>
     <link rel="canonical" href="/tokens/{$page.params.slug}/">
     <meta property="og:title" content="Live Arbitrum Charts & Analytics - Arbucks">
     <meta name=twitter:title content="Live Arbitrum Charts & Analytics - Arbucks">
@@ -431,7 +431,10 @@
         {/if}
     </div>
     {#if !!token && loading === false}
+        <Chart id="0" pairAddress={Pair_ID} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} tokenOnePrice={Token_1_price} tokenTwoPrice={Token_2_price} tokenOneSymbol={Token_1_symbol} tokenTwoSymbol={Token_2_symbol} {ethPrice} />
+        <!--
         <SimpleChart id="0" pairAddress={Pair_ID} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} tokenOnePrice={Token_1_price} tokenTwoPrice={Token_2_price} tokenOneSymbol={Token_1_symbol} tokenTwoSymbol={Token_2_symbol} {ethPrice} {timeframe} />
+        -->
     {:else}
         <div class="loading">
             <Loader />
@@ -446,6 +449,7 @@
     <Arbigator tokenOneSymbol={symbol} tokenTwoSymbol={Token_1_symbol === symbol ? Token_2_symbol : Token_1_symbol} pairAddress={Pair_ID} pairLiquidity={liquidityUSDT} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} tokenOneDecimals={decimalsBase} tokenTwoDecimals={decimalsQuote} />
 </div>
 
+<!--
 <div class="timeframes">
     <SegmentedButton segments={timeframes} let:segment singleSelect bind:selected={timeframe} key={(segment) => segment.name}>
         <Wrapper>
@@ -455,6 +459,7 @@
         </Wrapper>
     </SegmentedButton>
 </div>
+-->
 
 <br>
 
