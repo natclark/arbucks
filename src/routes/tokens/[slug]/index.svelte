@@ -218,7 +218,7 @@
                             pair = p.Pair_ID;
                             found = true;
                         }
-                        if (!!token && typeof document !== `undefined`) document.title = `$${p.Token_1_symbol} / $${p.Token_2_symbol} Live Arbitrum Charts & Analytics - Arbucks`;
+                        if (!!token && typeof document !== `undefined`) document.title = `$${symbol} ($${zeroes}${price}) - Live Arbitrum Charts & Analytics - Arbucks`;
                     }
                 });
             } catch (e) {
@@ -345,7 +345,7 @@
 </script>
 
 <svelte:head>
-    <title>Live Arbitrum Charts & Analytics - Arbucks</title>
+    <title>${symbol} (${zeroes}{price}) - Live Arbitrum Charts & Analytics - Arbucks</title>
     <link rel="canonical" href="/tokens/{$page.params.slug}/">
     <meta property="og:title" content="Live Arbitrum Charts & Analytics - Arbucks">
     <meta name=twitter:title content="Live Arbitrum Charts & Analytics - Arbucks">
