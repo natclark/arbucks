@@ -23,7 +23,8 @@
     }
     @media screen and (min-width: 768px) {
         .chart {
-            height: 600px;
+            border-radius: 0;
+            height: 700px;
         }
     }
 </style>

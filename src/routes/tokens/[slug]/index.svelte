@@ -6,7 +6,7 @@
     import Copy from '$lib/components/Copy/index.svelte';
     import Search from '$lib/components/Search/index.svelte';
     import Trade from '$lib/components/Trade/index.svelte';
-    import Chart from '$lib/components/Chart/index.svelte';
+    import TVChart from '$lib/components/Chart/index.svelte';
     //import SimpleChart from '$lib/components/Chart/SimpleChart.svelte';
     import Arbigator from '$lib/components/Arbigator/index.svelte';
     import SegmentedButton, { Segment, Icon } from '@smui/segmented-button';
@@ -77,6 +77,7 @@
     let fdmc = 0;
     let txCount = 0;
     let holders = 0;
+    let holderList = [];
     let swaps = [];
 
     let Token_1_name = `--------`;
@@ -92,6 +93,7 @@
     let liquidityUSDT = -1;
 
     let doc;
+    let chart;
 
     const addToken = async (e) => {
         !!doc && (ripple(e, doc));
@@ -271,11 +273,14 @@
                 const holdersReq = await fetch(`https://api.covalenthq.com/v1/42161/tokens/${$page.params.slug}/token_holders/?key=${COVALENT_KEY}`);
                 const jsonHolders = await holdersReq.json();
                 decimalsBase = jsonHolders.data.items[0].contract_decimals;
-                fdmc = new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(parseFloat(priceString) * (jsonHolders.data.items[0].total_supply / (10 ** decimalsBase)));
+                supply = jsonHolders.data.items[0].total_supply / (10 ** decimalsBase);
+                fdmc = new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(parseFloat(priceString) * (supply));
                 holders = jsonHolders.data.pagination.total_count;
+                holderList = jsonHolders.data.items;
             } catch (e) {
                 fdmc = `Error`;
                 holders = `Error`;
+                holderList = [];
             }
 
             const xhr = new XMLHttpRequest();
@@ -336,12 +341,68 @@
         loading = false;
     };
 
-    onMount(() => {
-        doc = document
+    const randomRGBA = () => {
+        const o = Math.round, r = Math.random, s = 255;
+        const inner = `${(r()*s)},${o(r()*s)},${o(r()*s)}`;
+        return {
+            backgroundColor: `rgba(${inner},.2)`,
+            borderColor: `rgba(${inner},1)`,
+        };
+    };
+
+    let chartRendered = false;
+
+    const updateHolders = () => {
+        if (chartRendered === false && holderList.length > 0 && holders > 0) {
+            let backgroundColor = [];
+            let borderColor = [];
+            for (let i = 0; i < (holderList.length > 99 ? 101 : holderList.length); i++) {
+                const rgba = randomRGBA();
+                backgroundColor.push(rgba.backgroundColor);
+                borderColor.push(rgba.borderColor);
+            }
+            let balance = supply;
+            let data = [];
+            holderList.forEach((holder) => {
+                data.push(holder.balance / (10 ** holder.contract_decimals))
+                balance -= holder.balance / (10 ** holder.contract_decimals);
+            });
+            if (holders > 100) {
+                data.push(supply - balance);
+                let labels = [];
+                holderList.forEach((holder) => labels.push(holder.address));
+                labels.push(`Other`);
+            }
+            /*
+            const holderChart = new chart(doc.getElementById(`holderChart`).getContext(`2d`), {
+                data: {
+                    datasets: [
+                        {
+                            backgroundColor,
+                            borderColor,
+                            borderWidth: 1,
+                            data,
+                            label: `BUCK tokens`,
+                        }
+                    ],
+                },
+                options: {},
+                type: `pie`,
+            });
+            */
+            chartRendered = true;
+        }
+    };
+
+    onMount(async () => {
+        doc = document;
+        await import(`https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js`);
+        chart = Chart;
         setInterval(() => autoRefresh(), 10000);
     });
 
     $: $page.params.slug, (typeof XMLHttpRequest !== `undefined`) && (refresh());
+    $: holderList, (!!doc && !!chart) && (updateHolders());
 </script>
 
 <svelte:head>
@@ -377,7 +438,7 @@
 
 <div class="details details--mobile">
     <p class="flex"><span class="bold">Exchange</span><span>Sushiswap V2</span></p>
-    <p class="flex"><span class="bold">24H Volume</span><span>{!!volume ? volume24 : 0}</span></p>
+    <p class="flex"><span class="bold">Total Volume</span><span>{!!volume ? volume24 : 0}</span></p>
     <p class="flex"><span class="bold">Market Cap</span><span>{fdmc}</span></p>
     <p class="flex"><span class="bold">Holders</span><span>{holders}</span></p>
     <p class="flex"><span class="bold">Transactions</span><span>{txCount}</span></p>
@@ -387,7 +448,7 @@
     <div>
         <p class="details__price"><span class="light">${zeroes}</span><span class="price">{price}</span> <span class="light">USDT</span> <span class={changeDir}>{changePctg}%</span></p>
         <p class="details__detail"><span class="bold">Exchange</span><span>Sushiswap V2</span></p>
-        <p class="details__detail"><span class="bold">24H Volume</span><span>{!!volume ? volume24 : 0}</span></p>
+        <p class="details__detail"><span class="bold">Total Volume</span><span>{!!volume ? volume24 : 0}</span></p>
         <p class="details__detail"><span class="bold">Market Cap</span><span>{fdmc}</span></p>
         <p class="details__detail"><span class="bold">Liquidity</span><span>~{liquidityUSDT}</span></p>
         <p class="details__detail"><span class="bold">Holders</span><span>{holders}</span></p>
@@ -431,7 +492,7 @@
         {/if}
     </div>
     {#if !!token && loading === false}
-        <Chart id="0" pairAddress={Pair_ID} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} tokenOnePrice={Token_1_price} tokenTwoPrice={Token_2_price} tokenOneSymbol={Token_1_symbol} tokenTwoSymbol={Token_2_symbol} {ethPrice} />
+        <TVChart id="0" pairAddress={Pair_ID} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} tokenOnePrice={Token_1_price} tokenTwoPrice={Token_2_price} tokenOneSymbol={Token_1_symbol} tokenTwoSymbol={Token_2_symbol} {ethPrice} />
         <!--
         <SimpleChart id="0" pairAddress={Pair_ID} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} tokenOnePrice={Token_1_price} tokenTwoPrice={Token_2_price} tokenOneSymbol={Token_1_symbol} tokenTwoSymbol={Token_2_symbol} {ethPrice} {timeframe} />
         -->
@@ -441,7 +502,7 @@
         </div>
     {/if}
     <!--
-    <Chart id="0" pairAddress={Pair_ID} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} tokenOnePrice={Token_1_price} tokenTwoPrice={Token_2_price} tokenOneSymbol={Token_1_symbol} tokenTwoSymbol={Token_2_symbol} {ethPrice} />
+    <TVChart id="0" pairAddress={Pair_ID} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} tokenOnePrice={Token_1_price} tokenTwoPrice={Token_2_price} tokenOneSymbol={Token_1_symbol} tokenTwoSymbol={Token_2_symbol} {ethPrice} />
     -->
     <!--
     <iframe class="trade" src="https://app.sushi.com/swap?inputCurrency={Token_1_contract}&outputCurrency={Token_2_contract}" title="Trade on Sushiswap"></iframe>
@@ -514,7 +575,8 @@
     {/if}
 </div>
 
-<h2>Info</h2>
+<!--
+<h2 class="big">Info</h2>
 <div class="details">
     <p class="flex"><span class="bold">Website</span><span><em>Coming soon!</em></span></p>
     <p class="flex"><span class="bold">Telegram</span><span><em>Coming soon!</em></span></p>
@@ -532,6 +594,35 @@
 
 <h2>Share</h2>
 <p><em>Share buttons are coming soon!</em></p>
+-->
+
+<div class="flex flex--asymmetric">
+    <div class="card card--1">
+        <h2 class="med">Token Info</h2>
+        <p><em>Coming soon.</em></p>
+    </div>
+    <div class="card card--2 card--big">
+        <h2 class="med">Holders</h2>
+        <p><em>Coming soon.</em></p>
+        <!--
+        <canvas id="holderChart" width="400px" height="400px"></canvas>
+        <p class="card__center">Total Supply: {new Intl.NumberFormat(`en-US`, {}).format(supply)}</p>
+        -->
+    </div>
+</div>
+
+<div class="flex flex--asymmetric">
+    <div class="card card--3 card--big">
+        <h2 class="med">All ${symbol} Pairs</h2>
+        <p><em>Coming soon.</em></p>
+    </div>
+    <div class="card card--4">
+        <h2 class="med">Share</h2>
+        <p><em>Coming soon.</em></p>
+    </div>
+</div>
+
+<p class="footnote"><em>More info coming soon.</em></p>
 
 <style>
     .loading {
@@ -591,6 +682,12 @@
     .negative {
         color: #ff3b69;
     }
+    .med {
+        font-size: 24px;
+    }
+    .big {
+        font-size: 32px;
+    }
     .details {
         border: 1px solid var(--fg-border);
         border-width: 1px 0 1px 0;
@@ -602,6 +699,36 @@
         }
         &.details--desktop {
             display: none;
+        }
+    }
+    .card {
+        border-radius: 24px;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        margin-bottom: 40px;
+        min-height: 100px;
+        padding: 1em;
+        h2 {
+            text-align: left;
+        }
+        .card__center {
+            text-align: center;
+        }
+        &.card--1 {
+            background-image: linear-gradient(to right, #054159, #056361);
+        }
+        &.card--2 {
+            background-image: linear-gradient(to right, #521e62, #65447d);
+        }
+        &.card--3 {
+            background-image: linear-gradient(to right, #803e1c, #755043);
+        }
+        &.card--4 {
+            background-image: linear-gradient(to right, #0a397e, #05427a);
+        }
+        &.card--big {
+            flex: 2;
         }
     }
     p {
@@ -634,7 +761,7 @@
     .scroller {
         background-color: var(--bg-table);
         border-radius: 8px;
-        max-height: 600px;
+        max-height: 700px;
         overflow-x: auto;
         padding: 8px;
         scrollbar-width: thin;
@@ -662,6 +789,13 @@
         align-items: center;
         display: flex;
         justify-content: center;
+    }
+    .footnote {
+        color: var(--ac-dark);
+        font-family: var(--font);
+        font-size: 18px;
+        margin-top: 48px;
+        text-align: center;
     }
     @media screen and (min-width: 1024px) {
         .flex {
@@ -697,6 +831,19 @@
                     }
                 }
             }
+            &.flex--asymmetric {
+                justify-content: flex-start;
+                column-gap: 40px;
+                flex-wrap: wrap;
+                width: 100%;
+                margin-bottom: 40px;
+            }
+        }
+        .card {
+            margin-bottom: 0;
+        }
+        .big {
+            font-size: 48px;
         }
         .details.details--mobile {
             display: none;
@@ -731,7 +878,7 @@
             display: none;
         }
         .scroller--dark {
-            background-color: #000;
+            background-color: var(--bg-soft);
             border-radius: 8px 0 0 8px;
             overflow-x: hidden;
             padding: 0;
@@ -740,11 +887,6 @@
     :global {
         @media screen and (min-width: 1024px) {
             .scroller--dark {
-                ::-webkit-scrollbar-thumb {
-                    background-color: #333;
-                }
-                scrollbar-color: #333 var(--bg-scroll);
-                scrollbar-face-color: #333;
                 thead tr {
                     color: #aaa;
                     height: 28px;
@@ -753,10 +895,10 @@
                     }
                 }
                 tbody tr {
-                    background-color: #000 !important;
-                    color: #fafafa;
+                    background-color: var(--bg-soft) !important;
+                    color: #eee;
                     &:hover {
-                        background-color: #111 !important;
+                        background-color: var(--bg-hover) !important;
                     }
                 }
             }

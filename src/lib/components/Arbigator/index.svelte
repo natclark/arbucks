@@ -558,7 +558,7 @@
 
 <style>
     .panel {
-        background-color: #000;
+        background-color: var(--bg-soft);
         border: 0;
         border-radius: 0 8px 8px 0;
         box-shadow: rgba(0, 0, 0, .45) 0 25px 20px -20px;
@@ -567,7 +567,7 @@
         width: 100%;
         .panel__flex {
             align-items: center;
-            color: #fafafa;
+            color: var(--fg);
             display: flex;
             font-size: 12px;
             height: 20px;
@@ -585,7 +585,7 @@
     @media screen and (min-width: 1024px) {
         .panel {
             display: block;
-            height: 600px;
+            height: 700px;
             max-width: 300px;
             width: 100%;
         }

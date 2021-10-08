@@ -69,7 +69,7 @@
 
 <style>
     .trade {
-        background-color: var(--bg-row-dark);
+        background-color: var(--bg-soft);
         border-radius: 8px;
         box-shadow: rgba(99, 99, 99, .1) 0 2px 8px 0;
         font-size: 12px;
@@ -118,7 +118,7 @@
             height: 28px;
         }
         &:hover {
-            background-color: var(--bg-row-hover);
+            background-color: var(--bg-hover);
             box-shadow: rgba(99, 99, 99, .2) 0 4px 12px 0;
         }
     }

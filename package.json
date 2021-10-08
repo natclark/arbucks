@@ -35,6 +35,7 @@
         "@smui/textfield": "^5.0.0-beta.5",
         "@smui/touch-target": "^5.0.0-beta.6",
         "canvas-confetti": "^1.4.0",
+        "chart.js": "^3.5.1",
         "lightweight-charts": "^3.5.0",
         "simple-svelte-autocomplete": "^2.2.3",
         "smui-theme": "^5.0.0-beta.5",
