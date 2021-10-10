@@ -23,16 +23,18 @@
         const xhr = new XMLHttpRequest();
         xhr.onload = () => {
             const json = JSON.parse(xhr.response); // TODO check for errors
-            const graphTokens = json.data.tokens;
-            let uniTokens = [];
-            graphTokens.forEach((token) => $tokens.indexOf($tokens.find((e) => e.Contract === token.id.toLowerCase())) === -1 && (uniTokens.push({
-                Contract: token.id.toLowerCase(),
-                Symbol: token.symbol,
-                Name: token.name,
-                Decimals: token.decimals,
-                Logo: `https://zapper.fi/images/${token.Symbol}-icon.png`,
-            })));
-            tokens.update(() => $tokens.concat(uniTokens));
+            try {
+                const graphTokens = json.data.tokens;
+                let uniTokens = [];
+                graphTokens.forEach((token) => $tokens.indexOf($tokens.find((e) => e.Contract === token.id.toLowerCase())) === -1 && (uniTokens.push({
+                    Contract: token.id.toLowerCase(),
+                    Symbol: token.symbol,
+                    Name: token.name,
+                    Decimals: token.decimals,
+                    Logo: `https://zapper.fi/images/${token.Symbol}-icon.png`,
+                })));
+                tokens.update(() => $tokens.concat(uniTokens));
+            } catch (e) {}
         };
         xhr.onerror = () => {
             console.log(`Request failed.`);

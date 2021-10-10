@@ -22,7 +22,7 @@
 <nav>
     <div class="left">
         <a class="logo" href="/" title="Home" draggable="false" aria-current="{$page.path === `/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>
-            <img draggable="false" src="/img/arbucks-logo.svg" alt="Arbucks Logo" width="36px" height="36px">
+            <img draggable="false" src="/img/arbucks-logo.svg" alt="Arbucks Logo" width="40px" height="40px">
         </a>
         <details bind:this={menu} class="menu menu--mobile">
             <summary on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)}>
@@ -42,7 +42,6 @@
                 <a href="/docs/" draggable="false" aria-current="{$page.path.includes(`/docs/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Docs</a>
                 <a href="/blog/" draggable="false" aria-current="{$page.path.includes(`/blog/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Blog</a>
                 <a href="/pro/" draggable="false" aria-current="{$page.path === `/pro/` ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Go Pro</a>
-                <a href="/buck/" draggable="false" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>$BUCK</a>
                 <a href="/portfolio/" draggable="false" aria-current="{$page.path.includes(`/portfolio/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>Portfolio</a>
             </div>
         </details>
@@ -63,7 +62,6 @@
         <div class="search">
             <Search />
         </div>
-        <a class="highlight" href="/buck/" draggable="false" on:mousedown={(e)=> ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>$BUCK</a>
         <a class="primary" href="/portfolio/" draggable="false" aria-current="{$page.path.includes(`/portfolio/`) ? `page` : ``}" on:mousedown={(e) => ripple(e, doc)} on:click={(e) => ripple(e, doc)} sveltekit:prefetch>
             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 200 200" style="enable-background:new 0 0 200 200;" xml:space="preserve">
                 <g>
@@ -191,6 +189,37 @@
                 }
             }
             .menu {
+                .submenu {
+                    .submenu__toggle {
+                        cursor: pointer;
+                        &:hover {
+                            & + .submenu__links {
+                                display: flex;
+                            }
+                        }
+                    }
+                    .submenu__links {
+                        background-color: var(--bg-soft);
+                        display: none;
+                        flex-direction: column;
+                        margin-left: 18px;
+                        position: absolute;
+                        top: 56px;
+                        width: 212px;
+                        .submenu__link {
+                            display: flex;
+                            justify-content: space-between;
+                            margin-left: 0;
+                            padding: 0 30px;
+                            &:hover {
+                                background-color: var(--bg-hover);
+                            }
+                        }
+                        &:hover {
+                            display: flex;
+                        }
+                    }
+                }
                 &.menu--mobile {
                     display: block;
                     summary {

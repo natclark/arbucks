@@ -21,8 +21,8 @@
         width: 100%;
         .profile__picture {
             border-radius: 50%;
-            max-height: 128px;
-            max-width: 128px;
+            height: 128px;
+            width: 128px;
         }
         .profile__telegram {
             color: var(--ac-light) !important;

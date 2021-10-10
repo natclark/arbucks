@@ -373,7 +373,6 @@
                 holderList.forEach((holder) => labels.push(holder.address));
                 labels.push(`Other`);
             }
-            /*
             const holderChart = new chart(doc.getElementById(`holderChart`).getContext(`2d`), {
                 data: {
                     datasets: [
@@ -389,7 +388,6 @@
                 options: {},
                 type: `pie`,
             });
-            */
             chartRendered = true;
         }
     };
@@ -451,8 +449,8 @@
         <p class="details__detail"><span class="bold">Total Volume</span><span>{!!volume ? volume24 : 0}</span></p>
         <p class="details__detail"><span class="bold">Market Cap</span><span>{fdmc}</span></p>
         <p class="details__detail"><span class="bold">Liquidity</span><span>~{liquidityUSDT}</span></p>
-        <p class="details__detail"><span class="bold">Holders</span><span>{holders}</span></p>
-        <p class="details__detail"><span class="bold">Transactions</span><span>{txCount}</span></p>
+        <p class="details__detail"><span class="bold">Holders</span><span>{new Intl.NumberFormat(`en-US`, {}).format(holders)}</span></p>
+        <p class="details__detail"><span class="bold">Transactions</span><span>{new Intl.NumberFormat(`en-US`, {}).format(txCount)}</span></p>
     </div>
     <div>
         <button class="squareButton" on:click={addToken} on:mousedown={(e) => !!doc && (ripple(e, doc))}>
@@ -603,11 +601,68 @@
     </div>
     <div class="card card--2 card--big">
         <h2 class="med">Holders</h2>
-        <p><em>Coming soon.</em></p>
-        <!--
-        <canvas id="holderChart" width="400px" height="400px"></canvas>
-        <p class="card__center">Total Supply: {new Intl.NumberFormat(`en-US`, {}).format(supply)}</p>
-        -->
+        <div class="flex flex--gap">
+            <div>
+                <h3>Wallet Distribution Chart</h3>
+                <div class="wrapper">
+                    <div class="pieChart">
+                        <canvas id="holderChart" width="400px" height="400px" aria-label="Pie chart of top holders" role="img" />
+                    </div>
+                </div>
+            </div>
+            <div class="card__details">
+                <p class="card__detail">
+                    <span>Total Supply</span>
+                    <span>{new Intl.NumberFormat(`en-US`, {}).format(supply)}</span>
+                </p>
+                <p class="card__detail">
+                    <span>Unique Holders</span>
+                    <span>{new Intl.NumberFormat(`en-US`, {}).format(holders)}</span>
+                </p>
+                <hr>
+                <p class="card__detail">
+                    <span>Average Holding ({symbol})</span>
+                    <span>{new Intl.NumberFormat(`en-US`, {}).format((supply / holders).toFixed(2))}</span>
+                </p>
+                <p class="card__detail">
+                    <span>Average Holding (USDT)</span>
+                    <span>${new Intl.NumberFormat(`en-US`, {}).format(((supply / holders) * parseFloat(`${zeroes}${price}`)).toFixed(2))}</span>
+                </p>
+                <p class="card__detail">
+                    <span>Average Holding (%)</span>
+                    <span>{(((supply / holders) / supply) * 100).toFixed(6)}%</span>
+                </p>
+                <p class="card__detail">
+                    <span>Average Entry (USDT)</span>
+                    <span>Coming Soon</span>
+                </p>
+                <p class="card__detail">
+                    <span>Average Unrealized P&L (%)</span>
+                    <span>Coming Soon</span>
+                </p>
+                <hr>
+                <p class="card__detail">
+                    <span>Median Holding ({symbol})</span>
+                    <span>Coming Soon</span>
+                </p>
+                <p class="card__detail">
+                    <span>Median Holding (USDT)</span>
+                    <span>Coming Soon</span>
+                </p>
+                <p class="card__detail">
+                    <span>Median Holding (%)</span>
+                    <span>Coming Soon</span>
+                </p>
+                <p class="card__detail">
+                    <span>Median Entry (USDT)</span>
+                    <span>Coming Soon</span>
+                </p>
+                <p class="card__detail">
+                    <span>Median Unrealized P&L (%)</span>
+                    <span>Coming Soon</span>
+                </p>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -669,6 +724,9 @@
                 display: none;
             }
         }
+        &.flex--gap {
+            column-gap: 18px;
+        }
     }
     .light {
         color: #888;
@@ -712,8 +770,19 @@
         h2 {
             text-align: left;
         }
-        .card__center {
-            text-align: center;
+        .card__details {
+            background-image: linear-gradient(to right, #1d1d1d, #222);
+            border-radius: 24px;
+            box-shadow: rgba(0, 0, 0, .02) 0 1px 3px 0, rgba(27, 31, 35, .15) 0 0 0 1px;
+            padding: 18px;
+            width: 100%;
+            .card__detail {
+                display: flex;
+                flex-direction: column;
+                span:first-child {
+                    color: #ddd;
+                }
+            }
         }
         &.card--1 {
             background-image: linear-gradient(to right, #054159, #056361);
@@ -736,6 +805,16 @@
     }
     h2 {
         font-size: 20px;
+    }
+    .wrapper {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 18px;
+    }
+    .pieChart {
+        height: 280px;
+        position: relative;
+        width: 280px;
     }
     .squareButton {
         align-items: center;
@@ -841,6 +920,17 @@
         }
         .card {
             margin-bottom: 0;
+            .card__detail {
+                flex-direction: row !important;
+                justify-content: space-between !important;
+            }
+        }
+        .wrapper {
+            margin-bottom: 0;
+        }
+        .pieChart {
+            height: 450px;
+            width: 450px;
         }
         .big {
             font-size: 48px;

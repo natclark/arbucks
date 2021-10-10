@@ -27,16 +27,18 @@
         const xhr = new XMLHttpRequest();
         xhr.onload = () => {
             const json = JSON.parse(xhr.response); // TODO check for errors
-            const graphTokens = json.data.tokens;
-            let uniTokens = [];
-            graphTokens.forEach((token) => $tokens.indexOf($tokens.find((e) => e.Contract === token.id.toLowerCase())) === -1 && (uniTokens.push({
-                Contract: token.id.toLowerCase(),
-                Symbol: token.symbol,
-                Name: token.name,
-                Decimals: token.decimals,
-                Logo: `https://zapper.fi/images/${token.Symbol}-icon.png`,
-            })));
-            tokens.update(() => $tokens.concat(uniTokens));
+            try {
+                const graphTokens = json.data.tokens;
+                let uniTokens = [];
+                graphTokens.forEach((token) => $tokens.indexOf($tokens.find((e) => e.Contract === token.id.toLowerCase())) === -1 && (uniTokens.push({
+                    Contract: token.id.toLowerCase(),
+                    Symbol: token.symbol,
+                    Name: token.name,
+                    Decimals: token.decimals,
+                    Logo: `https://zapper.fi/images/${token.Symbol}-icon.png`,
+                })));
+                tokens.update(() => $tokens.concat(uniTokens));
+            } catch (e) {}
         };
         xhr.onerror = () => {
             console.log(`Request failed.`);
@@ -104,39 +106,46 @@
 
 <div class="top">
     <br>
-    <h1>Arbucks</h1>
-    <p><em>Arbitrum's open-source charts & analytics platform</em></p>
+    <div class="flex">
+        <div class="flex__left">
+            <h1><span style="color: var(--ac-light);">Arbucks:</span> Free Arbitrum Charts, Data, & Analytics</h1>
+            <p>Arbucks is the Arbitrum community's go-to portal for price charts, portfolio tracking, project discovery, and more.</p>
+            <div class="wrapper">
+                <a class="primary" href="/tokens/0xafd871f684f21ab9d7137608c71808f83d75e6fc/" draggable="false" sveltekit:prefetch>Start Exploring</a>
+            </div>
+        </div>
+        <div class="flex__right">
+            <h2>Trending Tokens</h2>
+            <p>Top 10, past 30 days.</p>
+            {#if !!loading}
+                <div class="loading">
+                    <Loader />
+                </div>
+            {:else}
+                <div class="scroller">
+                    <table class="tokens">
+                        <thead>
+                            <tr>
+                                <th>Logo</th>
+                                <th>Name</th>
+                                <th>Symbol</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {#each $pages as page}
+                                <Token address={page.token.Contract} symbol={page.token.Symbol} name={page.token.Name} decimals={page.token.Decimals} logo={page.token.Logo || ``} />
+                            {/each}
+                        </tbody>
+                    </table>
+                </div>
+            {/if}
+        </div>
+    </div>
 </div>
 
-<h2>Trending Tokens</h2>
-
-<p>Top 10, past 30 days.</p>
-
-{#if !!loading}
-    <div class="loading">
-        <Loader />
-    </div>
-{:else}
-    <div class="scroller">
-        <table class="tokens">
-            <thead>
-                <tr>
-                    <th>Logo</th>
-                    <th>Name</th>
-                    <th>Symbol</th>
-                    <th>Address</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {#each $pages as page}
-                    <Token address={page.token.Contract} symbol={page.token.Symbol} name={page.token.Name} decimals={page.token.Decimals} logo={page.token.Logo || ``} />
-                {/each}
-            </tbody>
-        </table>
-    </div>
-{/if}
-
+<!--
 <h2>New Tokens</h2>
 
 <p>Top 10 latest ERC20 deployments.</p>
@@ -150,17 +159,56 @@
     <li><p>Explore analytics, charts, tokens, pairs, liquidity, volume, transactions, pools, and more!</p></li>
     <li><p>This is a <strong>very new</strong> project, so bugs and missing features are prevalent. If you want you can, check out <a href="/docs/" sveltekit:prefetch>the info page</a>!</p></li>
 </ul>
+-->
 
 <br>
 
 <style>
     .top {
-        text-align: center;
         h1 {
             text-shadow: 0 0 80px #888, 0 0 16px var(--fg-header);
         }
         img {
             max-width: 800px;
+        }
+    }
+    .flex {
+        column-gap: 24px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        .flex__left {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            text-align: center;
+            p {
+                font-size: 20px;
+                line-height: 1.3em;
+            }
+            .wrapper {
+                display: flex;
+                justify-content: center;
+                .primary {
+                    display: flex;
+                    font-size: 20px;
+                    height: 48px;
+                    justify-content: center;
+                    max-width: 190px;
+                }
+            }
+        }
+        .flex__right {
+            display: flex;
+            flex: 2;
+            flex-direction: column;
+            text-align: center;
+            h2 {
+                margin-bottom: 8px;
+            }
+            p {
+                margin: 0 0 8px;
+            }
         }
     }
     .loading {
@@ -183,6 +231,14 @@
         }
     }
     @media screen and (min-width: 768px) {
+        .flex__left {
+            h1, p {
+                text-align: left !important;
+            }
+            .wrapper {
+                justify-content: flex-start !important;
+            }
+        }
         .tokens {
             border-collapse: separate !important;
             border-spacing: 0 1em !important;
