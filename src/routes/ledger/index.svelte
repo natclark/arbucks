@@ -53,7 +53,7 @@
 
 <svelte:head>
     <title>Real-Time Arbitrum Order Book - Arbucks</title>
-    <link rel="canonical" href="https://arbucks.io/tokens/">
+    <link rel="canonical" href="https://arbucks.io/ledger/">
     <meta property="og:title" content="Real-Time Arbitrum Order Book - Arbucks">
     <meta name=twitter:title content="Real-Time Arbitrum Order Book - Arbucks">
 </svelte:head>

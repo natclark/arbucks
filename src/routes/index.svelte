@@ -191,10 +191,12 @@
                 justify-content: center;
                 .primary {
                     display: flex;
+                    filter: brightness(100%);
                     font-size: 20px;
                     height: 48px;
                     justify-content: center;
                     max-width: 190px;
+                    width: 100%;
                 }
             }
         }

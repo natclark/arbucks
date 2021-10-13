@@ -63,10 +63,10 @@
 </script>
 
 <svelte:head>
-    <title>Pairs - Arbucks</title>
-    <link rel="canonical" href="https://arbucks.io/pairs/">
-    <meta property="og:title" content="Pairs - Arbucks">
-    <meta name=twitter:title content="Pairs - Arbucks">
+    <title>Liquidity Pools - Arbucks</title>
+    <link rel="canonical" href="https://arbucks.io/pools/">
+    <meta property="og:title" content="Liqudity Pools - Arbucks">
+    <meta name=twitter:title content="Liquidity Pools - Arbucks">
 </svelte:head>
 
 <h1>Pools ({$pairs.length})</h1>

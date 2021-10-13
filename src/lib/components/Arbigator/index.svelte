@@ -74,11 +74,19 @@
 
     const getBase = () => {
         if (active === `sell`) {
-            const amountIn = (tokenTwoReserve * (10 ** tokenTwoDecimals)) * 1000;
-            const amountOut = (tokenOneReserve * (10 ** tokenOneDecimals));
-            const adjustedInput = parseFloat(amountQuote) * (10 ** tokenTwoDecimals);
-            amountBase = (adjustedInput * 997 * amountOut) / (amountIn + (adjustedInput * 997)) / (10 ** tokenOneDecimals);
-            minReceived = amountBase - ((amountBase / 100) * slippageTolerance);
+            if (tokenOneAddress === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
+                const amountIn = (tokenTwoReserve * (10 ** tokenTwoDecimals)) * 1000;
+                const amountOut = (tokenOneReserve * (10 ** tokenOneDecimals));
+                const adjustedInput = parseFloat(amountQuote) * (10 ** tokenTwoDecimals);
+                amountBase = (adjustedInput * 997 * amountOut) / (amountIn + (adjustedInput * 997)) / (10 ** tokenOneDecimals);
+                minReceived = amountBase - ((amountBase / 100) * slippageTolerance);
+            } else {
+                const amountIn = (tokenTwoReserve * (10 ** tokenOneDecimals)) * 1000;
+                const amountOut = (tokenOneReserve * (10 ** tokenTwoDecimals));
+                const adjustedInput = parseFloat(amountQuote) * (10 ** tokenOneDecimals);
+                amountBase = (adjustedInput * 997 * amountIn) / (amountOut + (adjustedInput * 997)) / (10 ** tokenTwoDecimals);
+                minReceived = amountBase - ((amountBase / 100) * slippageTolerance);
+            }
             if (!!isNaN(amountBase)) {
                 amountBase = 0;
                 minReceived = 0;
@@ -88,11 +96,19 @@
 
     const getQuote = () => {
         if (active === `buy`) {
-            const amountIn = (tokenOneReserve * (10 ** tokenOneDecimals)) * 1000;
-            const amountOut = (tokenTwoReserve * (10 ** tokenTwoDecimals));
-            const adjustedInput = parseFloat(amountBase) * (10 ** tokenOneDecimals);
-            amountQuote = (adjustedInput * 997 * amountOut) / (amountIn + (adjustedInput * 997)) / (10 ** tokenTwoDecimals);
-            minReceived = amountQuote - ((amountQuote / 100) * slippageTolerance);
+            if (tokenOneAddress === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
+                const amountIn = (tokenOneReserve * (10 ** tokenOneDecimals)) * 1000;
+                const amountOut = (tokenTwoReserve * (10 ** tokenTwoDecimals));
+                const adjustedInput = parseFloat(amountBase) * (10 ** tokenOneDecimals);
+                amountQuote = (adjustedInput * 997 * amountOut) / (amountIn + (adjustedInput * 997)) / (10 ** tokenTwoDecimals);
+                minReceived = amountQuote - ((amountQuote / 100) * slippageTolerance);
+            } else {
+                const amountIn = (tokenTwoReserve * (10 ** tokenTwoDecimals)) * 1000;
+                const amountOut = (tokenOneReserve * (10 ** tokenOneDecimals));
+                const adjustedInput = parseFloat(amountBase) * (10 ** tokenTwoDecimals);
+                amountQuote = (adjustedInput * 997 * amountIn) / (amountOut + (adjustedInput * 997)) / (10 ** tokenOneDecimals);
+                minReceived = amountQuote - ((amountQuote / 100) * slippageTolerance);
+            }
             if (!!isNaN(amountQuote)) {
                 amountQuote = 0;
                 minReceived = 0;
@@ -145,8 +161,6 @@
     };
 
     const encodeSwap = (amountIn, amountOut, decimalInput, decimalOutput, tokens) => {
-        console.log(amountIn, amountOut, decimalInput, decimalOutput, tokens);
-        console.log($web3.utils.toWei(amountIn.toFixed(decimalInput).toString(), getWei(decimalInput)), $web3.utils.toWei(amountOut.toFixed(decimalOutput).toString(), getWei(decimalOutput)), tokens, $selectedAccount.toString(), Math.floor(Date.now() / 1000) + 1800);
         const timeout = Math.floor(Date.now() / 1000) + 1800; // 30 minutes is default tx timeout
         return $web3.eth.abi.encodeFunctionCall(
             {
@@ -193,8 +207,7 @@
     const updateAllowance = async () => {
         tokenOneAllowance = await getAllowance(tokenOneAddress);
         tokenTwoAllowance = await getAllowance(tokenTwoAddress);
-        console.log(tokenOneAllowance, tokenTwoAllowance);
-        return active === `buy` ? tokenOneAllowance : tokenTwoAllowance;
+        return active === `buy` ? tokenTwoAllowance : tokenOneAllowance;
     };
 
     const updateBalance = async () => {
@@ -203,8 +216,13 @@
             const contractTwo = new $web3.eth.Contract(abiBalance, tokenTwoAddress);
             const balanceOne = await contractOne.methods.balanceOf($selectedAccount).call();
             const balanceTwo = await contractTwo.methods.balanceOf($selectedAccount).call();
-            balanceBase = balanceOne / (10 ** tokenOneDecimals); // TODO make sure not to divide by 0
-            balanceQuote = balanceTwo / (10 ** tokenTwoDecimals); // TODO make sure not to divide by 0
+            if (tokenOneAddress === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
+                balanceBase = balanceOne / (10 ** tokenOneDecimals); // TODO make sure not to divide by 0
+                balanceQuote = balanceTwo / (10 ** tokenTwoDecimals); // TODO make sure not to divide by 0
+            } else {
+                balanceBase = balanceTwo / (10 ** tokenTwoDecimals); // TODO make sure not to divide by 0
+                balanceQuote = balanceOne / (10 ** tokenOneDecimals); // TODO make sure not to divide by 0
+            }
         }
     };
 
@@ -275,12 +293,27 @@
     };
 
     const placeOrder = async () => {
-        const amountIn = parseFloat(active === `buy` ? amountBase : amountQuote);
-        const amountOut = parseFloat(active === `buy` ? amountQuote : amountBase);
-        const tokenInput = active === `buy` ? tokenOneAddress : tokenTwoAddress;
-        const tokenOutput = active === `buy` ? tokenTwoAddress : tokenOneAddress;
-        const decimalInput = active === `buy` ? tokenOneDecimals : tokenTwoDecimals;
-        const decimalOutput = active === `buy` ? tokenTwoDecimals : tokenOneDecimals;
+        let amountIn;
+        let amountOut;
+        let tokenInput;
+        let tokenOutput;
+        let decimalInput;
+        let decimalOutput;
+        if (active === `buy`) {
+            amountIn = parseFloat(amountBase);
+            amountOut = parseFloat(amountQuote);
+            tokenInput = tokenOneAddress;
+            tokenOutput = tokenTwoAddress;
+            decimalInput = tokenOneDecimals;
+            decimalOutput = tokenTwoDecimals;
+        } else {
+            amountIn = parseFloat(amountQuote);
+            amountOut = parseFloat(amountBase);
+            tokenInput = tokenTwoAddress;
+            tokenOutput = tokenOneAddress;
+            decimalInput = tokenTwoDecimals;
+            decimalOutput = tokenOneDecimals;
+        }
 
         const allowance = await updateAllowance();
 
@@ -293,50 +326,52 @@
                 from: $selectedAccount,
                 to: tokenInput.toString(),
             }).then((estimatedGas) => {
-                    const gasLimit = (parseInt(estimatedGas) + (parseInt(estimatedGas) / 10)).toFixed(0);
-                    $web3.eth.sendTransaction({
-                        data,
-                        from: $selectedAccount,
-                        gas: gasLimit,
-                        gasPrice: $web3.utils.toWei(`2`, `Gwei`),
-                        to: tokenInput.toString(),
-                    }).once(`error`, () => {
-                        approving = false;
-                        snackbar.open();
-                    }).once(`transactionHash`, () => {
-                        approving = true;
-                    }).once(`receipt`, async (receipt) => {
-                        approving = false;
-                        await updateAllowance();
-                    });
+                const gasLimit = (parseInt(estimatedGas) + (parseInt(estimatedGas) / 10)).toFixed(0);
+                $web3.eth.sendTransaction({
+                    data,
+                    from: $selectedAccount,
+                    gas: gasLimit,
+                    gasPrice: $web3.utils.toWei(`0.95`, `Gwei`),
+                    to: tokenOneAddress === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1` ? tokenInput.toString() : tokenOutput.toString(),
+                }).once(`error`, () => {
+                    approving = false;
+                    snackbar.open();
+                }).once(`transactionHash`, () => {
+                    approving = true;
+                }).once(`receipt`, async (receipt) => {
+                    approving = false;
+                    await updateAllowance();
+                });
             }).catch((error) => {
                 // RPC ERROR
                 snackbar.open();
             });
         } else {
-            const data = encodeSwap(amountIn, minReceived, decimalOutput, decimalInput, [tokenOutput, tokenInput]);
+            const data = tokenOneAddress === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`
+                ? encodeSwap(amountIn, minReceived, decimalOutput, decimalInput, [tokenOutput, tokenInput].reverse())
+                : encodeSwap(amountIn, minReceived, decimalOutput, decimalInput, [tokenOutput, tokenInput]);
             $web3.eth.estimateGas({
                 data,
                 from: $selectedAccount,
-                to: pairAddress.toString(),
+                to: `0x1b02da8cb0d097eb8d57a175b88c7d8b47997506`,
             }).then((estimatedGas) => {
-                    const gasLimit = (parseInt(estimatedGas) + (parseInt(estimatedGas) / 10)).toFixed(0);
-                    $web3.eth.sendTransaction({
-                        data,
-                        from: $selectedAccount,
-                        gas: gasLimit,
-                        gasPrice: $web3.utils.toWei(`20`, `Gwei`),
-                        to: pairAddress.toString(),
-                    }).once(`error`, () => {
-                        swapping = false;
-                        snackbar.open();
-                    }).once(`transactionHash`, () => {
-                        swapping = true;
-                    }).once(`receipt`, async (receipt) => {
-                        swapping = false;
-                        await updateBalance();
-                        await updateAllowance();
-                    });
+                const gasLimit = (parseInt(estimatedGas) + (parseInt(estimatedGas) / 10)).toFixed(0);
+                $web3.eth.sendTransaction({
+                    data,
+                    from: $selectedAccount,
+                    gas: gasLimit,
+                    gasPrice: $web3.utils.toWei(`0.95`, `Gwei`),
+                    to: `0x1b02da8cb0d097eb8d57a175b88c7d8b47997506`,
+                }).once(`error`, () => {
+                    swapping = false;
+                    snackbar.open();
+                }).once(`transactionHash`, () => {
+                    swapping = true;
+                }).once(`receipt`, async (receipt) => {
+                    swapping = false;
+                    await updateBalance();
+                    await updateAllowance();
+                });
             }).catch((error) => {
                 // RPC ERROR
                 snackbar.open();
@@ -380,6 +415,7 @@
     $: active, resetAmounts();
     $: amountBase, getQuote();
     $: amountQuote, getBase();
+    $: allowMultihops, allowMultihops === false && (alert(`This feature is still a WIP and transactions may go through multiple hops even with this setting disabled.`));
 </script>
 
 <div class="panel">
@@ -392,13 +428,13 @@
     </div>
     {#if active === `buy`}
         <div class="panel__flex panel__flex--tall">
-            <Textfield type="text" bind:value={amountBase} label="Amount ({tokenOneSymbol})" style={styleTextfield} />
+            <Textfield type="text" bind:value={amountBase} label="Amount ({tokenTwoSymbol})" style={styleTextfield} />
         </div>
         <div class="panel__flex">
             <p><small>Balance: <strong>{balanceBase}</strong></small></p>
         </div>
         <div class="panel__flex panel__flex--tall">
-            <Textfield type="text" bind:value={amountQuote} label="Amount ({tokenTwoSymbol})" style={styleTextfield} />
+            <Textfield type="text" bind:value={amountQuote} label="Amount ({tokenOneSymbol})" style={styleTextfield} />
         </div>
         <div class="panel__flex">
             <p><small>Balance: <strong>{balanceQuote}</strong></small></p>
@@ -430,13 +466,13 @@
         </div>
     {:else}
         <div class="panel__flex panel__flex--tall">
-            <Textfield type="text" bind:value={amountQuote} label="Amount ({tokenTwoSymbol})" style={styleTextfield} />
+            <Textfield type="text" bind:value={amountQuote} label="Amount ({tokenOneSymbol})" style={styleTextfield} />
         </div>
         <div class="panel__flex">
             <p><small>Balance: <strong>{balanceQuote}</strong></small></p>
         </div>
         <div class="panel__flex panel__flex--tall">
-            <Textfield type="text" bind:value={amountBase} label="Amount ({tokenOneSymbol})" style={styleTextfield} />
+            <Textfield type="text" bind:value={amountBase} label="Amount ({tokenTwoSymbol})" style={styleTextfield} />
         </div>
         <div class="panel__flex">
             <p><small>Balance: <strong>{balanceBase}</strong></small></p>
@@ -475,20 +511,9 @@
         <span>Liquidity</span>
         <span>~{pairLiquidity}</span>
     </div>
-    <!--
-        TODO
-    <div class="panel__flex">
-        <span>Route</span>
-        <span>Unavailable</span>
-    </div>
-    -->
     <div class="panel__flex">
         <span>Min. Received</span>
         <span>{minReceived}</span>
-    </div>
-    <div class="panel__flex">
-        <span>Price Impact</span>
-        <span>Unavailable</span>
     </div>
     <div class="panel__flex">
         <span>Wallet</span>
@@ -511,35 +536,71 @@
                     <Label>Switch to Arbitrum One</Label>
                 </Button>
             {:else}
-                {#if (active === `buy` && (amountBase > balanceBase || balanceBase === 0)) || (active === `sell` && (amountQuote > balanceQuote || balanceQuote === 0))}
-                    <Button disabled variant="raised" style={styleButton}>
-                        <Label>Insufficient Balance</Label>
-                    </Button>
-                {:else}
-                    {#if (active === `buy` && tokenOneAllowance == 0) || (active === `sell` && tokenTwoAllowance == 0)}
-                        {#if !!approving}
-                            <Button variant="raised" style={styleButton}>
-                                <Label>Approving {active === `buy` ? tokenOneSymbol : tokenTwoSymbol}...</Label>
-                            </Button>
-                        {:else}
-                            <Button on:click={placeOrder} variant="raised" style={styleButton}>
-                                <Label>Approve {active === `buy` ? tokenOneSymbol : tokenTwoSymbol}</Label>
-                            </Button>
-                        {/if}
+                {#if tokenOneAddress === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`}
+                    {#if (active === `buy` && (amountBase > balanceBase || balanceBase === 0)) || (active === `sell` && (amountQuote > balanceQuote || balanceQuote === 0))}
+                        <Button disabled variant="raised" style={styleButton}>
+                            <Label>Insufficient Balance</Label>
+                        </Button>
                     {:else}
-                        {#if amountBase <= 0}
-                            <Button disabled variant="raised" style={styleButton}>
-                                <Label>Invalid Amount</Label>
-                            </Button>
-                        {:else}
-                            {#if !!swapping}
+                        {#if (active === `buy` && tokenOneAllowance == 0) || (active === `sell` && tokenTwoAllowance == 0)}
+                            {#if !!approving}
                                 <Button variant="raised" style={styleButton}>
-                                    <Label>Swapping...</Label>
+                                    <Label>Approving {active === `buy` ? tokenOneSymbol : tokenTwoSymbol}...</Label>
                                 </Button>
                             {:else}
-                                <Button disabled on:click={placeOrder} variant="raised" style={styleButton}>
-                                    <Label>Coming Soon</Label>
+                                <Button on:click={placeOrder} variant="raised" style={styleButton}>
+                                    <Label>Approve {active === `buy` ? tokenOneSymbol : tokenTwoSymbol}</Label>
                                 </Button>
+                            {/if}
+                        {:else}
+                            {#if amountBase <= 0}
+                                <Button disabled variant="raised" style={styleButton}>
+                                    <Label>Invalid Amount</Label>
+                                </Button>
+                            {:else}
+                                {#if !!swapping}
+                                    <Button variant="raised" style={styleButton}>
+                                        <Label>Swapping...</Label>
+                                    </Button>
+                                {:else}
+                                    <Button on:click={placeOrder} variant="raised" style={styleButton}>
+                                        <Label>Place Order</Label>
+                                    </Button>
+                                {/if}
+                            {/if}
+                        {/if}
+                    {/if}
+                {:else}
+                    {#if (active === `buy` && (amountBase > balanceBase || balanceBase === 0)) || (active === `sell` && (amountQuote > balanceQuote || balanceQuote === 0))}
+                        <Button disabled variant="raised" style={styleButton}>
+                            <Label>Insufficient Balance</Label>
+                        </Button>
+                    {:else}
+                        {#if (active === `buy` && tokenTwoAllowance == 0) || (active === `sell` && tokenOneAllowance == 0)}
+                            {#if !!approving}
+                                <Button variant="raised" style={styleButton}>
+                                    <Label>Approving {active === `buy` ? tokenTwoSymbol : tokenOneSymbol}...</Label>
+                                </Button>
+                            {:else}
+                                <Button on:click={placeOrder} variant="raised" style={styleButton}>
+                                    <Label>Approve {active === `buy` ? tokenTwoSymbol : tokenOneSymbol}</Label>
+                                </Button>
+                            {/if}
+                        {:else}
+                            {#if amountBase <= 0}
+                                <Button disabled variant="raised" style={styleButton}>
+                                    <Label>Invalid Amount</Label>
+                                </Button>
+                            {:else}
+                                {#if !!swapping}
+                                    <Button variant="raised" style={styleButton}>
+                                        <Label>Swapping...</Label>
+                                    </Button>
+                                {:else}
+                                    <Button on:click={placeOrder} variant="raised" style={styleButton}>
+                                        <Label>Place Order</Label>
+                                    </Button>
+                                {/if}
                             {/if}
                         {/if}
                     {/if}
@@ -548,7 +609,13 @@
         {/if}
     </div>
     <div class="panel__flex panel__flex--tall">
-        <p class="centered"><small>Arbigator is a WIP, <strong>experimental</strong> DEX aggregator for Arbitrum. Get the best price with <em>no extra fees</em>.</small></p>
+        <p class="centered">
+            <br>
+            <br>
+            <small>
+                Arbigator is a DEX aggregator for Arbitrum. Get the best price with <em>no extra fees</em>. Gas limits are >200% lower than SushiSwap, with no extra slippage.
+            </small>
+        </p>
     </div>
 </div>
 
@@ -588,6 +655,11 @@
             height: 700px;
             max-width: 300px;
             width: 100%;
+        }
+    }
+    :global {
+        .mdc-slider__value-indicator-text {
+            color: #fff !important;
         }
     }
 </style>

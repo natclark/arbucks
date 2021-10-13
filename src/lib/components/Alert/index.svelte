@@ -1,10 +1,6 @@
 <script>
     import { onMount } from 'svelte';
 
-    export let title;
-    export let background;
-    export let message;
-
     let show = false;
     let ss;
 
@@ -30,8 +26,10 @@
 </script>
 
 {#if show}
-    <div class="alert {background}">
-        <p><strong>{title}:</strong> {message}</p>
+    <div class="alert">
+        <p>
+            Arbigator is now LIVE, with <strong>>200% lower gas limits than SushiSwap</strong>. Same slippage, same network conditions, <strong>no extra fees</strong>.
+        </p>
         <button on:click={close}>Close</button>
     </div>
 {/if}
@@ -42,14 +40,16 @@
         background-color: var(--bg-soft) !important;
         border-radius: 8px;
         color: #fff;
+        column-gap: 18px;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         left: 0;
         padding: 10px 20px;
         p {
             strong {
-                font-family: var(--fg-bold);
+                font-family: var(--font-bold);
             }
+            font-family: var(--font);
             line-height: 1.3em;
             margin: 0;
         }

@@ -3,6 +3,11 @@
     export const hydrate = true;
     export const router = browser;
     export const prerender = true;
+    export const load = async ({ page }) => ({
+        props: {
+            key: page.path,
+        },
+    });
 </script>
 
 <script>
@@ -11,7 +16,10 @@
     import { goto } from '$app/navigation';
     import Navbar from '$lib/components/Navbar/index.svelte';
     import Alert from '$lib/components/Alert/index.svelte';
+    import Transition from '$lib/components/Transition/index.svelte';
     import Footer from '$lib/components/Footer/index.svelte';
+
+    export let key;
 
     onMount(() => {
         (window.location.href.includes(`/charts/`)) && (goto(`/tokens/`));
@@ -27,8 +35,10 @@
 
 <div class="container">
     <main>
-        <Alert title="Important" background="warning" message="Our new DEX aggregator, Arbigator, is still very WIP and may be missing some features. Thank you for your patience!" />
-        <slot />
+        <Alert />
+        <Transition refresh={key}>
+            <slot />
+        </Transition>
     </main>
 </div>
 
