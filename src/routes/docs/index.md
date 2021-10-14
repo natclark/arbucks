@@ -15,9 +15,9 @@ This details all the important information about the project.
 
 Here's the elevator pitch:
 
-- Token-powered and DAC-governed, Arbucks is an **open-source**, **product-first**, and **community-led** Arbitrum project.
+- Arbucks is an **open-source**, **product-first**, and **community-led** Arbitrum project.
 
-- This web app is for Arbitrum charting and analytics. Many more features are in the works!
+- This web app is for Arbitrum charting, analytics, and other information. Many more features are in the works!
 
 - The ultimate goal for this site to be a focal point of the Arbitrum ecosystem, offering unbiased and real-time token information, pool lists, network analytics, Arbitrum tutorials, and more.
 

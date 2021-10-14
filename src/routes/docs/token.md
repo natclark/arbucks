@@ -54,13 +54,17 @@ There are **no** transaction taxes of any kind.
   - 1.8%: TBD
   - 0.2%: Anthony Acevedo (founder, ArbiCalls)
 
+*The 8% DAO treasury allocation has since been [burned](https://arbiscan.io/tx/0x4881aac3c7849259d89746358f5a69374a047661ea619fdf84cfa485b341e450) upon the cancellation of ArbiDAO.*
+
 ### Initial governance
 
-Because this is a speedy release, the developer wallet, DAO treasury wallet, marketing wallet, and advisory wallet will all be controlled by the developer at first.
+The developer wallet, deployer wallet, and DAO treasury wallet are actually all the same wallet: [0xA3b113Fba39133b7a9D544A45713A296945fF7B4](https://arbiscan.io/address/0xA3b113Fba39133b7a9D544A45713A296945fF7B4).
 
-The developer will be airdropped these tokens via DxDrop *after* the presale.
+However, what was once planned to be the DAO treasury has been [burned](https://arbiscan.io/tx/0x4881aac3c7849259d89746358f5a69374a047661ea619fdf84cfa485b341e450) (sent to a dead wallet).
 
-Almost 90% of the developer wallet has been locked:
+This wallet is currently controlled by the developer.
+
+Almost 90% of the developer wallet was vested for about a month:
 
 <br>
 
@@ -71,7 +75,7 @@ Almost 90% of the developer wallet has been locked:
 <br>
 <br>
 
-For transparency, here is the deployer wallet: [0xA3b113Fba39133b7a9D544A45713A296945fF7B4](https://arbiscan.io/address/0xA3b113Fba39133b7a9D544A45713A296945fF7B4).
+The vesting period for these tokens has since expired.
 
 ### Presale details
 
@@ -84,6 +88,8 @@ For transparency, here is the deployer wallet: [0xA3b113Fba39133b7a9D544A45713A2
 - 100% immediately locked in initial Sushi LP
 
 - 1 month cliff
+
+The vesting period for presalers has since expired.
 
 ## Trading pairs
 

@@ -7,52 +7,10 @@
     import Search from '$lib/components/Search/index.svelte';
     import Trade from '$lib/components/Trade/index.svelte';
     import TVChart from '$lib/components/Chart/index.svelte';
-    //import SimpleChart from '$lib/components/Chart/SimpleChart.svelte';
     import Arbigator from '$lib/components/Arbigator/index.svelte';
     import SegmentedButton, { Segment, Icon } from '@smui/segmented-button';
     import Wrapper from '@smui/touch-target';
     import ripple from '$lib/services/ripple';
-
-    const timeframes = [
-        {
-            name: `1M`,
-            seconds: 60,
-        },
-        {
-            name: `5M`,
-            seconds: 300,
-        },
-        {
-            name: `15M`,
-            seconds: 900,
-        },
-        {
-            name: `30M`,
-            seconds: 1800,
-        },
-        {
-            name: `1H`,
-            seconds: 3600,
-        },
-        {
-            name: `2H`,
-            seconds: 7200,
-        },
-        {
-            name: `4H`,
-            seconds: 14400,
-        },
-        {
-            name: `12H`,
-            seconds: 43200,
-        },
-        {
-            name: `1D`,
-            seconds: 86400,
-        },
-    ];
-
-    let timeframe = timeframes[2]; // 15M chart is default
 
     let loading = true;
     let valid = false;
@@ -157,7 +115,6 @@
 
         const txReq = await fetch(`https://api2.sushipro.io/?action=get_transactions_by_pair&pair=${Pair_ID}&chainID=42161`);
         const txJson = await txReq.json();
-        // console.log(swaps[0], txJson[1][0]);
         if (typeof txJson.error === `undefined`) {
             swaps[0] !== txJson[1][0] && (swaps = txJson[1]);
         }
@@ -173,7 +130,6 @@
 
         if (typeof jsonTokenPairs.error === `undefined`) {
             valid = true;
-            //token = jsonPair[0];
 
             let found = false;
             let priceString = ``;
@@ -491,53 +447,15 @@
     </div>
     {#if !!token && loading === false}
         <TVChart id="0" pairAddress={Pair_ID} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} tokenOnePrice={Token_1_price} tokenTwoPrice={Token_2_price} tokenOneSymbol={Token_1_symbol} tokenTwoSymbol={Token_2_symbol} {ethPrice} />
-        <!--
-        <SimpleChart id="0" pairAddress={Pair_ID} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} tokenOnePrice={Token_1_price} tokenTwoPrice={Token_2_price} tokenOneSymbol={Token_1_symbol} tokenTwoSymbol={Token_2_symbol} {ethPrice} {timeframe} />
-        -->
     {:else}
         <div class="loading">
             <Loader />
         </div>
     {/if}
-    <!--
-    <TVChart id="0" pairAddress={Pair_ID} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} tokenOnePrice={Token_1_price} tokenTwoPrice={Token_2_price} tokenOneSymbol={Token_1_symbol} tokenTwoSymbol={Token_2_symbol} {ethPrice} />
-    -->
-    <!--
-    <iframe class="trade" src="https://app.sushi.com/swap?inputCurrency={Token_1_contract}&outputCurrency={Token_2_contract}" title="Trade on Sushiswap"></iframe>
-    -->
     <Arbigator tokenOneSymbol={symbol} tokenTwoSymbol={Token_1_symbol === symbol ? Token_2_symbol : Token_1_symbol} pairAddress={Pair_ID} pairLiquidity={liquidityUSDT} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} tokenOneDecimals={decimalsBase} tokenTwoDecimals={decimalsQuote} />
 </div>
 
-<!--
-<div class="timeframes">
-    <SegmentedButton segments={timeframes} let:segment singleSelect bind:selected={timeframe} key={(segment) => segment.name}>
-        <Wrapper>
-            <Segment {segment} touch title={segment.name}>
-                {segment.name}
-            </Segment>
-        </Wrapper>
-    </SegmentedButton>
-</div>
--->
-
 <br>
-
-<!--
-    TODO
-<h2>Liquidity</h2>
-{#if !!liquidity}
-    <p><em>Coming soon!</em></p>
-{:else}
-    <p>No liquidity data is available for this pair.</p>
-{/if}
-
-<h2>Volume</h2>
-{#if !!volume}
-    <p><em>Coming soon!</em></p>
-{:else}
-    <p>No volume data is available for this pair.</p>
-{/if}
--->
 
 <div class="trades__mobile">
     <h2>Trades</h2>
@@ -572,27 +490,6 @@
         <p>No transaction data is available for this pair.</p>
     {/if}
 </div>
-
-<!--
-<h2 class="big">Info</h2>
-<div class="details">
-    <p class="flex"><span class="bold">Website</span><span><em>Coming soon!</em></span></p>
-    <p class="flex"><span class="bold">Telegram</span><span><em>Coming soon!</em></span></p>
-    <p class="flex"><span class="bold">Discord</span><span><em>Coming soon!</em></span></p>
-    <p class="flex"><span class="bold">Twitter</span><span><em>Coming soon!</em></span></p>
-    <p class="flex"><span class="bold">GitHub</span><span><em>Coming soon!</em></span></p>
-    <p class="flex"><span class="bold">4chan</span><span><em>Coming soon!</em></span></p>
-    <p class="flex"><span class="bold">Reddit</span><span><em>Coming soon!</em></span></p>
-    <p class="flex"><span class="bold">TikTok</span><span><em>Coming soon!</em></span></p>
-</div>
-<p><em>Token descriptions are coming soon!</em></p>
-
-<h2>Other {Token_1_name} Pairs</h2>
-<p><em>"Other pairs" coming soon!</em></p>
-
-<h2>Share</h2>
-<p><em>Share buttons are coming soon!</em></p>
--->
 
 <div class="flex flex--asymmetric">
     <div class="card card--1">
@@ -863,11 +760,6 @@
                 font-size: 8px;
             }
         }
-    }
-    .timeframes {
-        align-items: center;
-        display: flex;
-        justify-content: center;
     }
     .footnote {
         color: var(--ac-dark);

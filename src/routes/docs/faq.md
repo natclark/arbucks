@@ -29,7 +29,7 @@ It's by far more decentralized than any other publicly available Arbitrum charti
 There is no intention to shut this site down, and there are currently no known threats. Providers would be switched as soon as possible, and in the meantime, you'd have to build and run the code yourself.
 
 ## What if the developer disappears?
-The developer has no intention to purposefully disapper. However, gradual measures of decentralization are being taken to ensure the community can "keep the ball rolling", such as the formation of ArbiDAO.
+The developer has no intention to purposefully disapper. However, gradual measures of decentralization are being taken to ensure the community can "keep the ball rolling".
 
 ## What if this domain gets deleted?
 There is no known threat to this domain, but it could in theory get deleted, such as if the registrar decides that it violates some policy. In any case, this site just mirrors `arbucks.pages.dev`, so that can be considered a backup. However, if that doesn't work, you'll have to build and run the code yourself until a new domain is set up. This site will eventually be available on at least one blockchain domain.
@@ -38,10 +38,10 @@ There is no known threat to this domain, but it could in theory get deleted, suc
 Currently, the [Telegram group](https://t.me/arbuckscafe) is the best place to drop your feedback. Please give the [roadmap](/docs/roadmap/) a quick check before you request a feature though!
 
 ## What if the Telegram group shuts down?
-The community can create a new one, although there are absolutely no plans to shut the group down. Still, there are edge cases which highlight the importance of ArbiDAO.
+The community can create a new one, although there are absolutely no plans to shut the group down.
 
 ## What if I get banned from the Telegram group?
-We've had a few issues with scammers attempting to hassle our group members. So we have had to ban some users. If you break a rule (there aren't many), you'll have to create a new account. Otherwise, you'll have to trust the admin to not lose their account or make bans that contradict the group's rules. This is one example of the importance of ArbiDAO, which will decentralize governance.
+We've had a few issues with scammers attempting to hassle our group members. So we have had to ban some users. If you break a rule (there aren't many), you'll have to create a new account. Otherwise, you'll have to trust the admin to not lose their account or make bans that contradict the group's rules.
 
 ## Who is operating the Telegram group?
 The developer is the owner, while each of the four advisors are group administrators, spanning across multiple timezones. Each username is visible on the [team page](/docs/team/).

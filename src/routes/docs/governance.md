@@ -9,4 +9,6 @@
 
 Arbucks is currently "governed" solely by the developer with feedback from the advisors.
 
-However, governance will gradually shift into the hands of [ArbiDAO](/dao/).
+At one point, governance was planned to gradually shift into the hands of [ArbiDAO](/dao/).
+
+A sustainable model for future governance is being considered but yet to be determined.

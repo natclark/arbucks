@@ -13,9 +13,9 @@
     let logos = [];
 
     onMount(async () => {
-        (window.location.href.includes(`/tokens/`) || window.location.href.includes(`/portfolio/`)) && (goto(window.location));
+        //(window.location.href.includes(`/tokens/`) || window.location.href.includes(`/portfolio/`)) && (goto(window.location));
 
-                /* A more reliable and decentralized solution for fetching data is a high-priority upcoming feature. */
+        /* A more reliable and decentralized solution for fetching data is a high-priority upcoming feature. */
         const reqTokens = await fetch(`https://api2.sushipro.io/?action=all_tokens&chainID=42161`);
         const jsonTokens = await reqTokens.json();
         jsonTokens[1].forEach((token) => newTokens.indexOf(newTokens.find((e) => e.Contract === token.Contract)) === -1 && (newTokens.push(token)));

@@ -32,12 +32,10 @@
 
         <p>The utility of holding $BUCK tokens is currently threefold:</p>
 
-        <h3>1. ArbiDAO Governance (WIP)</h3>
+        <h3>1. Arbazaar (WIP)</h3>
 
-        <p><a href="/dao/" sveltekit:prefetch>ArbiDAO</a> is a decentralized autonomous corporation (DAC).</p>
-        <p>It is the first L2-native DAO of <strong>any</strong> kind.</p>
-        <p>Any $BUCK holder can use $BUCK to create or vote on proposals.</p>
-        <p>Proposal execution is subsidized by the ArbiDAO treasury.</p>
+        <p>Arbazaar is a WIP Arbitrum-native NFT marketplace.</p>
+        <p>$BUCK holders will be able to mint NFTs and list collections.</p>
 
         <h3>2. Arbucks Pro Membership (Coming Soon)</h3>
 
