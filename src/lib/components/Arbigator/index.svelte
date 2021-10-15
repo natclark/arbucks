@@ -331,7 +331,7 @@
                     data,
                     from: $selectedAccount,
                     gas: gasLimit,
-                    gasPrice: $web3.utils.toWei(`0.95`, `Gwei`),
+                    gasPrice: $web3.utils.toWei(`1`, `Gwei`),
                     to: tokenOneAddress === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1` ? tokenInput.toString() : tokenOutput.toString(),
                 }).once(`error`, () => {
                     approving = false;
@@ -360,7 +360,7 @@
                     data,
                     from: $selectedAccount,
                     gas: gasLimit,
-                    gasPrice: $web3.utils.toWei(`0.95`, `Gwei`),
+                    gasPrice: $web3.utils.toWei(`1`, `Gwei`),
                     to: `0x1b02da8cb0d097eb8d57a175b88c7d8b47997506`,
                 }).once(`error`, () => {
                     swapping = false;

@@ -111,6 +111,7 @@
 }
 
 html {
+    background-color: var(--bg);
     overflow: hidden scroll;
     scrollbar-color: var(--fg-scroll) var(--bg-scroll);
     scrollbar-width: thin;

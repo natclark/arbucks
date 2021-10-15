@@ -1,10 +1,8 @@
 <script>
-    import { onMount } from 'svelte';
-    import theme from '$lib/stores/theme';
     import { page } from '$app/stores';
     import ripple from '$lib/services/ripple';
     import Search from '$lib/components/Search/index.svelte';
-    import Tape from '$lib/components/Tape/index.svelte';
+    //import Tape from '$lib/components/Tape/index.svelte';
 
     let doc;
 

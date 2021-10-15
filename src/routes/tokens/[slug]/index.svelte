@@ -29,6 +29,8 @@
     let change = ``;
     let changePctg = ``;
     let changeDir = `positive`;
+    let volumeAll = ``;
+    let volume168 = ``;
     let volume24 = ``;
 
     let supply = 0;
@@ -37,6 +39,7 @@
     let holders = 0;
     let holderList = [];
     let swaps = [];
+    let pairs = [];
 
     let Token_1_name = `--------`;
     let Token_2_name = `--------`;
@@ -116,7 +119,8 @@
         const txReq = await fetch(`https://api2.sushipro.io/?action=get_transactions_by_pair&pair=${Pair_ID}&chainID=42161`);
         const txJson = await txReq.json();
         if (typeof txJson.error === `undefined`) {
-            swaps[0] !== txJson[1][0] && (swaps = txJson[1]);
+            //swaps[0] !== txJson[1][0] && (swaps = txJson[1]);
+            swaps = txJson[1];
         }
     };
 
@@ -129,6 +133,7 @@
         const jsonTokenPairs = await tokenPairs.json();
 
         if (typeof jsonTokenPairs.error === `undefined`) {
+            pairs = jsonTokenPairs[1];
             valid = true;
 
             let found = false;
@@ -205,23 +210,27 @@
                 }
             }
 
-            /*
-            TODO
-            const liquidityReq = await fetch(`https://api2.sushipro.io/?action=get_historical_liquidity&pair=${$page.params.slug}&from=${timestamp - 604800}&to=${timestamp}&chainID=42161`);
-            const jsonLiquidity = await liquidityReq.json();
-            typeof jsonLiquidity.error === `undefined` && (liquidity = jsonLiquidity);
-
-            const volumeReq = await fetch(`https://api2.sushipro.io/?action=get_historical_volume&pair=${$page.params.slug}&from=${timestamp - 604800}&to=${timestamp}&chainID=42161`);
-            const jsonVolume = await volumeReq.json();
-            typeof jsonVolume.error === `undefined` && (volume = jsonVolume);
+            const volume168Req = await fetch(`https://api2.sushipro.io/?action=get_historical_volume&pair=${pairs[0].Pair_ID}&from=${timestamp - 604800}&to=${timestamp}&chainID=42161`);
+            const json168Volume = await volume168Req.json();
+            typeof json168Volume.error === `undefined` && (volume = json168Volume);
             try {
-                volume24 = new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(volume[1][volume[1].length - 2].USD_total_volume);
+                let tempVolume = 0;
+                volume[1].forEach((vol) => tempVolume += vol.USD_total_volume);
+                volume168 = new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(tempVolume);
+            } catch (e) {
+                volume168 = `Error calculating volume`;
+            }
+
+            const volume24Req = await fetch(`https://api2.sushipro.io/?action=get_historical_volume&pair=${pairs[0].Pair_ID}&from=${timestamp - (86400 * 2)}&to=${timestamp}&chainID=42161`);
+            const json24Volume = await volume24Req.json();
+            typeof json24Volume.error === `undefined` && (volume = json24Volume);
+            try {
+                let tempVolume = 0;
+                volume[1].forEach((vol) => tempVolume += vol.USD_total_volume);
+                volume24 = new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(tempVolume);
             } catch (e) {
                 volume24 = `Error calculating volume`;
             }
-
-            // TODO console.log(liquidity, volume);
-            */
 
             /* A more reliable and decentralized solution for fetching data is a high-priority upcoming feature. */
             try {
@@ -245,7 +254,7 @@
                 const pair = json.data.pairs[0]; // TODO rename this
                 txCount = pair.txCount;
                 volume = true;
-                volume24 = new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(pair.volumeUSD);
+                volumeAll = new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(pair.volumeUSD);
                 try {
                     let reserveBasedPrice = pair.dayData[1].reserve1 / pair.dayData[1].reserve0;
                     if (token.Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) {
@@ -368,7 +377,11 @@
 
 <div class="flex flex--top">
     <div class="flex flex--header">
-        <img class="image" src="/placeholder.png" aria-hidden="true">
+        {#if $page.params.slug === `0xafd871f684f21ab9d7137608c71808f83d75e6fc`}
+            <img class="image" src="/img/arbucks-logo.png" aria-hidden="true">
+        {:else}
+            <img class="image" src="/placeholder.png" aria-hidden="true">
+        {/if}
         <div>
             <h1 class="title">{Token_1_symbol} / {Token_2_symbol}</h1>
             <p class="subtitle">
@@ -392,17 +405,17 @@
 
 <div class="details details--mobile">
     <p class="flex"><span class="bold">Exchange</span><span>Sushiswap V2</span></p>
-    <p class="flex"><span class="bold">Total Volume</span><span>{!!volume ? volume24 : 0}</span></p>
+    <p class="flex"><span class="bold">24H Volume</span><span>~{!!volume ? volume24 : 0}</span></p>
     <p class="flex"><span class="bold">Market Cap</span><span>{fdmc}</span></p>
-    <p class="flex"><span class="bold">Holders</span><span>{holders}</span></p>
-    <p class="flex"><span class="bold">Transactions</span><span>{txCount}</span></p>
+    <p class="flex"><span class="bold">Holders</span><span>{new Intl.NumberFormat(`en-US`, {}).format(holders)}</span></p>
+    <p class="flex"><span class="bold">Transactions</span><span>{new Intl.NumberFormat(`en-US`, {}).format(txCount)}</span></p>
 </div>
 
 <div class="details details--desktop">
     <div>
         <p class="details__price"><span class="light">${zeroes}</span><span class="price">{price}</span> <span class="light">USDT</span> <span class={changeDir}>{changePctg}%</span></p>
         <p class="details__detail"><span class="bold">Exchange</span><span>Sushiswap V2</span></p>
-        <p class="details__detail"><span class="bold">Total Volume</span><span>{!!volume ? volume24 : 0}</span></p>
+        <p class="details__detail"><span class="bold">24H Volume</span><span>~{!!volume ? volume24 : 0}</span></p>
         <p class="details__detail"><span class="bold">Market Cap</span><span>{fdmc}</span></p>
         <p class="details__detail"><span class="bold">Liquidity</span><span>~{liquidityUSDT}</span></p>
         <p class="details__detail"><span class="bold">Holders</span><span>{new Intl.NumberFormat(`en-US`, {}).format(holders)}</span></p>
@@ -494,7 +507,50 @@
 <div class="flex flex--asymmetric">
     <div class="card card--1">
         <h2 class="med">Token Info</h2>
-        <p><em>Coming soon.</em></p>
+        <div class="card__details">
+            <p class="card__detail">
+                <span>Total Supply</span>
+                <span>{new Intl.NumberFormat(`en-US`, {}).format(supply)}</span>
+            </p>
+            <p class="card__detail">
+                <span>Total Volume</span>
+                <span>{!!volume ? volumeAll : 0}</span>
+            </p>
+            <p class="card__detail">
+                <span>7D Volume</span>
+                <span>~{!!volume ? volume168 : 0}</span>
+            </p>
+            <p class="card__detail">
+                <span>Fully Diluted Market Cap</span>
+                <span>{fdmc}</span>
+            </p>
+            <p class="card__detail">
+                <span>DEX Spot Liquidity</span>
+                <span>~{liquidityUSDT}</span>
+            </p>
+            <hr>
+            <p class="card__detail">
+                <span>Earliest Trade (UTC)</span>
+                <span>Coming Soon</span>
+            </p>
+            <p class="card__detail">
+                <span>Last Trade</span>
+                <span>Coming Soon</span>
+            </p>
+            <hr>
+            <p class="card__detail">
+                <span>Contract Name</span>
+                <span>{Token_1_symbol === symbol ? Token_1_name : Token_2_name}</span>
+            </p>
+            <p class="card__detail">
+                <span>Contract Symbol</span>
+                <span>{symbol}</span>
+            </p>
+            <p class="card__detail">
+                <span>Contract Decimals</span>
+                <span>{Token_1_symbol === symbol ? decimalsBase : decimalsQuote}</span>
+            </p>
+        </div>
     </div>
     <div class="card card--2 card--big">
         <h2 class="med">Holders</h2>
@@ -509,12 +565,12 @@
             </div>
             <div class="card__details">
                 <p class="card__detail">
-                    <span>Total Supply</span>
-                    <span>{new Intl.NumberFormat(`en-US`, {}).format(supply)}</span>
-                </p>
-                <p class="card__detail">
                     <span>Unique Holders</span>
                     <span>{new Intl.NumberFormat(`en-US`, {}).format(holders)}</span>
+                </p>
+                <p class="card__detail">
+                    <span>Total Transactions</span>
+                    <span>{new Intl.NumberFormat(`en-US`, {}).format(txCount)}</span>
                 </p>
                 <hr>
                 <p class="card__detail">
@@ -566,11 +622,46 @@
 <div class="flex flex--asymmetric">
     <div class="card card--3 card--big">
         <h2 class="med">All ${symbol} Pairs</h2>
-        <p><em>Coming soon.</em></p>
+        <table class="pairs">
+            <thead>
+                <tr>
+                    <th>Exchange</th>
+                    <th>Contract</th>
+                    <th>Pair</th>
+                    <th>Liquidity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {#each pairs as pair}
+                    <tr>
+                        <td>Sushiswap V2</td>
+                        <td>
+                            <a href="https://analytics-arbitrum.sushi.com/pairs/{pair.Pair_ID}" rel="external noopener" target="_blank">
+                                {pair.Pair_ID.substring(0, 6)}...
+                            </a>
+                            <Copy text={pair.Pair_ID} />
+                        </td>
+                        <td>{pair.Token_1_symbol} / {pair.Token_2_symbol}</td>
+                        <td>
+                            {#if pair.Token_2_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`}
+                                ~{new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(pair.Token_1_reserve * parseFloat(`${zeroes}${price}`).toFixed(2) * 2)}
+                            {:else if pair.Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`}
+                                ~{new Intl.NumberFormat(`en-US`, { currency: `USD`, style: `currency`, }).format(pair.Token_2_reserve * parseFloat(`${zeroes}${price}`).toFixed(2) * 2)}
+                            {:else}
+                                ???
+                            {/if}
+                        </td>
+                    </tr>
+                {/each}
+            </tbody>
+        </table>
     </div>
     <div class="card card--4">
         <h2 class="med">Share</h2>
-        <p><em>Coming soon.</em></p>
+        <div class="card__share">
+            <input type="url" value="https://arbucks.io/tokens/{Token_1_symbol === symbol ? Token_1_contract : Token_2_contract}" disabled>
+            <Copy text="https://arbucks.io/tokens/{Token_1_symbol === symbol ? Token_1_contract : Token_2_contract}" />
+        </div>
     </div>
 </div>
 
@@ -624,6 +715,10 @@
         &.flex--gap {
             column-gap: 18px;
         }
+        &.flex--mobile {
+            display: flex;
+            justify-content: center;
+        }
     }
     .light {
         color: #888;
@@ -667,6 +762,26 @@
         h2 {
             text-align: left;
         }
+        .pairs {
+            border-collapse: collapse;
+            border-radius: 24px;
+            border-spacing: 0;
+            font-size: 10px;
+            margin-bottom: 32px;
+            width: 100%;
+            th, td {
+                padding: 12px;
+            }
+            th {
+                text-align: left;
+            }
+            tr {
+                background-image: linear-gradient(to right, #1d1d1d, #222);;
+                &:hover {
+                    background: var(--bg-hover);
+                }
+            }
+        }
         .card__details {
             background-image: linear-gradient(to right, #1d1d1d, #222);
             border-radius: 24px;
@@ -679,6 +794,20 @@
                 span:first-child {
                     color: #ddd;
                 }
+            }
+        }
+        .card__share {
+            align-items: center;
+            column-gap: 12px;
+            display: flex;
+            input {
+                background-color: #222;
+                border: 0;
+                border-radius: 12px;
+                color: #ddd;
+                font-size: 20px;
+                padding: 16px;
+                width: 100%;
             }
         }
         &.card--1 {
@@ -812,6 +941,9 @@
         }
         .card {
             margin-bottom: 0;
+            .pairs {
+                font-size: 18px;
+            }
             .card__detail {
                 flex-direction: row !important;
                 justify-content: space-between !important;
