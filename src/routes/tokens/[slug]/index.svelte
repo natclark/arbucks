@@ -378,9 +378,9 @@
 <div class="flex flex--top">
     <div class="flex flex--header">
         {#if $page.params.slug === `0xafd871f684f21ab9d7137608c71808f83d75e6fc`}
-            <img class="image" src="/img/arbucks-logo.png" aria-hidden="true">
+            <img class="image" src="/img/arbucks-logo.png" loading="lazy" aria-hidden="true">
         {:else}
-            <img class="image" src="/placeholder.png" aria-hidden="true">
+            <img class="image" src="/placeholder.png" loading="lazy" aria-hidden="true">
         {/if}
         <div>
             <h1 class="title">{Token_1_symbol} / {Token_2_symbol}</h1>
