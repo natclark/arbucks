@@ -5,7 +5,10 @@
     import Loader from '$lib/components/Loader/index.svelte';
     import Copy from '$lib/components/Copy/index.svelte';
     import Search from '$lib/components/Search/index.svelte';
+    import Tab, { Label } from '@smui/tab';
+    import TabBar from '@smui/tab-bar';
     import Trade from '$lib/components/Trade/index.svelte';
+    //import LiquidityEvent from '$lib/components/LiquidityEvent/index.svelte';
     import TVChart from '$lib/components/Chart/index.svelte';
     import Arbigator from '$lib/components/Arbigator/index.svelte';
     import SegmentedButton, { Segment, Icon } from '@smui/segmented-button';
@@ -39,6 +42,7 @@
     let holders = 0;
     let holderList = [];
     let swaps = [];
+    let liquidityEvents = []; // TODO
     let pairs = [];
 
     let Token_1_name = `--------`;
@@ -55,6 +59,12 @@
 
     let doc;
     let chart;
+
+    let active = `trades`;
+    let tab = `trades`;
+
+    let activeMobile = `trades`;
+    let tabMobile = `trades`;
 
     const addToken = async (e) => {
         !!doc && (ripple(e, doc));
@@ -119,8 +129,8 @@
         const txReq = await fetch(`https://api2.sushipro.io/?action=get_transactions_by_pair&pair=${Pair_ID}&chainID=42161`);
         const txJson = await txReq.json();
         if (typeof txJson.error === `undefined`) {
-            //swaps[0] !== txJson[1][0] && (swaps = txJson[1]);
-            swaps = txJson[1];
+            swaps[0] !== txJson[1][0] && (swaps = txJson[1]);
+            //swaps = txJson[1];
         }
     };
 
@@ -396,10 +406,7 @@
 <div class="flex flex--center flex--mobile">
     <div class="left">
         <h2><span class="light">${zeroes}</span><span class="price">{price}</span> <span class="light">USDT</span> <span class={changeDir}>{changePctg}%</span></h2>
-        <br>
         <!--<p class="light">(TODO ETH)</p>-->
-        <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={Token_1_contract}" rel="external noopener" target="_blank" draggable="false">Buy {Token_1_symbol}</a>
-        <a class="button button--buy" href="https://app.sushi.com/swap?outputCurrency={Token_2_contract}" rel="external noopener" target="_blank" draggable="false">Buy {Token_2_symbol}</a>
     </div>
 </div>
 
@@ -432,28 +439,39 @@
     <div class="trades__mobile">
         {#if !!swaps}
             {#if swaps.length > 0}
+                <div class="trades__tabs">
+                    <TabBar tabs={[`trades`, `liquidity`]} let:tab bind:active>
+                        <Tab {tab}>
+                            <Label>{tab}</Label>
+                        </Tab>
+                    </TabBar>
+                </div>
                 <div class="scroller scroller--dark">
-                    <table class="trades trades--desktop">
-                        <thead>
-                            <tr>
-                                <th>Time</th>
-                                <!--
-                                <th>Type</th>
-                                -->
-                                <th>Amount (USDT)</th>
-                                <!--
-                                <th>Est. Price Impact (WIP)</th>
-                                -->
-                                <th>Maker</th>
-                                <th>TX</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {#each swaps as swap}
-                                <Trade timestamp={swap.timestamp} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} type={((swap.side === `BUY` && Token_1_contract !== `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) || (swap.side === `SELL` && Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`)) ? `buy` : `sell`} amount={swap.volumeUSD} maker={swap.receiver} address={swap.txHash} version="desktop" />
-                            {/each}
-                        </tbody>
-                    </table>
+                    {#if active === `trades`}
+                        <table class="trades trades--desktop">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <!--
+                                    <th>Type</th>
+                                    -->
+                                    <th>Amount (USDT)</th>
+                                    <!--
+                                    <th>Est. Price Impact (WIP)</th>
+                                    -->
+                                    <th>Maker</th>
+                                    <th>TX</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {#each swaps as swap}
+                                    <Trade timestamp={swap.timestamp} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} type={((swap.side === `BUY` && Token_1_contract !== `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) || (swap.side === `SELL` && Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`)) ? `buy` : `sell`} amount={swap.volumeUSD} maker={swap.receiver} address={swap.txHash} version="desktop" />
+                                {/each}
+                            </tbody>
+                        </table>
+                    {:else}
+                        <p>This feature is coming soon and will display the recent additions and removals to the token's primary liquidity pool.</p>
+                    {/if}
                 </div>
             {/if}
         {/if}
@@ -471,30 +489,39 @@
 <br>
 
 <div class="trades__mobile">
-    <h2>Trades</h2>
+    <h2>Order Book</h2>
+    <div class="trades__tabs trades__tabs--mobile">
+        <TabBar tabs={[`trades`, `liquidity`]} let:tab={tabMobile} bind:active={activeMobile}>
+            <Tab tab={tabMobile}>
+                <Label>{tabMobile}</Label>
+            </Tab>
+        </TabBar>
+    </div>
     {#if !!swaps}
         {#if swaps.length > 0}
-            <p>Showing the 100 most recent trades.</p>
-            <p><em>This doesn't yet update in real time, so you'll have to refresh the page to fetch new trades.</em></p>
             <div class="scroller">
-                <table class="trades">
-                    <thead>
-                        <tr>
-                            <th>Time</th>
-                            <th>Amount (USDT)</th>
-                            <!--
-                            <th>Est. Price Impact (WIP)</th>
-                            -->
-                            <th>Maker</th>
-                            <th>TX Hash</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {#each swaps as swap}
-                            <Trade timestamp={swap.timestamp} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} type={((swap.side === `BUY` && Token_1_contract !== `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) || (swap.side === `SELL` && Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`)) ? `buy` : `sell`} amount={swap.volumeUSD} maker={swap.receiver} address={swap.txHash} version="mobile" />
-                        {/each}
-                    </tbody>
-                </table>
+                {#if activeMobile === `trades`}
+                    <table class="trades">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Amount (USDT)</th>
+                                <!--
+                                <th>Est. Price Impact (WIP)</th>
+                                -->
+                                <th>Maker</th>
+                                <th>TX Hash</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {#each swaps as swap}
+                                <Trade timestamp={swap.timestamp} tokenOneAddress={Token_1_contract} tokenTwoAddress={Token_2_contract} type={((swap.side === `BUY` && Token_1_contract !== `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`) || (swap.side === `SELL` && Token_1_contract === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1`)) ? `buy` : `sell`} amount={swap.volumeUSD} maker={swap.receiver} address={swap.txHash} version="mobile" />
+                            {/each}
+                        </tbody>
+                    </table>
+                {:else}
+                    <p>This feature is coming soon and will display the recent additions and removals to the token's primary liquidity pool.</p>
+                {/if}
             </div>
         {:else}
             <p><em>There haven't been any transactions for this pair yet.</em></p>
@@ -832,6 +859,20 @@
     h2 {
         font-size: 20px;
     }
+    .trades__mobile {
+        text-align: center;
+        .scroller {
+            border-radius: 0 0 8px 8px;
+        }
+    }
+    .trades__tabs {
+        background-color: var(--bg-soft);
+        border-radius: 8px 0 0 0;
+        height: 48px;
+        &.trades__tabs--mobile {
+            border-radius: 8px 8px 0 0;
+        }
+    }
     .wrapper {
         display: flex;
         justify-content: center;
@@ -864,9 +905,9 @@
         }
     }
     .scroller {
-        background-color: var(--bg-table);
+        background-color: var(--bg-soft);
         border-radius: 8px;
-        max-height: 700px;
+        max-height: 652px;
         overflow-x: auto;
         padding: 8px;
         scrollbar-width: thin;

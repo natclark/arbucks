@@ -331,7 +331,7 @@
                     data,
                     from: $selectedAccount,
                     gas: gasLimit,
-                    gasPrice: $web3.utils.toWei(`1`, `Gwei`),
+                    gasPrice: $web3.utils.toWei(`1.2`, `Gwei`),
                     to: tokenOneAddress === `0x82af49447d8a07e3bd95bd0d56f35241523fbab1` ? tokenInput.toString() : tokenOutput.toString(),
                 }).once(`error`, () => {
                     approving = false;
@@ -360,7 +360,7 @@
                     data,
                     from: $selectedAccount,
                     gas: gasLimit,
-                    gasPrice: $web3.utils.toWei(`1`, `Gwei`),
+                    gasPrice: $web3.utils.toWei(`1.2`, `Gwei`),
                     to: `0x1b02da8cb0d097eb8d57a175b88c7d8b47997506`,
                 }).once(`error`, () => {
                     swapping = false;
@@ -542,14 +542,14 @@
                             <Label>Insufficient Balance</Label>
                         </Button>
                     {:else}
-                        {#if (active === `buy` && tokenOneAllowance == 0) || (active === `sell` && tokenTwoAllowance == 0)}
+                        {#if (active === `buy` && tokenTwoAllowance == 0) || (active === `sell` && tokenOneAllowance == 0)}
                             {#if !!approving}
                                 <Button variant="raised" style={styleButton}>
-                                    <Label>Approving {active === `buy` ? tokenOneSymbol : tokenTwoSymbol}...</Label>
+                                    <Label>Approving {active === `buy` ? tokenTwoSymbol : tokenOneSymbol}...</Label>
                                 </Button>
                             {:else}
                                 <Button on:click={placeOrder} variant="raised" style={styleButton}>
-                                    <Label>Approve {active === `buy` ? tokenOneSymbol : tokenTwoSymbol}</Label>
+                                    <Label>Approve {active === `buy` ? tokenTwoSymbol : tokenOneSymbol}</Label>
                                 </Button>
                             {/if}
                         {:else}
@@ -627,10 +627,11 @@
     .panel {
         background-color: var(--bg-soft);
         border: 0;
-        border-radius: 0 8px 8px 0;
+        border-radius: 8px;
         box-shadow: rgba(0, 0, 0, .45) 0 25px 20px -20px;
-        display: none;
-        height: 400px;
+        height: 600px;
+        margin: 40px auto 0;
+        max-width: 300px;
         width: 100%;
         .panel__flex {
             align-items: center;
@@ -651,10 +652,9 @@
     }
     @media screen and (min-width: 1024px) {
         .panel {
-            display: block;
+            border-radius: 0 8px 8px 0;
             height: 700px;
-            max-width: 300px;
-            width: 100%;
+            margin-top: 0;
         }
     }
     :global {

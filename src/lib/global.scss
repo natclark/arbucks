@@ -266,3 +266,28 @@ span.ripple {
         }
     }
 }
+
+.trades__tabs .mdc-tab {
+    .mdc-tab__ripple::before, .mdc-tab .mdc-tab__ripple::after {
+        background-color: var(--mdc-theme-primary) !important;
+    }
+    &.mdc-tab--active .mdc-tab__text-label {
+        color: var(--mdc-theme-primary) !important;
+    }
+    .mdc-tab-indicator .mdc-tab-indicator__content--underline {
+        border-color: var(--mdc-theme-primary) !important;
+        
+    }
+    &:last-child {
+        .mdc-tab__ripple::before, .mdc-tab .mdc-tab__ripple::after {
+            background-color: var(--mdc-theme-primary) !important;
+        }
+        &.mdc-tab--active .mdc-tab__text-label {
+            color: var(--mdc-theme-primary) !important;
+        }
+        .mdc-tab-indicator .mdc-tab-indicator__content--underline {
+            border-color: var(--mdc-theme-primary) !important;
+            
+        }
+    }
+}

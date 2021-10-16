@@ -12,7 +12,7 @@
     export let address;
     export let version;
 
-    const difference = Math.floor(new Date().getTime() / 1000) - parseInt(timestamp);
+    let difference = Math.floor(new Date().getTime() / 1000) - parseInt(timestamp);
     let time = ``;
     if (difference < 60) time = `${difference} seconds ago`;
     else if (difference < 3600) time = `${Math.floor(difference / 60)} minutes ago`;
@@ -32,6 +32,15 @@
             ripple(e, document);
         }, true);
         */
+       setInterval(() => {
+           difference = Math.floor(new Date().getTime() / 1000) - parseInt(timestamp);
+           if (difference < 60) time = `${difference} seconds ago`;
+           else if (difference < 3600) time = `${Math.floor(difference / 60)} minutes ago`;
+           else if (difference < 86400) time = `${Math.floor(difference / 3600)} hours ago`;
+           else if (difference < 2620800) time = `${Math.floor(difference / 86400)} days ago`;
+           else if (difference < 31449600) time = `${Math.floor(difference / 2620800)} months ago`;
+           else time = `${Math.floor(difference / 31449600)} years ago`;
+       }, 10000);
     });
 </script>
 
